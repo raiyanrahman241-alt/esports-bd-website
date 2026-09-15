@@ -1,0 +1,32 @@
+{
+  "name": "esports-bangladesh",
+  "version": "2.0.0",
+  "description": "E-SPORTS BANGLADESH (ESBD) - Premier 3D Gaming Tournament Hosting & Esports Platform",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo \"Build complete.\""
+  },
+  "keywords": [
+    "esports",
+    "gaming",
+    "bangladesh",
+    "tournament",
+    "supabase",
+    "vercel",
+    "threejs",
+    "freefire",
+    "pubgmobile",
+    "valorant"
+  ],
+  "author": "E-SPORTS BANGLADESH",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

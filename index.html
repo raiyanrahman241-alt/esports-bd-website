@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fira+Code:wght@300..700&family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>E-SPORTS BANGLADESH (ESBD) — Premier Gaming Tournament Platform</title>
+    <meta
+      name="description"
+      content="E-SPORTS BANGLADESH (ESBD) hosts online and offline gaming championships for Bangladesh — Free Fire, PUBG Mobile, Valorant, CS2, eFootball and more. 1200+ projects, 200+ LAN executions, 85,000+ players managed since 2012."
+    />
+    <meta property="og:title" content="E-SPORTS BANGLADESH — Online Gaming Tournament Platform" />
+    <meta property="og:description" content="Bangladesh's #1 esports league operations, broadcast production, and tournament management platform." />
+    <meta property="og:image" content="/img/gallery/arena-stage.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#07090c" />
+
+    <!-- Core App Styles & Bundles -->
+    <link rel="stylesheet" crossorigin href="/assets/index-Bdt_ggT_.css">
+    <script type="module" crossorigin src="/assets/index-DxaXhSva.js"></script>
+
+    <!-- 3D Cyber Atmosphere & Interactive Motion Styles -->
+    <style>
+      /* 3D Cyber Perspective Container */
+      body {
+        perspective: 1400px;
+        background-color: #07090c;
+        overflow-x: hidden;
+      }
+
+      /* Ambient 3D Particle Canvas */
+      #esbd-cyber-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.65;
+        mix-blend-mode: screen;
+      }
+
+      /* Interactive 3D Cursor Spotlight */
+      .cyber-spotlight {
+        position: fixed;
+        width: 650px;
+        height: 650px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(239, 68, 68, 0.04) 40%, transparent 70%);
+        transition: opacity 0.3s ease;
+      }
+
+      /* Dynamic 3D Card Hover Depth */
+      .tilt-3d {
+        transform-style: preserve-3d;
+        transition: transform 0.22s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.22s ease;
+        will-change: transform;
+      }
+
+      .tilt-3d:hover {
+        box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.2), 0 0 25px rgba(239, 68, 68, 0.12);
+      }
+
+      .tilt-3d > * {
+        transform: translateZ(14px);
+      }
+
+      /* Cyber Scanline Overlay */
+      .cyber-scanlines {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 999;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 136, 0.01), rgba(0, 0, 255, 0.02));
+        background-size: 100% 3px, 6px 100%;
+        opacity: 0.35;
+      }
+
+      /* Glow Ring Accents */
+      @keyframes cyberPulse {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 0.85; transform: scale(1.02); }
+      }
+      .cyber-pulse {
+        animation: cyberPulse 4s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background 3D Particles & Visual Depth Canvas -->
+    <canvas id="esbd-cyber-bg"></canvas>
+    <div class="cyber-spotlight" id="esbd-spotlight"></div>
+    <div class="cyber-scanlines"></div>
+
+    <!-- Main React Single Page App -->
+    <div id="root"></div>
+
+    <!-- 3D Interactive Cyber Engine Script -->
+    <script>
+      (function () {
+        // 1. Interactive 3D Cursor Spotlight
+        const spotlight = document.getElementById('esbd-spotlight');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let currentX = mouseX;
+        let currentY = mouseY;
+
+        window.addEventListener('pointermove', function (e) {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        }, { passive: true });
+
+        function updateSpotlight() {
+          currentX += (mouseX - currentX) * 0.1;
+          currentY += (mouseY - currentY) * 0.1;
+          if (spotlight) {
+            spotlight.style.left = currentX + 'px';
+            spotlight.style.top = currentY + 'px';
+          }
+          requestAnimationFrame(updateSpotlight);
+        }
+        requestAnimationFrame(updateSpotlight);
+
+        // 2. 3D Particle Ambient Canvas (Cyber Green & Crimson)
+        const canvas = document.getElementById('esbd-cyber-bg');
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          let width = canvas.width = window.innerWidth;
+          let height = canvas.height = window.innerHeight;
+
+          window.addEventListener('resize', function () {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+          });
+
+          const PARTICLE_COUNT = 45;
+          const particles = [];
+          const colors = ['rgba(16, 185, 129, ', 'rgba(239, 68, 68, ', 'rgba(56, 189, 248, '];
+
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              z: Math.random() * 800 + 200,
+              size: Math.random() * 2.2 + 0.8,
+              speedX: (Math.random() - 0.5) * 0.4,
+              speedY: -Math.random() * 0.5 - 0.2,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              alpha: Math.random() * 0.5 + 0.2
+            });
+          }
+
+          function renderParticles() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Parallax influence from cursor
+            const pOffsetX = (mouseX - width / 2) * 0.02;
+            const pOffsetY = (mouseY - height / 2) * 0.02;
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+              const p = particles[i];
+              p.x += p.speedX;
+              p.y += p.speedY;
+
+              if (p.y < -20) p.y = height + 20;
+              if (p.x < -20) p.x = width + 20;
+              if (p.x > width + 20) p.x = -20;
+
+              const depthScale = 600 / (600 + p.z);
+              const drawX = p.x + pOffsetX * depthScale;
+              const drawY = p.y + pOffsetY * depthScale;
+              const drawSize = p.size * depthScale;
+
+              ctx.beginPath();
+              ctx.arc(drawX, drawY, drawSize, 0, Math.PI * 2);
+              ctx.fillStyle = p.color + (p.alpha * depthScale) + ')';
+              ctx.shadowColor = p.color + '0.8)';
+              ctx.shadowBlur = 8;
+              ctx.fill();
+            }
+            requestAnimationFrame(renderParticles);
+          }
+          requestAnimationFrame(renderParticles);
+        }
+
+        // 3. Dynamic 3D Card Physics Tilt on Cards and Interactive Elements
+        function apply3DTilt() {
+          const cards = document.querySelectorAll(
+            'div[class*="rounded-xl"], div[class*="rounded-2xl"], div[class*="border-border"], a[href*="/tournaments/"]'
+          );
+
+          cards.forEach(card => {
+            if (card.dataset.hasTilt || card.id === 'root') return;
+            card.dataset.hasTilt = "true";
+            card.classList.add('tilt-3d');
+
+            card.addEventListener('mousemove', function (e) {
+              const rect = card.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+
+              const rotateX = ((y - centerY) / centerY) * -7;
+              const rotateY = ((x - centerX) / centerX) * 7;
+
+              card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.015, 1.015, 1.015)`;
+            });
+
+            card.addEventListener('mouseleave', function () {
+              card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+          });
+        }
+
+        // Observe DOM for dynamic page changes
+        setInterval(apply3DTilt, 1500);
+      })();
+    </script>
+  </body>
+</html>
