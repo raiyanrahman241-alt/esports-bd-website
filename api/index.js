@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken');
 const { supabase, isSupabaseConfigured } = require('../lib/supabase');
 const seed = require('../lib/seedData');
 
+const app = express();
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'esports-bangladesh-production-jwt-2026';
 
 // Middleware
-router.use(cors());
-router.use(express.json());
+app.use(cors());
+app.use(express.json());
 
 // In-Memory Storage for High-Speed Fallback & Local Sessions
 const memoryStore = {
@@ -167,7 +168,6 @@ router.post('/auth/register', async (req, res) => {
     const cleanEmail = email ? email.trim().toLowerCase() : `${ign.toLowerCase().replace(/[^a-z0-9]/g, '')}@esportsbd.com`;
     const cleanIgn = ign.trim();
 
-    // Check if user exists
     const existing = memoryStore.users.find(u => u.ign.toLowerCase() === cleanIgn.toLowerCase() || (email && u.email?.toLowerCase() === cleanEmail));
     if (existing) {
       return res.status(400).json({ error: "A player with this IGN or Email already exists." });
@@ -201,7 +201,6 @@ router.post('/auth/register', async (req, res) => {
       }
     ];
 
-    // Persist to Supabase if configured
     if (isSupabaseConfigured && supabase) {
       try {
         await supabase.from('profiles').insert([{
@@ -770,4 +769,19 @@ router.get('/admin/settings', (req, res) => {
   });
 });
 
-module.exports = router;
+// Mount both on /api and / so it works with ANY Vercel rewrite configuration
+app.use('/api', router);
+app.use('/', router);
+
+// Clean 404 handler so serverless function never throws unhandled error
+app.use((req, res) => {
+  res.status(404).json({ error: `Endpoint ${req.method} ${req.url} not found` });
+});
+
+// Clean Error handler
+app.use((err, req, res, next) => {
+  console.error('API Error:', err);
+  res.status(500).json({ error: err.message || 'Internal server error' });
+});
+
+module.exports = app;

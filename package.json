@@ -2,11 +2,10 @@
   "name": "esports-bangladesh",
   "version": "2.0.0",
   "description": "E-SPORTS BANGLADESH (ESBD) - Premier 3D Gaming Tournament Hosting & Esports Platform",
-  "main": "server.js",
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "build": "echo \"Build complete.\""
+    "build": "echo \"Build ready.\""
   },
   "keywords": [
     "esports",

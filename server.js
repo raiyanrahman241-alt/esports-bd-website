@@ -5,9 +5,9 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// API Router
-const apiRouter = require('./api/index');
-app.use('/api', apiRouter);
+// Mount API application on /api
+const apiApp = require('./api/index');
+app.use('/api', apiApp);
 
 // Serve static assets
 app.use(express.static(path.join(__dirname)));
@@ -17,7 +17,11 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`🎮 E-SPORTS BANGLADESH Server is running at http://localhost:${PORT}`);
-  console.log(`⚡ API endpoints live at http://localhost:${PORT}/api`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🎮 E-SPORTS BANGLADESH Server is running at http://localhost:${PORT}`);
+    console.log(`⚡ API endpoints live at http://localhost:${PORT}/api`);
+  });
+}
+
+module.exports = app;
