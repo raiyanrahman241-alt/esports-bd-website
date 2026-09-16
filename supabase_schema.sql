@@ -419,3 +419,68 @@ ON CONFLICT DO NOTHING;
 INSERT INTO public.profiles (id, email, ign, display_name, role, wallet_balance_minor) VALUES
 ('00000000-0000-0000-0000-000000000001', 'admin@esportsbd.com', 'ESBD_Admin', 'ESBD Platform Administrator', 'admin', 5000000)
 ON CONFLICT (id) DO NOTHING;
+
+-- =============================================================================
+-- ROW LEVEL SECURITY (RLS) POLICIES
+-- Ensures public read for showcase and safe user participation
+-- =============================================================================
+ALTER TABLE public.games ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tournaments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.stats ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.clients ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.influencers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.communities ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.milestones ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.gallery ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.staff ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.services ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.leaderboards ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.matches ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.tournament_registrations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
+
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Games') THEN
+        CREATE POLICY "Public Read Games" ON public.games FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Tournaments') THEN
+        CREATE POLICY "Public Read Tournaments" ON public.tournaments FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Stats') THEN
+        CREATE POLICY "Public Read Stats" ON public.stats FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Clients') THEN
+        CREATE POLICY "Public Read Clients" ON public.clients FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Influencers') THEN
+        CREATE POLICY "Public Read Influencers" ON public.influencers FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Communities') THEN
+        CREATE POLICY "Public Read Communities" ON public.communities FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Milestones') THEN
+        CREATE POLICY "Public Read Milestones" ON public.milestones FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Gallery') THEN
+        CREATE POLICY "Public Read Gallery" ON public.gallery FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Staff') THEN
+        CREATE POLICY "Public Read Staff" ON public.staff FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Services') THEN
+        CREATE POLICY "Public Read Services" ON public.services FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Leaderboards') THEN
+        CREATE POLICY "Public Read Leaderboards" ON public.leaderboards FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Matches') THEN
+        CREATE POLICY "Public Read Matches" ON public.matches FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Register Tournaments') THEN
+        CREATE POLICY "Public Register Tournaments" ON public.tournament_registrations FOR ALL USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Submit Contact') THEN
+        CREATE POLICY "Public Submit Contact" ON public.contact_messages FOR INSERT WITH CHECK (true);
+    END IF;
+END $$;
+
