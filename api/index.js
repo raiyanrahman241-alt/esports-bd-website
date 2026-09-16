@@ -279,29 +279,47 @@ router.get('/auth/me', (req, res) => {
 // 2. PUBLIC SHOWCASES & STATS (Live Supabase + Resilient Fallback)
 // -----------------------------------------------------------------------------
 router.get('/stats', async (req, res) => {
+  const liveTournaments = memoryStore.tournaments.filter(t => t.status === 'live');
+  const openTournaments = memoryStore.tournaments.filter(t => t.status === 'registration_open');
+  const totalPrizeMinor = memoryStore.tournaments.reduce((sum, t) => sum + (t.prizePoolMinor || 0), 0);
+
   if (isSupabaseConfigured && supabase) {
     try {
       const { data } = await supabase.from('stats').select('*').limit(1);
       if (data && data.length > 0) {
         const s = data[0];
-        return res.json({
+        const baseStats = {
+          // Frontend hero expects these exact keys:
+          liveNow: liveTournaments.length,
+          tournaments: openTournaments.length,
+          players: s.total_players || 85400,
+          prizePoolMinor: s.total_prize_minor || totalPrizeMinor,
+          // Legacy fields for other sections:
           totalPlayers: s.total_players || 85400,
           playersManaged: `${(s.total_players || 85400).toLocaleString()}+`,
           totalProjects: s.total_projects || 1240,
           projectsDelivered: `${s.total_projects || 1240}+`,
           lanExecutions: `${s.lan_executions || 200}+`,
-          totalPrizeMinor: s.total_prize_minor || 2500000000,
+          totalPrizeMinor: s.total_prize_minor || totalPrizeMinor,
           totalPrizeBDT: "2.5 Crore+",
           audienceReached: s.audience_reached || "2.5M+",
           companiesServed: `${s.companies_served || 100}+`,
           activeTournaments: memoryStore.tournaments.length
-        });
+        };
+        return res.json(baseStats);
       }
     } catch (err) {
       console.warn('Supabase stats query fallback:', err.message);
     }
   }
-  return res.json(memoryStore.stats);
+  // Fallback with correct hero fields
+  return res.json({
+    ...memoryStore.stats,
+    liveNow: liveTournaments.length,
+    tournaments: openTournaments.length,
+    players: memoryStore.stats.totalPlayers,
+    prizePoolMinor: totalPrizeMinor
+  });
 });
 
 router.get('/games', async (req, res) => {
@@ -330,6 +348,12 @@ router.get('/games', async (req, res) => {
 });
 
 router.get('/tournaments', async (req, res) => {
+  // Helper: build a nested game object the frontend card expects (e.game?.iconUrl)
+  function buildGameObj(gameId) {
+    const gameInfo = memoryStore.games.find(g => g.id === gameId || g.slug === gameId);
+    return gameInfo ? gameInfo : { id: gameId, name: gameId, iconUrl: `/img/games/${gameId}.png`, bannerUrl: `/img/games/${gameId}.png` };
+  }
+
   if (isSupabaseConfigured && supabase) {
     try {
       const { data } = await supabase.from('tournaments').select('*');
@@ -338,7 +362,7 @@ router.get('/tournaments', async (req, res) => {
           id: t.id,
           slug: t.slug,
           title: t.title,
-          game: t.game_id,
+          game: buildGameObj(t.game_id),  // nested game object with iconUrl
           gameId: t.game_id,
           format: t.format,
           status: t.status,
@@ -362,7 +386,11 @@ router.get('/tournaments', async (req, res) => {
       console.warn('Supabase tournaments query fallback:', err.message);
     }
   }
-  return res.json(memoryStore.tournaments);
+  // Fallback: attach nested game objects
+  return res.json(memoryStore.tournaments.map(t => ({
+    ...t,
+    game: typeof t.game === 'string' ? buildGameObj(t.game) : (t.game || buildGameObj(t.gameId))
+  })));
 });
 
 router.get('/tournaments/:slug', async (req, res) => {
@@ -437,7 +465,12 @@ router.get('/gallery', (req, res) => {
 });
 
 router.get('/staff', (req, res) => {
-  return res.json(memoryStore.staff);
+  // Frontend reads f.imageUrl for staff card photos — map avatarUrl -> imageUrl
+  const staffWithImageUrl = memoryStore.staff.map(m => ({
+    ...m,
+    imageUrl: m.imageUrl || m.avatarUrl || null
+  }));
+  return res.json(staffWithImageUrl);
 });
 
 router.get('/services', (req, res) => {
