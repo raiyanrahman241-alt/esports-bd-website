@@ -10,6 +10,7 @@ const apiApp = require('./api/index');
 app.use('/api', apiApp);
 
 // Serve static assets
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
 
 // SPA fallback: any other route sends index.html

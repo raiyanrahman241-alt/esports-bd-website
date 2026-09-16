@@ -8,9 +8,21 @@ const app = express();
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'esports-bangladesh-production-jwt-2026';
 
+const path = require('path');
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Static asset serving fallback in case Vercel routes static paths to API function
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
+app.use('/img', express.static(path.join(__dirname, '../public/img')));
+app.use('/img', express.static(path.join(__dirname, '../img')));
+app.get('/favicon.png', (req, res) => {
+  const p = path.join(__dirname, '../public/favicon.png');
+  res.sendFile(p);
+});
 
 // In-Memory Storage for High-Speed Fallback & Local Sessions
 const memoryStore = {

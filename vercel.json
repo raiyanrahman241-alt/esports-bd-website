@@ -10,7 +10,19 @@
       "destination": "/api/index.js"
     },
     {
-      "source": "/((?!api|assets|img|favicon\\.png).*)",
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/img/(.*)",
+      "destination": "/img/$1"
+    },
+    {
+      "source": "/favicon.png",
+      "destination": "/favicon.png"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
