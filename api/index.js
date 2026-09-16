@@ -419,6 +419,7 @@ router.get('/influencers', async (req, res) => {
           followersRank: inf.followers_rank,
           followersDisplay: inf.followers_display,
           avatarUrl: inf.avatar_url,
+          imageUrl: inf.avatar_url,  // Creators page reads imageUrl for card photos
           category: inf.category,
           platforms: inf.platforms,
           featured: inf.featured
@@ -428,7 +429,11 @@ router.get('/influencers', async (req, res) => {
       console.warn('Supabase influencers query fallback:', err.message);
     }
   }
-  return res.json(memoryStore.influencers);
+  // Fallback: add imageUrl from avatarUrl for creators page
+  return res.json(memoryStore.influencers.map(inf => ({
+    ...inf,
+    imageUrl: inf.imageUrl || inf.avatarUrl
+  })));
 });
 
 router.get('/clients', async (req, res) => {
