@@ -17,6 +17,12 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     avatar_url TEXT DEFAULT '/img/esbd-logo.png',
     wallet_balance_minor BIGINT NOT NULL DEFAULT 0, -- Stored in BDT Poisha (1 BDT = 100 Poisha)
     game_tags JSONB DEFAULT '{}'::jsonb,
+    age_bracket TEXT DEFAULT 'above_18' CHECK (age_bracket IN ('above_18', 'below_18')),
+    nid_number TEXT,
+    nid_attachment_url TEXT,
+    birth_certificate_no TEXT,
+    guardian_name TEXT,
+    guardian_phone TEXT,
     is_verified BOOLEAN DEFAULT true,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -88,7 +94,19 @@ CREATE TABLE IF NOT EXISTS public.tournament_registrations (
     tournament_id TEXT REFERENCES public.tournaments(id) ON DELETE CASCADE,
     user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
     team_id TEXT REFERENCES public.teams(id) ON DELETE SET NULL,
+    team_name TEXT,
     ign TEXT,
+    age_bracket TEXT NOT NULL DEFAULT 'above_18' CHECK (age_bracket IN ('above_18', 'below_18')),
+    tournament_tier TEXT NOT NULL DEFAULT 'national' CHECK (tournament_tier IN ('national', 'international')),
+    nid_number TEXT,
+    nid_attachment_url TEXT,
+    birth_certificate_no TEXT,
+    guardian_name TEXT,
+    guardian_phone TEXT,
+    guardian_nid TEXT,
+    payment_method TEXT DEFAULT 'free_pass',
+    payment_trx_id TEXT,
+    payment_phone TEXT,
     contact_phone TEXT,
     status TEXT NOT NULL DEFAULT 'registered' CHECK (status IN ('registered', 'checked_in', 'withdrawn', 'disqualified')),
     registered_at TIMESTAMPTZ DEFAULT NOW(),
@@ -286,6 +304,70 @@ CREATE TABLE IF NOT EXISTS public.match_submissions (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 21. NEWSROOM (Game News, Tournament Portals & Esports Coverage)
+CREATE TABLE IF NOT EXISTS public.news (
+    id TEXT PRIMARY KEY DEFAULT ('news-' || substr(uuid_generate_v4()::text, 1, 8)),
+    slug TEXT UNIQUE NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT,
+    content TEXT,
+    category TEXT NOT NULL DEFAULT 'General',
+    game_id TEXT REFERENCES public.games(id) ON DELETE SET NULL,
+    game_name TEXT,
+    author TEXT NOT NULL DEFAULT 'ESBD Editorial Team',
+    author_role TEXT DEFAULT 'Staff Writer',
+    author_avatar TEXT DEFAULT '/img/esbd-logo.png',
+    image_url TEXT,
+    read_time TEXT DEFAULT '3 min read',
+    tags JSONB DEFAULT '[]'::jsonb,
+    is_featured BOOLEAN DEFAULT false,
+    views_count INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 22. SHOP PRODUCTS (Gaming Hardware, Peripherals & Tournament Gear)
+CREATE TABLE IF NOT EXISTS public.products (
+    id TEXT PRIMARY KEY DEFAULT ('prod-' || substr(uuid_generate_v4()::text, 1, 8)),
+    slug TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    brand TEXT NOT NULL,
+    category TEXT NOT NULL,
+    price_bdt NUMERIC(12,2) NOT NULL,
+    original_price_bdt NUMERIC(12,2),
+    discount_pct INTEGER DEFAULT 0,
+    rating NUMERIC(2,1) DEFAULT 4.8,
+    reviews_count INTEGER DEFAULT 0,
+    in_stock BOOLEAN DEFAULT true,
+    is_tournament_grade BOOLEAN DEFAULT true,
+    sponsor_tier TEXT DEFAULT 'Official Partner',
+    image_url TEXT,
+    specs JSONB DEFAULT '{}'::jsonb,
+    features JSONB DEFAULT '[]'::jsonb,
+    description TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 23. PRODUCT ORDERS
+CREATE TABLE IF NOT EXISTS public.product_orders (
+    id TEXT PRIMARY KEY DEFAULT ('ord-' || substr(uuid_generate_v4()::text, 1, 8)),
+    product_id TEXT REFERENCES public.products(id) ON DELETE SET NULL,
+    user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
+    customer_name TEXT NOT NULL,
+    customer_phone TEXT NOT NULL,
+    customer_email TEXT,
+    delivery_address TEXT NOT NULL,
+    city TEXT NOT NULL DEFAULT 'Dhaka',
+    quantity INTEGER NOT NULL DEFAULT 1,
+    unit_price_bdt NUMERIC(12,2) NOT NULL,
+    total_amount_bdt NUMERIC(12,2) NOT NULL,
+    payment_method TEXT NOT NULL,
+    trx_id TEXT,
+    status TEXT NOT NULL DEFAULT 'confirmed' CHECK (status IN ('pending', 'confirmed', 'shipped', 'delivered', 'cancelled')),
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- =============================================================================
 -- SEED DATA (High Fidelity Bangladesh Esports Records)
 -- =============================================================================
@@ -346,15 +428,18 @@ INSERT INTO public.communities (id, name, game_id, members_rank, members, tag, l
 ('mlbb-bd', 'Mobile Legends Bangladesh Arena', 'mobile-legends', 190000, '190K', 'COMMUNITY', 'https://facebook.com/groups/esbd')
 ON CONFLICT (id) DO NOTHING;
 
--- STAFF
+-- STAFF & LEADERSHIP
 INSERT INTO public.staff (id, name, role, kind, avatar_url, bio, order_index) VALUES
-('md-tanvir-ahmed', 'Md Tanvir Ahmed', 'Founder & Chief Executive Officer', 'team', '/img/team/md-tanvir-ahmed.jpg', 'Pioneered institutional esports in Bangladesh since 2012, spearheading national tournaments and global representations.', 1),
-('gazi-rahman', 'Gazi Rahman', 'Head of Esports Operations & Tournaments', 'team', '/img/team/gazi-rahman.jpg', 'Over a decade of refereeing and directing major LAN arenas, campus cups, and national qualifier broadcasts.', 2),
-('md-mahdiul-alam', 'Md Mahdiul Alam', 'Chief Broadcast & Production Director', 'team', '/img/team/md-mahdiul-alam.jpg', 'Lead technical director behind high-bandwidth multi-camera esports productions and stadium visual mapping.', 3),
-('taksib-amin-khan', 'Taksib Amin Khan', 'Talent & Creator Partnerships Lead', 'team', '/img/team/taksib-amin-khan.jpg', 'Manages relationships across 80+ elite content creators, brand deals, and influencer activations.', 4),
-('sumit-s-ron', 'Sumit S Ron', 'Senior Tournament Admin & Integrity Lead', 'team', '/img/team/sumit-s-ron.jpg', 'Specialist in bracket automation, competitive integrity, and anti-cheat enforcement across all game titles.', 5),
-('noyon-hossain', 'Noyon Hossain', 'Community & University League Manager', 'team', '/img/team/noyon-hossain.jpg', 'Overseeing 40+ university gaming clubs and grassroots community engagement across 8 divisions.', 6)
-ON CONFLICT (id) DO NOTHING;
+('sumit-s-ron', 'SUMIT S RON', 'CEO & Founder', 'team', '/img/team/sumit-s-ron.jpg', 'CEO & Founder of E-SPORTS BANGLADESH since 2012. Pioneer of national competitive gaming leagues, campus championship circuits, and national team representation on the global stage.', 1),
+('taksib-amin-khan', 'TAKSIB AMIN KHAN', 'COO', 'team', '/img/team/taksib-amin-khan.jpg', 'Chief Operating Officer managing enterprise hardware partnerships, creator roster relations, and nationwide tournament event operations.', 2),
+('md-mahdiul-alam', 'Md.Mahdiul Alam', 'COO', 'team', '/img/team/md-mahdiul-alam.jpg', 'Chief Operating Officer directing 4K multi-stream arena broadcasting, stage visual engineering, and Commonwealth Esports Championships team operations.', 3),
+('gazi-rahman', 'GAZI RAHMAN', 'COO', 'team', '/img/team/gazi-rahman.jpg', 'Chief Operating Officer overseeing tournament rulesets, live refereeing panels, anti-cheat validation, and national competitive integrity.', 4),
+-- ESBD TEAM AMBASSADORS
+('md-shoikot-islam', 'MD. SHOIKOT ISLAM', 'ESBD Ambassador', 'ambassador', '/img/team/md-shoikot-islam.jpg', 'Official ESBD Team Ambassador (ITZ KABBO) & premier Free Fire creator uniting millions across Bangladesh gaming communities.', 5),
+('noyon-hossain', 'NOYON HOSSAIN', 'ESBD Ambassador', 'ambassador', '/img/team/noyon-hossain.jpg', 'Official ESBD Team Ambassador (APOLLO GAMING) representing grassroots community tournaments and youth gamer development.', 6),
+('md-rayhan', 'MD. RAYHAN', 'ESBD Ambassador', 'ambassador', '/img/team/md-rayhan.jpg', 'Official ESBD Team Ambassador (HEADSHOT KING) celebrated for competitive sharpshooting and championship broadcast analysis.', 7),
+('md-tanvir-ahmed', 'MD. TANVIR AHMED', 'ESBD Ambassador', 'ambassador', '/img/team/md-tanvir-ahmed.jpg', 'Official ESBD Team Ambassador (TIMEBURNERGG), mentoring emerging competitive rosters and collegiate champions.', 8)
+ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role, kind = EXCLUDED.kind, avatar_url = EXCLUDED.avatar_url, bio = EXCLUDED.bio, order_index = EXCLUDED.order_index;
 
 -- SERVICES
 INSERT INTO public.services (id, number, title, description, features, order_index) VALUES
@@ -415,6 +500,24 @@ INSERT INTO public.leaderboards (rank, game_id, team_name, player_ign, points, w
 (7, 'cs2', 'Dhaka Knights', 'DK_Headshot', 1980, 24, 30, 18000000, 'Global')
 ON CONFLICT DO NOTHING;
 
+-- NEWSROOM SEED DATA
+INSERT INTO public.news (id, slug, title, game_id, game_name, category, author, read_time, summary, image_url, is_featured, content) VALUES
+('news-ffws-2026', 'ffws-2026-bangladesh-qualifiers', 'FFWS 2026 Bangladesh National Qualifiers: 48 Elite Squads Set to Battle for Regional Slot', 'free-fire', 'Free Fire', 'Championship', 'ESBD Editorial Staff', '3 min read', 'The roadmap to the Free Fire World Series kicks off in Dhaka with 48 registered squads competing across online group stages and a sold-out LAN grand final.', '/img/games/free-fire.png', true, 'E-SPORTS BANGLADESH today officially unveiled the operational blueprint for the FFWS 2026 Bangladesh Qualifiers. Over 48 squads, verified through competitive ID checks and automated anti-cheat screenings, will lock horns over four weekends of non-stop Battle Royale action.'),
+('news-pmgc-2026', 'pmgc-south-asia-bangladesh-roster', 'PMGC South Asia Prelims: Bangladesh National Contenders Confirm Active Starting Roster', 'pubg-mobile', 'PUBG Mobile', 'Roster News', 'Gazi Rahman', '4 min read', 'Leading PUBG Mobile organizations in Bangladesh finalize their tactical rosters ahead of the high-stakes South Asia Prelims hosted under ESBD officiating.', '/img/games/pubg-mobile.png', true, 'With the international competitive window fast approaching, Bangladesh top 16 PUBG Mobile teams have locked their official starting lineups.'),
+('news-valorant-cup', 'valorant-champions-cup-bangladesh-2026', 'Valorant Champions Cup 2026: 500,000 BDT Prize Pool Announced with Vanguard LAN Setup', 'valorant', 'Valorant', 'Tournament Alert', 'Sumit S Ron', '3 min read', 'Registration opens for the 500,000 BDT Valorant Champions Cup, featuring dedicated high-tick tournament servers and official Riot Vanguard hardware validation.', '/img/games/valorant.png', true, 'Tactical FPS enthusiasts have a new benchmark to aim for as ESBD announces the Valorant Champions Cup 2026 with a 500,000 BDT prize pool.'),
+('news-hardware-expo', 'hardware-expo-asus-aorus-partnership', 'ASUS ROG & Gigabyte AORUS Partner with ESBD to Equip Pro Tournament LAN Arenas', NULL, 'Hardware & Gear', 'Partnership', 'Taksib Amin Khan', '3 min read', 'Official hardware distributors bring 540Hz displays, RTX 4080 Super rigs, and tournament mechanical keyboards to competitive players in Bangladesh.', '/img/clients/asus.png', true, 'E-SPORTS BANGLADESH has solidified strategic hardware partnerships with ASUS ROG, Gigabyte AORUS, MSI, Thermaltake, ViewSonic, ZOTAC, and UCC Bangladesh.')
+ON CONFLICT (id) DO NOTHING;
+
+-- SHOP PRODUCTS SEED DATA
+INSERT INTO public.products (id, slug, name, brand, category, price_bdt, in_stock, is_tournament_grade, image_url, description) VALUES
+('prod-rog-pg248qp', 'asus-rog-swift-pg248qp', 'ASUS ROG Swift Pro PG248QP 540Hz Gaming Display', 'ASUS ROG', 'Monitors', 115000.00, true, true, '/img/clients/asus.png', 'The official stage display for ESBD CS2 and Valorant National Championships. Engineered for zero motion blur.'),
+('prod-rog-azoth', 'asus-rog-azoth-wireless', 'ASUS ROG Azoth Wireless 75% Custom Gaming Keyboard', 'ASUS ROG', 'Keyboards', 29500.00, true, true, '/img/clients/asus.png', 'Tournament-certified mechanical keyboard offering unmatched acoustic feedback and rapid response times.'),
+('prod-rog-harpe-ace', 'asus-rog-harpe-ace-mouse', 'ASUS ROG Harpe Ace Aim Lab Edition Ultralight Mouse', 'ASUS ROG', 'Mice', 16500.00, true, true, '/img/clients/asus.png', 'Developed alongside esports professionals to provide pixel-precise tracking for tactical shooters.'),
+('prod-aorus-rtx4080s', 'gigabyte-aorus-rtx4080-super', 'Gigabyte AORUS GeForce RTX 4080 SUPER Master 16G', 'Gigabyte AORUS', 'Rigs', 168000.00, true, true, '/img/clients/gigabyte.png', 'Powers the primary broadcast rigs and spectator observation cameras at ESBD LAN arenas.'),
+('prod-msi-raider-ge78', 'msi-raider-ge78-laptop', 'MSI Raider GE78 HX 14V Tournament Esports Laptop', 'MSI Gaming', 'Rigs', 345000.00, true, true, '/img/clients/msi.png', 'The mobile powerhouse utilized by ESBD live casters, match observers, and travelling national team players.'),
+('prod-viewsonic-xg270', 'viewsonic-elite-xg270', 'ViewSonic ELITE XG270 240Hz 1ms Fast IPS Monitor', 'ViewSonic Gaming', 'Monitors', 48500.00, true, true, '/img/clients/viewsonic.png', 'High-refresh workhorse of Bangladesh collegiate esports tournaments, offering vibrant colors and zero ghosting.')
+ON CONFLICT (id) DO NOTHING;
+
 -- DEFAULT ADMIN USER SEED (Profiles)
 INSERT INTO public.profiles (id, email, ign, display_name, role, wallet_balance_minor) VALUES
 ('00000000-0000-0000-0000-000000000001', 'admin@esportsbd.com', 'ESBD_Admin', 'ESBD Platform Administrator', 'admin', 5000000)
@@ -438,6 +541,9 @@ ALTER TABLE public.leaderboards ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.matches ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.tournament_registrations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.news ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.product_orders ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Games') THEN
@@ -481,6 +587,15 @@ DO $$ BEGIN
     END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Submit Contact') THEN
         CREATE POLICY "Public Submit Contact" ON public.contact_messages FOR INSERT WITH CHECK (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read News') THEN
+        CREATE POLICY "Public Read News" ON public.news FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Read Products') THEN
+        CREATE POLICY "Public Read Products" ON public.products FOR SELECT USING (true);
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Public Create Orders') THEN
+        CREATE POLICY "Public Create Orders" ON public.product_orders FOR INSERT WITH CHECK (true);
     END IF;
 END $$;
 

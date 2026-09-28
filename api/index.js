@@ -80,6 +80,9 @@ const memoryStore = {
   staff: JSON.parse(JSON.stringify(seed.staff)),
   services: JSON.parse(JSON.stringify(seed.services)),
   leaderboard: JSON.parse(JSON.stringify(seed.leaderboard)),
+  news: JSON.parse(JSON.stringify(seed.news || [])),
+  products: JSON.parse(JSON.stringify(seed.products || [])),
+  productOrders: [],
   teams: [
     { id: "team-redx", name: "RedX Esports", tag: "REDX", gameId: "free-fire", captainId: "player-demo-02", captainIgn: "RedX_Vampire" },
     { id: "team-legion", name: "Team Legion BD", tag: "LGN", gameId: "free-fire", captainId: "user-2", captainIgn: "Legion_Ghost" },
@@ -395,14 +398,26 @@ router.get('/tournaments', async (req, res) => {
 
 router.get('/tournaments/:slug', async (req, res) => {
   const { slug } = req.params;
+  const user = authenticateUser(req);
   const tournament = memoryStore.tournaments.find(t => t.slug === slug || t.id === slug);
   if (!tournament) {
     return res.status(404).json({ error: "Tournament not found." });
   }
+
+  const enrichedTournament = {
+    ...tournament,
+    game: typeof tournament.game === 'string' ? buildGameObj(tournament.game) : (tournament.game || buildGameObj(tournament.gameId))
+  };
+
+  const myReg = user ? (memoryStore.registrations || []).find(r => r.tournamentId === tournament.id && r.userId === user.id) : null;
+
   return res.json({
-    tournament,
+    tournament: enrichedTournament,
     bracket: tournament.bracket || { rounds: [] },
-    registeredTeams: tournament.registeredTeams || [],
+    registrations: tournament.registeredTeams || [],
+    matches: (memoryStore.matches || []).filter(m => m.tournamentId === tournament.id),
+    standings: tournament.standings || [],
+    myRegistration: myReg || null,
     rules: tournament.rules || []
   });
 });
@@ -523,15 +538,132 @@ router.post('/contact', (req, res) => {
 });
 
 // -----------------------------------------------------------------------------
-// 3. TOURNAMENT ACTIONS (Register, Check-In, Withdraw)
+// NEWSROOM / GAMING NEWS PORTAL
 // -----------------------------------------------------------------------------
-router.post('/tournaments/:id/register', (req, res) => {
+router.get('/news', (req, res) => {
+  const { game, category } = req.query;
+  let articles = memoryStore.news || [];
+  if (game && game !== 'all') {
+    articles = articles.filter(a => a.gameId === game || (a.gameTitle && a.gameTitle.toLowerCase().includes(game.toLowerCase())));
+  }
+  if (category && category !== 'all') {
+    articles = articles.filter(a => a.category && a.category.toLowerCase() === category.toLowerCase());
+  }
+  return res.json(articles);
+});
+
+router.get('/news/:slug', (req, res) => {
+  const { slug } = req.params;
+  const article = (memoryStore.news || []).find(a => a.slug === slug || a.id === slug);
+  if (!article) return res.status(404).json({ error: "Article not found." });
+  return res.json(article);
+});
+
+// -----------------------------------------------------------------------------
+// E-COMMERCE / TOURNAMENT HARDWARE & ACCESSORIES SHOP
+// -----------------------------------------------------------------------------
+router.get('/products', (req, res) => {
+  const { brand, category } = req.query;
+  let items = memoryStore.products || [];
+  if (brand && brand !== 'all') {
+    items = items.filter(p => p.brand.toLowerCase().includes(brand.toLowerCase()));
+  }
+  if (category && category !== 'all') {
+    items = items.filter(p => p.category.toLowerCase() === category.toLowerCase());
+  }
+  return res.json(items);
+});
+
+router.get('/products/:id', (req, res) => {
+  const item = (memoryStore.products || []).find(p => p.id === req.params.id);
+  if (!item) return res.status(404).json({ error: "Product not found." });
+  return res.json(item);
+});
+
+router.post('/products/order', (req, res) => {
+  const user = authenticateUser(req);
+  const { productId, quantity = 1, customerName, customerPhone, deliveryAddress, paymentMethod = 'cash_on_delivery', trxId } = req.body;
+  const product = (memoryStore.products || []).find(p => p.id === productId);
+  if (!product) return res.status(404).json({ error: "Product not found." });
+
+  const order = {
+    id: `ord-${Date.now()}`,
+    productId: product.id,
+    productName: product.name,
+    brand: product.brand,
+    quantity: Number(quantity) || 1,
+    unitPriceBDT: product.priceBDT,
+    totalBDT: (product.priceBDT || 0) * (Number(quantity) || 1),
+    customerName: customerName || (user ? user.displayName : "Gamer"),
+    customerPhone: customerPhone || (user ? user.phone : ""),
+    deliveryAddress: deliveryAddress || "Dhaka, Bangladesh",
+    paymentMethod,
+    trxId: trxId || null,
+    status: "confirmed",
+    createdAt: new Date().toISOString()
+  };
+
+  memoryStore.productOrders = memoryStore.productOrders || [];
+  memoryStore.productOrders.push(order);
+
+  return res.json({
+    success: true,
+    message: `Order for ${product.name} confirmed! Our hardware team will dispatch with tournament warranty.`,
+    order
+  });
+});
+
+// -----------------------------------------------------------------------------
+// 3. TOURNAMENT ACTIONS (Register, Join, Check-In, Withdraw)
+// Separate sections for Above 18 & Below 18 with mandatory NID validation
+// -----------------------------------------------------------------------------
+function handleTournamentJoin(req, res) {
   const user = authenticateUser(req);
   const tournament = memoryStore.tournaments.find(t => t.id === req.params.id);
   if (!tournament) return res.status(404).json({ error: "Tournament not found." });
 
-  const userId = user ? user.id : 'player-demo-01';
-  const ign = user ? user.ign : 'raiyan';
+  const userId = user ? user.id : (req.body.userId || `player-${Date.now()}`);
+  const ign = user ? user.ign : (req.body.ign || req.body.captainIgn || `Gamer_${Math.floor(Math.random() * 9000 + 1000)}`);
+  const teamId = req.body.teamId || null;
+  const teamName = req.body.teamName || (user ? `${user.ign}'s Squad` : `${ign}'s Squad`);
+
+  // Age Division & Identification Validation
+  const ageBracket = req.body.ageBracket || 'above_18'; // 'above_18' | 'below_18'
+  const tournamentTier = req.body.tournamentTier || (tournament.isInternational ? 'international' : 'national');
+  const nidNumber = req.body.nidNumber || (user && user.nidNumber);
+  const nidAttachmentUrl = req.body.nidAttachmentUrl || req.body.nidAttachment || req.body.nidProof;
+  const birthCertificateNo = req.body.birthCertificateNo || req.body.studentIdNo || (user && user.birthCertificateNo);
+  const guardianName = req.body.guardianName;
+  const guardianPhone = req.body.guardianPhone;
+  const guardianNid = req.body.guardianNid;
+  const paymentMethod = req.body.paymentMethod || 'free_pass';
+  const paymentTrxId = req.body.paymentTrxId || null;
+  const paymentPhone = req.body.paymentPhone || null;
+
+  if (ageBracket === 'above_18') {
+    if (!nidNumber || String(nidNumber).trim().length < 8) {
+      return res.status(400).json({
+        error: "National ID (NID) number is mandatory for Above 18 tournament registration. Please enter your valid 10 or 17 digit NID number."
+      });
+    }
+    if (!nidAttachmentUrl) {
+      return res.status(400).json({
+        error: "Attachment of NID document / image proof is mandatory for Above 18 competitive tournaments."
+      });
+    }
+  } else {
+    // Under 18
+    if (!birthCertificateNo) {
+      return res.status(400).json({
+        error: "Birth Certificate Number or Student ID is required for Under 18 players (as NID is not issued below 18)."
+      });
+    }
+    if (!guardianName || !guardianPhone) {
+      return res.status(400).json({
+        error: "Parent or Legal Guardian name and phone number are required for Under 18 participants."
+      });
+    }
+  }
 
   const alreadyRegistered = (tournament.registeredTeams || []).some(rt => rt.captainIgn === ign || rt.id === userId);
   if (alreadyRegistered) {
@@ -540,9 +672,19 @@ router.post('/tournaments/:id/register', (req, res) => {
 
   const newEntry = {
     id: userId,
-    name: `${ign}'s Squad`,
+    name: teamName,
     tag: ign.slice(0, 4).toUpperCase(),
     captainIgn: ign,
+    teamId,
+    ageBracket,
+    tournamentTier,
+    nidNumber: ageBracket === 'above_18' ? nidNumber : null,
+    nidAttachmentUrl: ageBracket === 'above_18' ? nidAttachmentUrl : null,
+    birthCertificateNo: ageBracket === 'below_18' ? birthCertificateNo : null,
+    guardianName: ageBracket === 'below_18' ? guardianName : null,
+    guardianPhone: ageBracket === 'below_18' ? guardianPhone : null,
+    paymentMethod,
+    paymentTrxId,
     checkedIn: false
   };
 
@@ -550,17 +692,39 @@ router.post('/tournaments/:id/register', (req, res) => {
   tournament.registeredTeams.push(newEntry);
   tournament.registeredCount = (tournament.registeredCount || 0) + 1;
 
-  memoryStore.registrations.push({
+  const regRecord = {
     id: `reg-${Date.now()}`,
     tournamentId: tournament.id,
     userId,
     ign,
+    teamName,
+    ageBracket,
+    tournamentTier,
+    nidNumber: ageBracket === 'above_18' ? nidNumber : null,
+    nidAttachmentUrl: ageBracket === 'above_18' ? nidAttachmentUrl : null,
+    birthCertificateNo: ageBracket === 'below_18' ? birthCertificateNo : null,
+    guardianName: ageBracket === 'below_18' ? guardianName : null,
+    guardianPhone: ageBracket === 'below_18' ? guardianPhone : null,
+    guardianNid: ageBracket === 'below_18' ? guardianNid : null,
+    paymentMethod,
+    paymentTrxId,
+    paymentPhone,
     status: 'registered',
     registeredAt: new Date().toISOString()
-  });
+  };
 
-  return res.json({ success: true, tournament });
-});
+  memoryStore.registrations.push(regRecord);
+
+  return res.json({
+    success: true,
+    message: "Registration confirmed. NID/Youth credentials verified.",
+    tournament,
+    registration: regRecord
+  });
+}
+
+router.post('/tournaments/:id/join', handleTournamentJoin);
+router.post('/tournaments/:id/register', handleTournamentJoin);
 
 router.post('/tournaments/:id/check-in', (req, res) => {
   const user = authenticateUser(req);

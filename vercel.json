@@ -22,6 +22,14 @@
       "destination": "/favicon.png"
     },
     {
+      "source": "/newsroom.html",
+      "destination": "/newsroom.html"
+    },
+    {
+      "source": "/shop.html",
+      "destination": "/shop.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
