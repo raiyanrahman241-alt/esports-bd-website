@@ -84,9 +84,49 @@ const memoryStore = {
   products: JSON.parse(JSON.stringify(seed.products || [])),
   productOrders: [],
   teams: [
-    { id: "team-redx", name: "RedX Esports", tag: "REDX", gameId: "free-fire", captainId: "player-demo-02", captainIgn: "RedX_Vampire" },
-    { id: "team-legion", name: "Team Legion BD", tag: "LGN", gameId: "free-fire", captainId: "user-2", captainIgn: "Legion_Ghost" },
-    { id: "team-velocity", name: "Velocity Gaming BD", tag: "VLY", gameId: "valorant", captainId: "user-3", captainIgn: "Velocity_Aces" }
+    {
+      id: "team-redx",
+      name: "RedX Esports",
+      tag: "REDX",
+      gameId: "free-fire",
+      gameName: "Free Fire",
+      captainId: "player-demo-01",
+      captainIgn: "raiyan",
+      members: [
+        { userId: "player-demo-01", ign: "raiyan", role: "captain", avatarUrl: "/img/influencers/mr-triple-r.jpg" },
+        { userId: "player-demo-02", ign: "RedX_Vampire", role: "starter", avatarUrl: "/img/influencers/itz-kabbo.jpg" },
+        { userId: "user-3", ign: "RedX_Ghost", role: "starter", avatarUrl: "/img/influencers/sinister-plays.jpg" },
+        { userId: "user-4", ign: "RedX_Sniper", role: "starter", avatarUrl: "/img/influencers/apollo-gaming.jpg" }
+      ],
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: "team-legion",
+      name: "Team Legion BD",
+      tag: "LGN",
+      gameId: "free-fire",
+      gameName: "Free Fire",
+      captainId: "player-demo-02",
+      captainIgn: "RedX_Vampire",
+      members: [
+        { userId: "player-demo-02", ign: "RedX_Vampire", role: "captain", avatarUrl: "/img/influencers/itz-kabbo.jpg" },
+        { userId: "user-5", ign: "Legion_Ghost", role: "starter", avatarUrl: "/img/influencers/timeburnergg.jpg" }
+      ],
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: "team-velocity",
+      name: "Velocity Gaming BD",
+      tag: "VLY",
+      gameId: "valorant",
+      gameName: "Valorant",
+      captainId: "user-3",
+      captainIgn: "Velocity_Aces",
+      members: [
+        { userId: "user-3", ign: "Velocity_Aces", role: "captain", avatarUrl: "/img/influencers/sinister-plays.jpg" }
+      ],
+      createdAt: new Date().toISOString()
+    }
   ],
   matches: [
     {
@@ -96,7 +136,11 @@ const memoryStore = {
       roundName: "Semifinals - Match 1",
       roundIndex: 1,
       matchIndex: 1,
+      round: 1,
+      position: 1,
       status: "live",
+      opponentName: "Team Legion BD",
+      teamName: "RedX Esports",
       teamA: { id: "team-redx", name: "RedX Esports", score: 1 },
       teamB: { id: "team-legion", name: "Team Legion BD", score: 0 },
       myScore: 1,
@@ -112,7 +156,11 @@ const memoryStore = {
       roundName: "Semifinals - Match 2",
       roundIndex: 1,
       matchIndex: 2,
+      round: 1,
+      position: 2,
       status: "scheduled",
+      opponentName: "Delta Force BD",
+      teamName: "Apex Predators",
       teamA: { id: "team-apex", name: "Apex Predators", score: 0 },
       teamB: { id: "team-delta", name: "Delta Force BD", score: 0 },
       myScore: 0,
@@ -144,8 +192,8 @@ const memoryStore = {
   },
   notifications: {
     "player-demo-01": [
-      { id: "n-1", type: "room_code", title: "Room Code Delivered", message: "Custom Room for Match 1 is live! Room ID: ESBD-FF-492 | Password: esbd", readAt: null, createdAt: new Date().toISOString() },
-      { id: "n-2", type: "tournament", title: "Free Fire Pro League S4", message: "Your registration has been verified and confirmed.", readAt: new Date().toISOString(), createdAt: new Date(Date.now() - 7200000).toISOString() }
+      { id: "n-1", kind: "room_code", type: "room_code", title: "Room Code Delivered", message: "Custom Room for Match 1 is live! Room ID: ESBD-FF-492 | Password: esbd", readAt: null, createdAt: new Date().toISOString() },
+      { id: "n-2", kind: "tournament", type: "tournament", title: "Free Fire Pro League S4", message: "Your registration has been verified and confirmed.", readAt: new Date().toISOString(), createdAt: new Date(Date.now() - 7200000).toISOString() }
     ]
   },
   submissions: [
@@ -761,7 +809,21 @@ router.get('/me/tournaments', (req, res) => {
   const user = authenticateUser(req) || memoryStore.users[1];
   const registeredIds = memoryStore.registrations.filter(r => r.userId === user.id).map(r => r.tournamentId);
   const userTournaments = memoryStore.tournaments.filter(t => registeredIds.includes(t.id) || t.status === 'live');
-  return res.json(userTournaments.length ? userTournaments : [memoryStore.tournaments[0]]);
+  const list = userTournaments.length ? userTournaments : [memoryStore.tournaments[0]];
+
+  // Format each tournament with game object and startsAt expected by the frontend
+  const formatted = list.map(t => ({
+    ...t,
+    startsAt: t.startDate || t.startsAt || new Date().toISOString(),
+    endsAt: t.endDate || t.endsAt || new Date(Date.now() + 86400000).toISOString(),
+    game: typeof t.game === 'object' ? t.game : {
+      id: t.gameId || 'free-fire',
+      title: t.game || 'Free Fire',
+      iconUrl: t.bannerUrl || `/img/games/${t.gameId || 'free-fire'}.png`
+    }
+  }));
+
+  return res.json(formatted);
 });
 
 router.get('/me/matches', (req, res) => {
@@ -808,6 +870,7 @@ router.get('/me/notifications', (req, res) => {
   const list = memoryStore.notifications[user.id] || [
     {
       id: "n-demo",
+      kind: "room_code",
       type: "room_code",
       title: "Match Room Code",
       message: "Room ID: ESBD-FF-492 | Pass: esbd | Mode: Clash Squad",
@@ -830,9 +893,13 @@ router.post('/me/notifications/read', (req, res) => {
   return res.json({ success: true });
 });
 
+router.get('/teams', (req, res) => {
+  return res.json(memoryStore.teams);
+});
+
 router.get('/teams/mine', (req, res) => {
   const user = authenticateUser(req) || memoryStore.users[1];
-  const userTeams = memoryStore.teams.filter(t => t.captainId === user.id);
+  const userTeams = memoryStore.teams.filter(t => t.captainId === user.id || (t.members || []).some(m => m.userId === user.id));
   return res.json(userTeams.length ? userTeams : [memoryStore.teams[0]]);
 });
 
@@ -841,17 +908,52 @@ router.post('/teams', (req, res) => {
   const { name, tag, gameId } = req.body;
   if (!name || !tag) return res.status(400).json({ error: "Team name and tag are required." });
 
+  const gameObj = memoryStore.games.find(g => g.id === gameId) || { name: "Multi-title" };
   const newTeam = {
     id: `team-${Date.now()}`,
     name,
     tag: tag.toUpperCase(),
     gameId: gameId || "free-fire",
+    gameName: gameObj.name || gameObj.title || "Free Fire",
     captainId: user.id,
     captainIgn: user.ign,
+    members: [
+      { userId: user.id, ign: user.ign, role: "captain", avatarUrl: user.avatarUrl || "/img/influencers/mr-triple-r.jpg" }
+    ],
     createdAt: new Date().toISOString()
   };
   memoryStore.teams.push(newTeam);
   return res.json(newTeam);
+});
+
+router.post('/teams/:id/members', (req, res) => {
+  const team = memoryStore.teams.find(t => t.id === req.params.id);
+  if (!team) return res.status(404).json({ error: "Team not found." });
+  const { identifier, role } = req.body;
+  if (!identifier) return res.status(400).json({ error: "Player identifier (IGN or email) is required." });
+
+  const clean = identifier.trim();
+  const matchedUser = memoryStore.users.find(u => u.ign.toLowerCase() === clean.toLowerCase() || (u.email && u.email.toLowerCase() === clean.toLowerCase()));
+
+  team.members = team.members || [];
+  const alreadyMember = team.members.some(m => m.ign.toLowerCase() === clean.toLowerCase());
+  if (alreadyMember) return res.status(400).json({ error: "Player is already on this team roster." });
+
+  const newMember = {
+    userId: matchedUser ? matchedUser.id : `user-${Date.now()}`,
+    ign: matchedUser ? matchedUser.ign : clean,
+    role: role || "player",
+    avatarUrl: matchedUser?.avatarUrl || "/img/esbd-logo.png"
+  };
+  team.members.push(newMember);
+  return res.json({ success: true, team, member: newMember });
+});
+
+router.delete('/teams/:id/members/:userId', (req, res) => {
+  const team = memoryStore.teams.find(t => t.id === req.params.id);
+  if (!team) return res.status(404).json({ error: "Team not found." });
+  team.members = (team.members || []).filter(m => m.userId !== req.params.userId && m.ign !== req.params.userId);
+  return res.json({ success: true, team });
 });
 
 router.post('/matches/:id/result', (req, res) => {

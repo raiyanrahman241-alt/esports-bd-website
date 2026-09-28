@@ -291,6 +291,183 @@
 
         // Observe DOM for dynamic page changes
         setInterval(apply3DTilt, 1500);
+
+        // =====================================================================
+        // 4. INJECT EXTRA NAV LINKS (Newsroom & Shop) INTO THE REACT NAVBAR
+        // =====================================================================
+        function injectNavLinks() {
+          // Find the React nav links container
+          const allNavLinks = document.querySelectorAll('nav a[href], header a[href]');
+          let contactLink = null;
+          let navContainer = null;
+
+          allNavLinks.forEach(link => {
+            if (link.textContent.trim() === 'Contact' || link.getAttribute('href') === '/contact') {
+              contactLink = link;
+              navContainer = link.parentElement;
+            }
+          });
+
+          if (!navContainer || navContainer.dataset.esbdInjected) return;
+          navContainer.dataset.esbdInjected = 'true';
+
+          // Create Newsroom link
+          const newsLink = contactLink.cloneNode(true);
+          newsLink.textContent = 'Newsroom';
+          newsLink.setAttribute('href', '/newsroom.html');
+          newsLink.removeAttribute('data-active');
+          newsLink.removeAttribute('aria-current');
+          newsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '/newsroom.html';
+          });
+
+          // Create Shop link
+          const shopLink = contactLink.cloneNode(true);
+          shopLink.textContent = 'Shop';
+          shopLink.setAttribute('href', '/shop.html');
+          shopLink.removeAttribute('data-active');
+          shopLink.removeAttribute('aria-current');
+          shopLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '/shop.html';
+          });
+
+          // Insert before Contact
+          navContainer.insertBefore(newsLink, contactLink);
+          navContainer.insertBefore(shopLink, contactLink);
+        }
+
+        // =====================================================================
+        // 5. INJECT NEWSROOM PREVIEW SECTION ON LANDING PAGE
+        // =====================================================================
+        function injectNewsroomSection() {
+          // Only inject on the home page
+          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') return;
+
+          // Check if already injected
+          if (document.getElementById('esbd-newsroom-preview')) return;
+
+          // Find the footer element in the React app
+          const footer = document.querySelector('footer');
+          if (!footer) return;
+
+          const section = document.createElement('section');
+          section.id = 'esbd-newsroom-preview';
+          section.innerHTML = `
+            <div style="max-width:1200px; margin:0 auto; padding:80px 2rem 60px;">
+              <div style="text-align:center; margin-bottom:40px;">
+                <span style="font-family:'Oxanium',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:#10b981; display:block; margin-bottom:8px;">📰 LATEST NEWS</span>
+                <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.6rem,3.5vw,2.5rem); font-weight:800; color:#f0f6fc; margin-bottom:10px;">ESBD Newsroom</h2>
+                <p style="color:#8b949e; max-width:500px; margin:0 auto; font-size:0.95rem;">Tournament updates, patch notes, and the latest from Bangladesh's gaming scene.</p>
+              </div>
+              <div id="newsroom-cards" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; margin-bottom:30px;">
+                <div style="grid-column:1/-1; text-align:center; padding:40px; color:#6e7681;">Loading news...</div>
+              </div>
+              <div style="text-align:center;">
+                <a href="/newsroom.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#10b981,#059669); color:#fff; padding:12px 28px; border-radius:12px; text-decoration:none; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.95rem; transition:all 0.25s; box-shadow:0 4px 16px rgba(16,185,129,0.25);">
+                  View All News →
+                </a>
+              </div>
+            </div>
+          `;
+          section.style.cssText = 'position:relative; border-top:1px solid rgba(255,255,255,0.06);';
+
+          // Insert before footer
+          footer.parentElement.insertBefore(section, footer);
+
+          // Fetch and render preview cards
+          fetch('/api/news')
+            .then(r => r.json())
+            .then(articles => {
+              const container = document.getElementById('newsroom-cards');
+              if (!container) return;
+              const top4 = articles.slice(0, 4);
+              container.innerHTML = top4.map(a => `
+                <a href="/newsroom.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; text-decoration:none; transition:all 0.3s; display:block;" onmouseover="this.style.borderColor='rgba(16,185,129,0.3)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.transform='none'">
+                  <div style="padding:18px;">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                      <span style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.2); color:#10b981; font-size:0.68rem; font-weight:600; padding:2px 8px; border-radius:100px; text-transform:uppercase;">${a.gameTitle || a.gameId || 'Gaming'}</span>
+                      <span style="color:#6e7681; font-size:0.72rem; margin-left:auto;">${a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</span>
+                    </div>
+                    <h3 style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#f0f6fc; margin-bottom:6px; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${a.title}</h3>
+                    <p style="color:#8b949e; font-size:0.8rem; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${a.excerpt || a.summary || ''}</p>
+                  </div>
+                </a>
+              `).join('');
+            })
+            .catch(() => {
+              const c = document.getElementById('newsroom-cards');
+              if (c) c.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px; color:#6e7681;">News feed unavailable</div>';
+            });
+        }
+
+        // =====================================================================
+        // 6. INJECT SHOP PROMO BANNER ON LANDING PAGE
+        // =====================================================================
+        function injectShopPromo() {
+          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') return;
+          if (document.getElementById('esbd-shop-promo')) return;
+
+          const newsSection = document.getElementById('esbd-newsroom-preview');
+          if (!newsSection) return;
+
+          const promo = document.createElement('section');
+          promo.id = 'esbd-shop-promo';
+          promo.style.cssText = 'position:relative; border-top:1px solid rgba(255,255,255,0.06); background:linear-gradient(180deg, rgba(167,139,250,0.03) 0%, transparent 100%);';
+          promo.innerHTML = `
+            <div style="max-width:1200px; margin:0 auto; padding:60px 2rem;">
+              <div style="display:flex; flex-wrap:wrap; align-items:center; gap:40px; justify-content:center;">
+                <div style="flex:1; min-width:280px; max-width:500px;">
+                  <span style="font-family:'Oxanium',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:#a78bfa; display:block; margin-bottom:8px;">🛒 GEAR UP</span>
+                  <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); font-weight:800; color:#f0f6fc; margin-bottom:12px;">ESBD Gaming Shop</h2>
+                  <p style="color:#8b949e; font-size:0.95rem; line-height:1.6; margin-bottom:20px;">Tournament-grade peripherals from ASUS ROG, Razer, Logitech, and HyperX. Gear trusted by pro players, now available for all ESBD competitors.</p>
+                  <a href="/shop.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#a78bfa,#7c3aed); color:#fff; padding:12px 28px; border-radius:12px; text-decoration:none; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.95rem; transition:all 0.25s; box-shadow:0 4px 16px rgba(167,139,250,0.25);">
+                    Browse Shop →
+                  </a>
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; flex:1; min-width:280px;" id="shop-preview-cards"></div>
+              </div>
+            </div>
+          `;
+
+          newsSection.parentElement.insertBefore(promo, newsSection.nextSibling);
+
+          // Fetch top 3 products
+          fetch('/api/products')
+            .then(r => r.json())
+            .then(products => {
+              const c = document.getElementById('shop-preview-cards');
+              if (!c) return;
+              c.innerHTML = products.slice(0, 3).map(p => `
+                <a href="/shop.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:16px; text-decoration:none; width:160px; text-align:center; transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(167,139,250,0.3)'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.transform='none'">
+                  <div style="font-size:0.65rem; color:#a78bfa; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">${p.brand}</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700; color:#f0f6fc; margin-bottom:6px; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${p.name}</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:800; color:#10b981;">৳ ${(p.priceBDT||0).toLocaleString('en-BD')}</div>
+                </a>
+              `).join('');
+            })
+            .catch(() => {});
+        }
+
+        // Run injections periodically to catch SPA navigation
+        function runInjections() {
+          injectNavLinks();
+          injectNewsroomSection();
+          injectShopPromo();
+        }
+        setInterval(runInjections, 2000);
+
+        // Also run on hash change
+        window.addEventListener('hashchange', function() {
+          // Remove injected sections when navigating away from home
+          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') {
+            const ns = document.getElementById('esbd-newsroom-preview');
+            const sp = document.getElementById('esbd-shop-promo');
+            if (ns) ns.remove();
+            if (sp) sp.remove();
+          }
+        });
       })();
     </script>
   </body>
