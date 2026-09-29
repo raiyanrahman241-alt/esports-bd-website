@@ -33,9 +33,9 @@
       border-bottom: 1px solid var(--border); padding: 0 2rem; height: 64px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .esbd-nav .logo-group { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .esbd-nav .logo-group img { height: 36px; width: auto; }
-    .esbd-nav .logo-group span { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--text-primary); letter-spacing: 0.5px; }
+    .esbd-nav .logo-group { display: flex; align-items: center; text-decoration: none; }
+    .esbd-nav .logo-group img { height: 38px; width: auto; max-width: 220px; object-fit: contain; filter: drop-shadow(0 2px 10px rgba(16, 185, 129, 0.45)); transition: transform 0.25s, filter 0.25s; }
+    .esbd-nav .logo-group:hover img { transform: scale(1.03); filter: drop-shadow(0 2px 16px rgba(16, 185, 129, 0.75)); }
     .esbd-nav .nav-links { display: flex; gap: 6px; align-items: center; }
     .esbd-nav .nav-links a {
       color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500;
@@ -236,9 +236,8 @@
 
   <!-- Navigation -->
   <nav class="esbd-nav">
-    <a href="/#/" class="logo-group">
-      <img src="/img/esbd-logo.png" alt="ESBD Logo" />
-      <span>ESBD</span>
+    <a href="/#/" class="logo-group" aria-label="E-SPORTS BANGLADESH Home">
+      <img src="/img/logo.png" alt="E-SPORTS BANGLADESH" />
     </a>
     <div class="nav-links">
       <a href="/#/">Home</a>
