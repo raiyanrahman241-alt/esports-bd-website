@@ -291,6 +291,311 @@
           padding-right: 1rem !important;
         }
       }
+    
+      /* =====================================================================
+         GLOBAL CYBERPUNK AESTHETICS & FIRST-SCREEN ANIMATIONS EVERYWHERE
+         ===================================================================== */
+      
+      /* Glowing Cyber Laser Section Dividers */
+      .esbd-laser-divider {
+        position: relative;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.45) 25%, rgba(239, 68, 68, 0.55) 50%, rgba(16, 185, 129, 0.45) 75%, transparent 100%);
+        margin: 0;
+        overflow: hidden;
+      }
+      .esbd-laser-divider::after {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -140px;
+        width: 140px;
+        height: 8px;
+        background: radial-gradient(circle, #fff 10%, #10b981 60%, transparent 100%);
+        border-radius: 50%;
+        filter: blur(1.5px);
+        animation: laserScan 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes laserScan {
+        0% { left: -140px; opacity: 0; }
+        15% { opacity: 1; }
+        85% { opacity: 1; }
+        100% { left: 105%; opacity: 0; }
+      }
+
+      /* Enhanced Glassmorphism & Cyber Card Elevation across all cards */
+      .glass,
+      .clip-corner,
+      div[class*="rounded-xl"],
+      div[class*="rounded-2xl"] {
+        position: relative;
+        transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      /* Subtle Ambient Neon Rim on Hover */
+      @media (min-width: 1024px) {
+        .glass:hover,
+        .clip-corner:hover,
+        div[class*="rounded-xl"]:hover,
+        div[class*="rounded-2xl"]:hover {
+          border-color: rgba(16, 185, 129, 0.42) !important;
+          box-shadow: 0 12px 35px -10px rgba(16, 185, 129, 0.22), 0 0 22px rgba(239, 68, 68, 0.12) !important;
+        }
+      }
+
+      /* Holographic Surface Shimmer Sweep */
+      .cyber-shimmer-sweep {
+        position: relative;
+        overflow: hidden;
+      }
+      .cyber-shimmer-sweep::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          115deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.04) 40%,
+          rgba(16, 185, 129, 0.22) 50%,
+          rgba(239, 68, 68, 0.12) 58%,
+          transparent 70%
+        );
+        transform: translateX(-160%) skewX(-20deg);
+        pointer-events: none;
+        transition: transform 0.8s ease;
+      }
+      .cyber-shimmer-sweep:hover::after {
+        transform: translateX(160%) skewX(-20deg);
+      }
+
+      /* Cyber Corner Bracket Notches */
+      .cyber-bracket {
+        position: relative;
+      }
+      .cyber-bracket::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid #10b981;
+        border-left: 2px solid #10b981;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .cyber-bracket::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid #ef4444;
+        border-right: 2px solid #ef4444;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Animated Pulsing Status Dots */
+      .cyber-dot-live {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #ef4444;
+        box-shadow: 0 0 10px #ef4444;
+        animation: cyberDotPulse 1.8s ease-in-out infinite;
+      }
+      .cyber-dot-active {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #10b981;
+        box-shadow: 0 0 10px #10b981;
+        animation: cyberDotPulse 2s ease-in-out infinite;
+      }
+      @keyframes cyberDotPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.35); opacity: 0.6; }
+      }
+
+      /* Cyber Badge Tags */
+      .cyber-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 10px;
+        border-radius: 100px;
+        font-family: 'Oxanium', monospace, sans-serif;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.28);
+        color: #10b981;
+      }
+      .cyber-badge-crimson {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.28);
+        color: #ef4444;
+      }
+      .cyber-badge-gold {
+        background: rgba(245, 158, 11, 0.1);
+        border-color: rgba(245, 158, 11, 0.28);
+        color: #f59e0b;
+      }
+
+      /* =====================================================================
+         DEDICATED SPONSOR & ADVERTISEMENT SLOTS (PREMIUM ARCHITECTURE)
+         ===================================================================== */
+      
+      /* 1. TOP LEADERBOARD SPONSOR BANNER (728x90 Responsive) */
+      .esbd-ad-leaderboard {
+        position: relative;
+        max-width: 1280px;
+        margin: 28px auto 12px;
+        padding: 0 1.25rem;
+        z-index: 20;
+      }
+      .esbd-ad-leaderboard-inner {
+        position: relative;
+        background: rgba(13, 17, 23, 0.88);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px dashed rgba(16, 185, 129, 0.38);
+        border-radius: 14px;
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      .esbd-ad-leaderboard-inner:hover {
+        border-color: rgba(16, 185, 129, 0.85);
+        border-style: solid;
+        box-shadow: 0 8px 32px rgba(16, 185, 129, 0.18), inset 0 0 20px rgba(16, 185, 129, 0.06);
+        transform: translateY(-2px);
+      }
+      .esbd-ad-leaderboard-inner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #10b981, #ef4444);
+      }
+
+      /* 2. MID-PAGE ESPORTS BILLBOARD AD (970x250 Responsive) */
+      .esbd-ad-billboard {
+        position: relative;
+        max-width: 1280px;
+        margin: 48px auto;
+        padding: 0 1.25rem;
+        z-index: 20;
+      }
+      .esbd-ad-billboard-inner {
+        position: relative;
+        background: linear-gradient(135deg, rgba(13, 17, 23, 0.95) 0%, rgba(20, 27, 38, 0.92) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 18px;
+        padding: 32px 36px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        transition: all 0.35s ease;
+      }
+      .esbd-ad-billboard-inner:hover {
+        border-color: rgba(16, 185, 129, 0.55);
+        box-shadow: 0 25px 60px -10px rgba(16, 185, 129, 0.22), 0 0 32px rgba(239, 68, 68, 0.15);
+      }
+      .esbd-ad-billboard-inner::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 320px;
+        background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.15) 0%, rgba(239, 68, 68, 0.08) 50%, transparent 70%);
+        pointer-events: none;
+      }
+
+      /* 3. DEDICATED OFFICIAL SPONSORS & BRAND ALLIANCES SECTION */
+      .esbd-sponsors-section {
+        position: relative;
+        padding: 70px 0 60px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: linear-gradient(180deg, rgba(7, 9, 12, 0.9) 0%, rgba(13, 17, 23, 0.75) 100%);
+      }
+      .esbd-sponsor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 32px;
+      }
+      .esbd-sponsor-card {
+        position: relative;
+        background: rgba(13, 17, 23, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+        overflow: hidden;
+      }
+      .esbd-sponsor-card:hover {
+        border-color: rgba(16, 185, 129, 0.45);
+        background: rgba(16, 185, 129, 0.04);
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px -10px rgba(16, 185, 129, 0.25);
+      }
+      .esbd-sponsor-card-reserved {
+        border: 1px dashed rgba(245, 158, 11, 0.45);
+        background: rgba(245, 158, 11, 0.03);
+      }
+      .esbd-sponsor-card-reserved:hover {
+        border-color: rgba(245, 158, 11, 0.95);
+        border-style: solid;
+        background: rgba(245, 158, 11, 0.09);
+        box-shadow: 0 14px 30px -10px rgba(245, 158, 11, 0.28);
+      }
+
+      /* Mobile adjustments for ads */
+      @media (max-width: 768px) {
+        .esbd-ad-leaderboard-inner {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+          padding: 12px 14px;
+        }
+        .esbd-ad-billboard-inner {
+          flex-direction: column;
+          text-align: center;
+          padding: 24px 18px;
+        }
+        .esbd-ad-billboard-actions {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
     </style>
   </head>
   <body>
@@ -635,6 +940,173 @@
         }
 
         // Run injections periodically to catch SPA navigation
+        
+        // =====================================================================
+        // 7. INJECT TOP LEADERBOARD SPONSOR BANNER (728x90 Responsive Slot)
+        // =====================================================================
+        function injectLeaderboardAd() {
+          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') return;
+          if (document.getElementById('esbd-ad-leaderboard-top')) return;
+
+          // Find the Hero section or first section in root
+          const firstSection = document.querySelector('#root section');
+          if (!firstSection) return;
+
+          const adDiv = document.createElement('div');
+          adDiv.id = 'esbd-ad-leaderboard-top';
+          adDiv.className = 'esbd-ad-leaderboard cyber-bracket';
+          adDiv.setAttribute('data-ad-slot', 'leaderboard-top');
+          adDiv.innerHTML = `
+            <div class="esbd-ad-leaderboard-inner cyber-shimmer-sweep">
+              <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+                <span class="cyber-badge"><span class="cyber-dot-active"></span> PARTNER SPOTLIGHT</span>
+                <div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.92rem; font-weight:700; color:#f0f6fc; display:flex; align-items:center; gap:8px;">
+                    OFFICIAL PARTNER // RESERVED PROMO SLOT
+                  </div>
+                  <div style="font-size:0.75rem; color:#8b949e; margin-top:2px;">
+                    Reach 85,000+ Verified Esports Athletes & 2M+ Live Stream Viewers Across Bangladesh
+                  </div>
+                </div>
+              </div>
+              <a href="/#/contact" style="display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.08)); border:1px solid rgba(16,185,129,0.45); color:#10b981; padding:8px 18px; border-radius:10px; text-decoration:none; font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700; white-space:nowrap; transition:all 0.25s;" onmouseover="this.style.background='rgba(16,185,129,0.35)'; this.style.borderColor='#10b981'" onmouseout="this.style.background='rgba(16,185,129,0.18)'; this.style.borderColor='rgba(16,185,129,0.45)'">
+                ⚡ PARTNER WITH US →
+              </a>
+            </div>
+          `;
+
+          // Insert after first section
+          firstSection.parentElement.insertBefore(adDiv, firstSection.nextSibling);
+        }
+
+        // =====================================================================
+        // 8. INJECT MID-PAGE ESPORTS BILLBOARD AD (970x250 Responsive Slot)
+        // =====================================================================
+        function injectMidBillboardAd() {
+          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') return;
+          if (document.getElementById('esbd-ad-mid-billboard')) return;
+
+          // Find the "The arena" tournaments section
+          const sections = document.querySelectorAll('#root section');
+          let tournamentSection = null;
+          sections.forEach(sec => {
+            if (sec.textContent.includes('Live and open tournaments') || sec.textContent.includes('The arena')) {
+              tournamentSection = sec;
+            }
+          });
+
+          if (!tournamentSection) return;
+
+          const billboard = document.createElement('div');
+          billboard.id = 'esbd-ad-mid-billboard';
+          billboard.className = 'esbd-ad-billboard cyber-bracket';
+          billboard.setAttribute('data-ad-slot', 'billboard-mid');
+          billboard.innerHTML = `
+            <div class="esbd-ad-billboard-inner cyber-shimmer-sweep">
+              <div style="max-width:580px; position:relative; z-index:2;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+                  <span class="cyber-badge-gold cyber-badge"><span class="cyber-dot-live"></span> TOURNAMENT PRESENTING SPONSOR</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:#6e7681;">SLOT #ESBD-AD-02</span>
+                </div>
+                <h3 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.25rem,2.4vw,1.85rem); font-weight:800; color:#f0f6fc; line-height:1.25; margin-bottom:8px;">
+                  Put Your Brand in Front of Bangladesh's #1 Gaming Generation
+                </h3>
+                <p style="color:#8b949e; font-size:0.88rem; line-height:1.55;">
+                  Title sponsorships, jersey branding, broadcast overlay takeovers, and custom LAN activation packages available for 2026 championships.
+                </p>
+              </div>
+              <div class="esbd-ad-billboard-actions" style="display:flex; gap:12px; align-items:center; position:relative; z-index:2; flex-wrap:wrap;">
+                <a href="/#/contact" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg, #10b981, #059669); color:#fff; padding:12px 24px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.88rem; text-decoration:none; box-shadow:0 4px 18px rgba(16,185,129,0.3); transition:all 0.25s;">
+                  Book Sponsor Slot →
+                </a>
+                <a href="/#/about" style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:12px 20px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:600; font-size:0.88rem; text-decoration:none; transition:all 0.25s;">
+                  View Media Kit
+                </a>
+              </div>
+            </div>
+          `;
+
+          tournamentSection.parentElement.insertBefore(billboard, tournamentSection.nextSibling);
+        }
+
+        // =====================================================================
+        // 9. INJECT DEDICATED OFFICIAL SPONSORS & BRAND ALLIANCES SECTION
+        // =====================================================================
+        function injectSponsorsSection() {
+          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') return;
+          if (document.getElementById('esbd-sponsors-showcase')) return;
+
+          // Find newsroom preview or footer
+          const anchor = document.getElementById('esbd-newsroom-preview') || document.querySelector('footer');
+          if (!anchor) return;
+
+          const section = document.createElement('section');
+          section.id = 'esbd-sponsors-showcase';
+          section.className = 'esbd-sponsors-section';
+          section.innerHTML = `
+            <div class="esbd-laser-divider" style="margin-bottom:60px;"></div>
+            <div style="max-width:1280px; margin:0 auto; padding:0 1.25rem;">
+              <div style="text-align:center; max-width:650px; margin:0 auto 36px;">
+                <span class="cyber-badge" style="margin-bottom:10px;"><span class="cyber-dot-active"></span> ECOSYSTEM PARTNERS</span>
+                <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.6rem,3.2vw,2.4rem); font-weight:800; color:#f0f6fc; margin-bottom:8px;">
+                  Official Partners & Sponsors
+                </h2>
+                <p style="color:#8b949e; font-size:0.92rem; line-height:1.5;">
+                  Powering national championships, pro-grade broadcasts, and athlete development across Bangladesh.
+                </p>
+              </div>
+
+              <!-- Tier 1: Headline Title Sponsors -->
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px; margin-bottom:24px;">
+                <div class="esbd-sponsor-card cyber-bracket cyber-shimmer-sweep" style="padding:28px 24px;">
+                  <span class="cyber-badge-gold cyber-badge" style="margin-bottom:12px;">OFFICIAL GAMING HARDWARE</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.35rem; font-weight:800; color:#f0f6fc; margin-bottom:6px;">ASUS ROG BANGLADESH</div>
+                  <p style="color:#8b949e; font-size:0.82rem; line-height:1.4; max-width:280px;">Official tournament esports monitors, gaming rigs, and high-refresh hardware partner.</p>
+                  <span style="margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#10b981; letter-spacing:1px;">● VERIFIED TITLE PARTNER</span>
+                </div>
+
+                <div class="esbd-sponsor-card cyber-bracket cyber-shimmer-sweep" style="padding:28px 24px;">
+                  <span class="cyber-badge-gold cyber-badge" style="margin-bottom:12px;">OFFICIAL FINTECH & PRIZE POOL</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.35rem; font-weight:800; color:#f0f6fc; margin-bottom:6px;">bKash LIMITED</div>
+                  <p style="color:#8b949e; font-size:0.82rem; line-height:1.4; max-width:280px;">Powering instant payouts, secure registration, and verified player prize disbursement.</p>
+                  <span style="margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#10b981; letter-spacing:1px;">● VERIFIED TITLE PARTNER</span>
+                </div>
+              </div>
+
+              <!-- Tier 2: Category Partners & Reserved Slots -->
+              <div class="esbd-sponsor-grid">
+                <div class="esbd-sponsor-card cyber-shimmer-sweep">
+                  <span style="font-size:0.65rem; color:#6e7681; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px;">PERIPHERAL PARTNER</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:700; color:#f0f6fc;">RAZER / LOGITECH G</div>
+                  <div style="font-size:0.75rem; color:#8b949e; margin-top:4px;">Pro Gear & Audio</div>
+                </div>
+
+                <div class="esbd-sponsor-card cyber-shimmer-sweep">
+                  <span style="font-size:0.65rem; color:#6e7681; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px;">NETWORK & 5G</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:700; color:#f0f6fc;">TELCO ALLIANCE</div>
+                  <div style="font-size:0.75rem; color:#8b949e; margin-top:4px;">Low-Latency LAN & 5G</div>
+                </div>
+
+                <div class="esbd-sponsor-card cyber-shimmer-sweep">
+                  <span style="font-size:0.65rem; color:#6e7681; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px;">BROADCAST & STREAMING</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:700; color:#f0f6fc;">YOUTUBE GAMING BD</div>
+                  <div style="font-size:0.75rem; color:#8b949e; margin-top:4px;">Official Livestream Feed</div>
+                </div>
+
+                <!-- Interactive Reserved Slot for Future Sponsors -->
+                <a href="/#/contact" class="esbd-sponsor-card esbd-sponsor-card-reserved cyber-bracket cyber-shimmer-sweep" data-ad-slot="partner-inquiry">
+                  <span class="cyber-badge-gold cyber-badge" style="margin-bottom:8px;">★ SPONSORSHIP OPEN</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:700; color:#f59e0b;">YOUR BRAND HERE</div>
+                  <div style="font-size:0.78rem; color:#8b949e; margin-top:4px;">Join ESBD Season 2026 →</div>
+                </a>
+              </div>
+            </div>
+            <div class="esbd-laser-divider" style="margin-top:60px;"></div>
+          `;
+
+          anchor.parentElement.insertBefore(section, anchor);
+        }
+
         function runInjections() {
           injectNavLinks();
           injectNewsroomSection();
