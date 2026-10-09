@@ -572,7 +572,7 @@
                   <div style="padding:18px;">
                     <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
                       <span style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.2); color:#10b981; font-size:0.68rem; font-weight:600; padding:2px 8px; border-radius:100px; text-transform:uppercase;">${a.gameTitle || a.gameId || 'Gaming'}</span>
-                      <span style="color:#6e7681; font-size:0.72rem; margin-left:auto;">${a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</span>
+                      <span style="color:#6e7681; font-size:0.72rem; margin-left:auto;">${(() => { try { if (!a.publishedAt) return ''; const d = new Date(a.publishedAt); return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); } catch { return ''; } })()}</span>
                     </div>
                     <h3 style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#f0f6fc; margin-bottom:6px; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${a.title}</h3>
                     <p style="color:#8b949e; font-size:0.8rem; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${a.excerpt || a.summary || ''}</p>

@@ -811,11 +811,21 @@ router.get('/me/tournaments', (req, res) => {
   const userTournaments = memoryStore.tournaments.filter(t => registeredIds.includes(t.id) || t.status === 'live');
   const list = userTournaments.length ? userTournaments : [memoryStore.tournaments[0]];
 
+  const toSafeIso = (val, fallbackOffset = 0) => {
+    try {
+      if (!val) return new Date(Date.now() + fallbackOffset).toISOString();
+      const d = new Date(val);
+      return isNaN(d.getTime()) ? new Date(Date.now() + fallbackOffset).toISOString() : d.toISOString();
+    } catch {
+      return new Date(Date.now() + fallbackOffset).toISOString();
+    }
+  };
+
   // Format each tournament with game object and startsAt expected by the frontend
   const formatted = list.map(t => ({
     ...t,
-    startsAt: t.startDate || t.startsAt || new Date().toISOString(),
-    endsAt: t.endDate || t.endsAt || new Date(Date.now() + 86400000).toISOString(),
+    startsAt: toSafeIso(t.startDate || t.startsAt),
+    endsAt: toSafeIso(t.endDate || t.endsAt, 86400000),
     game: typeof t.game === 'object' ? t.game : {
       id: t.gameId || 'free-fire',
       title: t.game || 'Free Fire',
