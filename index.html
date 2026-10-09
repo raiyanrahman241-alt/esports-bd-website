@@ -25,8 +25,35 @@
     <meta name="theme-color" content="#07090c" />
 
     <!-- Core App Styles & Bundles -->
+        <!-- React DOM Resilience Shield & Global Protection -->
+    <script>
+      (function() {
+        const origRemoveChild = Node.prototype.removeChild;
+        Node.prototype.removeChild = function(child) {
+          if (child && child.parentNode !== this) {
+            if (child.parentNode) {
+              return child.parentNode.removeChild(child);
+            }
+            return child;
+          }
+          return origRemoveChild.apply(this, arguments);
+        };
+        const origInsertBefore = Node.prototype.insertBefore;
+        Node.prototype.insertBefore = function(newNode, refNode) {
+          if (refNode && refNode.parentNode !== this) {
+            return this.appendChild(newNode);
+          }
+          return origInsertBefore.apply(this, arguments);
+        };
+        window.addEventListener('error', function(e) {
+          if (e && e.message && (e.message.includes('removeChild') || e.message.includes('Minified React error #321'))) {
+            e.preventDefault && e.preventDefault();
+          }
+        });
+      })();
+    </script>
     <link rel="stylesheet" crossorigin href="/assets/index-Bdt_ggT_.css">
-    <script type="module" crossorigin src="/assets/index-v4-esbd.js"></script>
+    <script type="module" crossorigin src="/assets/index-DxaXhSva.js"></script>
 
     <!-- 3D Cyber Atmosphere & Interactive Motion Styles -->
     <style>
@@ -1107,23 +1134,43 @@
           anchor.parentElement.insertBefore(section, anchor);
         }
 
+                function isHomePage() {
+          const hash = window.location.hash;
+          return !hash || hash === '#/' || hash === '#';
+        }
+
         function runInjections() {
-          injectNavLinks();
-          injectNewsroomSection();
-          injectShopPromo();
           apply3DLogoTilt();
           injectMobileDrawerLogo();
-        }
-        setInterval(runInjections, 1500);
 
-        // Also run on hash change
+          if (!isHomePage()) return;
+
+          injectLeaderboardAd();
+          injectMidBillboardAd();
+          injectNewsroomSection();
+          injectShopPromo();
+          injectSponsorsSection();
+        }
+        setInterval(runInjections, 1200);
+
+        // Clean up injected landing elements when navigating away from home
         window.addEventListener('hashchange', function() {
-          // Remove injected sections when navigating away from home
-          if (window.location.hash && window.location.hash !== '#/' && window.location.hash !== '#') {
-            const ns = document.getElementById('esbd-newsroom-preview');
-            const sp = document.getElementById('esbd-shop-promo');
-            if (ns) ns.remove();
-            if (sp) sp.remove();
+          if (!isHomePage()) {
+            const ids = [
+              'esbd-ad-leaderboard-top',
+              'esbd-ad-mid-billboard',
+              'esbd-newsroom-preview',
+              'esbd-shop-promo',
+              'esbd-sponsors-showcase'
+            ];
+            ids.forEach(function(id) {
+              const el = document.getElementById(id);
+              if (el && el.parentNode) {
+                el.parentNode.removeChild(el);
+              }
+            });
+          } else {
+            setTimeout(runInjections, 100);
           }
         });
       })();

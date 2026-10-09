@@ -10,6 +10,14 @@
       "destination": "/api/index.js"
     },
     {
+      "source": "/assets/index-v4-esbd.js",
+      "destination": "/assets/index-DxaXhSva.js"
+    },
+    {
+      "source": "/assets/index-v2.js",
+      "destination": "/assets/index-DxaXhSva.js"
+    },
+    {
       "source": "/assets/(.*)",
       "destination": "/assets/$1"
     },

@@ -9,7 +9,19 @@ const PORT = process.env.PORT || 3000;
 const apiApp = require('./api/index');
 app.use('/api', apiApp);
 
-// Serve static assets
+// Route aliases for index bundles to guarantee single module identity
+app.get(['/assets/index-v4-esbd.js', '/assets/index-v2.js'], (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+  res.sendFile(path.join(__dirname, 'assets', 'index-DxaXhSva.js'));
+});
+
+// Serve static assets with no-cache headers for assets
+app.use('/assets', express.static(path.join(__dirname, 'assets'), {
+  setHeaders: (res) => {
+    res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+  }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
 
