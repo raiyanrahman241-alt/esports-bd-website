@@ -202,7 +202,135 @@ const memoryStore = {
   disputes: [
     { id: "disp-1", matchId: "m-ff-02", raisedBy: "Delta_Ruler", reason: "Opponent used prohibited weapon attachment in round 2", status: "open", proofUrl: null, createdAt: new Date().toISOString() }
   ],
-  contactMessages: []
+  contactMessages: [],
+  streams: [
+    {
+      id: "stream-01",
+      tournamentId: "esbd-ff-pro-s4",
+      tournamentTitle: "ESBD Free Fire Pro League: Season 4",
+      gameTitle: "Free Fire",
+      type: "official",
+      title: "GRAND FINALS // Official Broadcast — ESBD Arena Dhaka",
+      caster: "Kabbo & Mr. Triple R",
+      status: "live",
+      viewerCount: 14820,
+      streamUrl: "https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=0",
+      chatEnabled: true,
+      quality: "1080p60 Full HD",
+      featured: true
+    },
+    {
+      id: "stream-02",
+      tournamentId: "esbd-ff-pro-s4",
+      tournamentTitle: "ESBD Free Fire Pro League: Season 4",
+      gameTitle: "Free Fire",
+      type: "pov",
+      participantIgn: "raiyan (RedX Esports IGL)",
+      title: "[PLAYER POV] RedX_raiyan — Semifinals Match 1 High Ground Rush",
+      caster: "Player Audio & Team Comms",
+      status: "live",
+      viewerCount: 3410,
+      streamUrl: "https://www.youtube-nocookie.com/embed/5qap5aO4i9A?autoplay=0",
+      chatEnabled: true,
+      quality: "1080p60",
+      featured: false
+    },
+    {
+      id: "stream-03",
+      tournamentId: "esbd-pubgm-s3",
+      tournamentTitle: "PUBG Mobile South Asia Prelims 2026",
+      gameTitle: "PUBG Mobile",
+      type: "official",
+      title: "PUBG Mobile South Asia Prelims — Erangel Drop Zone Day 2",
+      caster: "Apollo & Sinister Plays",
+      status: "live",
+      viewerCount: 9240,
+      streamUrl: "https://www.youtube-nocookie.com/embed/DWcJFNfaw9c?autoplay=0",
+      chatEnabled: true,
+      quality: "1080p60",
+      featured: true
+    },
+    {
+      id: "stream-04",
+      tournamentId: "esbd-val-cup-26",
+      tournamentTitle: "Valorant Champions Cup Bangladesh",
+      gameTitle: "Valorant",
+      type: "pov",
+      participantIgn: "Velocity_Aces (Duelist)",
+      title: "[PLAYER POV] Velocity_Aces — Jett Ascent Entry Frags",
+      caster: "Team Discord Voice Feed",
+      status: "live",
+      viewerCount: 1850,
+      streamUrl: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=0",
+      chatEnabled: true,
+      quality: "1080p60",
+      featured: false
+    }
+  ],
+  chatMessages: [
+    { id: "c-1", channel: "tournament-live", user: "ProCaster_BD", role: "caster", badge: "🎙️ CASTER", text: "Welcome everyone to ESBD Free Fire Pro League Semifinals!", timestamp: new Date(Date.now() - 300000).toISOString() },
+    { id: "c-2", channel: "tournament-live", user: "RedX_FanBoy", role: "fan", badge: "🔥 FAN", text: "REDX ALL THE WAY! Raiyan is on fire today!", timestamp: new Date(Date.now() - 240000).toISOString() },
+    { id: "c-3", channel: "tournament-live", user: "ESBD_Mod_Shuvo", role: "moderator", badge: "🛡️ MOD", text: "Keep the chat clean guys. Official room codes are delivered inside player match rooms.", timestamp: new Date(Date.now() - 180000).toISOString() },
+    { id: "c-4", channel: "tournament-live", user: "Legion_Captain", role: "pro", badge: "⚡ PRO", text: "Good luck RedX! Let's make this match count!", timestamp: new Date(Date.now() - 120000).toISOString() },
+    { id: "c-5", channel: "general", user: "DhakaGamer_07", role: "user", badge: "🎮 GAMER", text: "When does registration open for Valorant Champions Cup?", timestamp: new Date(Date.now() - 60000).toISOString() },
+    { id: "c-6", channel: "general", user: "ESBD_Admin", role: "admin", badge: "👑 ADMIN", text: "Registration is open now in the Tournaments tab! Prize pool ৳500,000.", timestamp: new Date(Date.now() - 30000).toISOString() }
+  ],
+  matchResults: [
+    {
+      id: "res-01",
+      tournamentId: "esbd-ff-pro-s4",
+      tournamentTitle: "ESBD Free Fire Pro League: Season 4",
+      matchId: "m-ff-01",
+      roundName: "Semifinals - Match 1",
+      winnerTeam: "RedX Esports",
+      loserTeam: "Team Legion BD",
+      scoreA: 14,
+      scoreB: 9,
+      mvp: "raiyan (RedX)",
+      mvpKills: 9,
+      status: "verified",
+      verifiedBy: "ESBD Head Referee (Ref_Tanvir)",
+      submittedAt: new Date(Date.now() - 3600000).toISOString(),
+      proofUrl: "/img/gallery/lan-01.jpg",
+      bracketPlacement: "Advanced to Grand Finals"
+    },
+    {
+      id: "res-02",
+      tournamentId: "esbd-ff-pro-s4",
+      tournamentTitle: "ESBD Free Fire Pro League: Season 4",
+      matchId: "m-ff-02",
+      roundName: "Semifinals - Match 2",
+      winnerTeam: "Velocity Gaming BD",
+      loserTeam: "Team Apex BD",
+      scoreA: 13,
+      scoreB: 11,
+      mvp: "Velocity_Aces",
+      mvpKills: 8,
+      status: "verified",
+      verifiedBy: "ESBD Head Referee (Ref_Tanvir)",
+      submittedAt: new Date(Date.now() - 1800000).toISOString(),
+      proofUrl: "/img/gallery/lan-02.jpg",
+      bracketPlacement: "Advanced to Grand Finals"
+    },
+    {
+      id: "res-03",
+      tournamentId: "esbd-pubgm-s3",
+      tournamentTitle: "PUBG Mobile South Asia Prelims 2026",
+      matchId: "m-pubgm-01",
+      roundName: "Erangel Match 4",
+      winnerTeam: "A1 eSports BD",
+      loserTeam: "Zeus Gaming BD",
+      scoreA: 28,
+      scoreB: 19,
+      mvp: "A1_Dante",
+      mvpKills: 7,
+      status: "verified",
+      verifiedBy: "ESBD Head Referee",
+      submittedAt: new Date(Date.now() - 900000).toISOString(),
+      proofUrl: "/img/gallery/lan-03.jpg",
+      bracketPlacement: "Group Stage Day 2 Leaders"
+    }
+  ]
 };
 
 // Helper: Extract current user from Bearer Token
@@ -1094,6 +1222,158 @@ router.get('/admin/settings', (req, res) => {
     antiCheatEngine: "Active (Server-Authoritative)"
   });
 });
+
+// -----------------------------------------------------------------------------
+// 6. LIVE TOURNAMENT STREAMS & BROADCAST HUB
+// -----------------------------------------------------------------------------
+router.get('/streams', (req, res) => {
+  return res.json(memoryStore.streams || []);
+});
+
+router.post('/streams/submit', (req, res) => {
+  const { tournamentId, tournamentTitle, participantIgn, title, streamUrl, gameTitle } = req.body;
+  if (!streamUrl || !participantIgn) {
+    return res.status(400).json({ error: "Stream URL and Participant IGN are required." });
+  }
+
+  // Sanitize stream URL to standard embed if standard YouTube link
+  let embedUrl = streamUrl;
+  if (streamUrl.includes('watch?v=')) {
+    const videoId = streamUrl.split('watch?v=')[1].split('&')[0];
+    embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0`;
+  } else if (streamUrl.includes('youtu.be/')) {
+    const videoId = streamUrl.split('youtu.be/')[1].split('?')[0];
+    embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=0`;
+  } else if (streamUrl.includes('twitch.tv/')) {
+    const channel = streamUrl.split('twitch.tv/')[1].split('/')[0];
+    embedUrl = `https://player.twitch.tv/?channel=${channel}&parent=${req.headers.host || 'localhost'}`;
+  }
+
+  const newStream = {
+    id: `stream-user-${Date.now()}`,
+    tournamentId: tournamentId || "esbd-ff-pro-s4",
+    tournamentTitle: tournamentTitle || "Live Tournament",
+    gameTitle: gameTitle || "Esports Championship",
+    type: "pov",
+    participantIgn,
+    title: title || `[POV] ${participantIgn} — Live Tournament Match`,
+    caster: "Player Stream Feed",
+    status: "live",
+    viewerCount: Math.floor(100 + Math.random() * 850),
+    streamUrl: embedUrl,
+    chatEnabled: true,
+    quality: "1080p60",
+    featured: false,
+    submittedAt: new Date().toISOString()
+  };
+
+  memoryStore.streams.push(newStream);
+  return res.json({ success: true, stream: newStream });
+});
+
+router.post('/admin/streams', (req, res) => {
+  const { tournamentId, title, caster, streamUrl, quality, featured } = req.body;
+  const stream = {
+    id: `stream-admin-${Date.now()}`,
+    tournamentId: tournamentId || "esbd-ff-pro-s4",
+    tournamentTitle: "Official Championship",
+    gameTitle: "Featured Event",
+    type: "official",
+    title: title || "ESBD Official Broadcast",
+    caster: caster || "Official Casters",
+    status: "live",
+    viewerCount: 15400,
+    streamUrl,
+    chatEnabled: true,
+    quality: quality || "1080p60 Full HD",
+    featured: featured !== false
+  };
+  memoryStore.streams.unshift(stream);
+  return res.json({ success: true, stream });
+});
+
+// -----------------------------------------------------------------------------
+// 7. LIVE TOURNAMENT CHATBOX
+// -----------------------------------------------------------------------------
+router.get('/chat/messages', (req, res) => {
+  const channel = req.query.channel || 'tournament-live';
+  const messages = (memoryStore.chatMessages || []).filter(m => !channel || channel === 'all' || m.channel === channel);
+  return res.json(messages.slice(-50));
+});
+
+router.post('/chat/send', (req, res) => {
+  const { channel, user, text, role, badge } = req.body;
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: "Message cannot be empty." });
+  }
+
+  const cleanText = text.trim().slice(0, 300);
+  const cleanUser = user ? user.trim().slice(0, 30) : "AnonymousGamer";
+  const newMsg = {
+    id: `c-${Date.now()}`,
+    channel: channel || "tournament-live",
+    user: cleanUser,
+    role: role || (cleanUser.toLowerCase().includes('admin') ? 'admin' : 'user'),
+    badge: badge || (cleanUser.toLowerCase().includes('admin') ? '👑 ADMIN' : '🎮 PRO'),
+    text: cleanText,
+    timestamp: new Date().toISOString()
+  };
+
+  memoryStore.chatMessages.push(newMsg);
+  // Keep last 150 messages
+  if (memoryStore.chatMessages.length > 150) {
+    memoryStore.chatMessages.shift();
+  }
+
+  return res.json({ success: true, message: newMsg });
+});
+
+// -----------------------------------------------------------------------------
+// 8. GAMING RESULTS & MATCH SCORE SUBMISSIONS
+// -----------------------------------------------------------------------------
+router.get('/matches/results', (req, res) => {
+  return res.json(memoryStore.matchResults || []);
+});
+
+router.post('/matches/submit-result', (req, res) => {
+  const { tournamentId, tournamentTitle, matchId, roundName, winnerTeam, loserTeam, scoreA, scoreB, mvp, mvpKills, proofUrl } = req.body;
+  if (!winnerTeam) {
+    return res.status(400).json({ error: "Winner team name is required." });
+  }
+
+  const newResult = {
+    id: `res-${Date.now()}`,
+    tournamentId: tournamentId || "esbd-ff-pro-s4",
+    tournamentTitle: tournamentTitle || "ESBD Championship",
+    matchId: matchId || `m-user-${Date.now()}`,
+    roundName: roundName || "Championship Match",
+    winnerTeam,
+    loserTeam: loserTeam || "Opponent Squad",
+    scoreA: Number(scoreA) || 1,
+    scoreB: Number(scoreB) || 0,
+    mvp: mvp || `${winnerTeam} IGL`,
+    mvpKills: Number(mvpKills) || 6,
+    status: "verified",
+    verifiedBy: "ESBD Automated Match Arbitrator",
+    submittedAt: new Date().toISOString(),
+    proofUrl: proofUrl || "/img/gallery/lan-01.jpg",
+    bracketPlacement: "Match Complete & Recorded"
+  };
+
+  memoryStore.matchResults.unshift(newResult);
+  return res.json({ success: true, result: newResult });
+});
+
+router.post('/admin/matches/verify-result', (req, res) => {
+  const { resultId, status, verifiedBy } = req.body;
+  const result = memoryStore.matchResults.find(r => r.id === resultId);
+  if (result) {
+    result.status = status || "verified";
+    result.verifiedBy = verifiedBy || "ESBD Tournament Director";
+  }
+  return res.json({ success: true, result });
+});
+
 
 // Mount both on /api and / so it works with ANY Vercel rewrite configuration
 app.use('/api', router);
