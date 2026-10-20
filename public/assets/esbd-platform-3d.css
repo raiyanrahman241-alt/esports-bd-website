@@ -1,0 +1,630 @@
+/* =============================================================================
+   ESBD PREMIER 3D GAMING PLATFORM & ATMOSPHERE ENGINE
+   Cosmic Dust, Stars, Animated 3D Graphic Bars & Holographic Gaming Objects
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   1. FULL-PAGE CONTINUOUS 3D BACKGROUND SYSTEM
+   ----------------------------------------------------------------------------- */
+#esbd-fullpage-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  opacity: 0.92;
+}
+
+.esbd-ambient-nebula {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-nebula-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: esbdNebulaFloat 18s ease-in-out infinite alternate;
+}
+
+.esbd-nebula-green {
+  width: 650px;
+  height: 650px;
+  top: 15%;
+  left: -150px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.45) 0%, rgba(16, 185, 129, 0) 70%);
+}
+
+.esbd-nebula-red {
+  width: 600px;
+  height: 600px;
+  bottom: 20%;
+  right: -120px;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.35) 0%, rgba(239, 68, 68, 0) 70%);
+  animation-delay: -9s;
+}
+
+.esbd-nebula-cyan {
+  width: 500px;
+  height: 500px;
+  top: 60%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(56, 189, 248, 0) 70%);
+  animation-delay: -4s;
+}
+
+@keyframes esbdNebulaFloat {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.28; }
+  50% { transform: translate(40px, -30px) scale(1.15); opacity: 0.45; }
+  100% { transform: translate(-30px, 35px) scale(0.95); opacity: 0.32; }
+}
+
+/* -----------------------------------------------------------------------------
+   2. SECTION GAMING PLATFORM STYLING & 3D ELEVATION
+   ----------------------------------------------------------------------------- */
+/* Wrap sections with platform look and feel */
+section,
+.esbd-platform-section,
+.shop-section,
+.news-section {
+  position: relative !important;
+  z-index: 10;
+  margin-top: 18px;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+/* Base styling for section container as a gaming platform */
+.esbd-platform-frame {
+  position: relative !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, rgba(13, 17, 23, 0.72) 0%, rgba(7, 9, 12, 0.82) 100%) !important;
+  backdrop-filter: blur(14px) saturate(1.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 
+    0 15px 45px -10px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(16, 185, 129, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(16, 185, 129, 0.15) !important;
+  transition: all 0.35s cubic-bezier(0.2, 0, 0.2, 1) !important;
+  overflow: visible !important;
+}
+
+/* Ensure solid Tailwind backgrounds on sections become sleek translucent cyber platforms */
+section.bg-\[hsl\(218_22\%_5\.5\%\)\],
+section.bg-\[hsl\(218_22\%_5\%\)\],
+[class*="bg-[hsl(218_22%_5"] {
+  background-color: rgba(10, 14, 20, 0.75) !important;
+  backdrop-filter: blur(14px) saturate(1.2) !important;
+}
+
+.esbd-platform-frame:hover {
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 
+    0 24px 60px -12px rgba(0, 0, 0, 0.9),
+    0 0 30px -5px rgba(16, 185, 129, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(239, 68, 68, 0.25);
+  transform: translateY(-2px);
+}
+
+/* High-tech side rail hazard accents */
+.esbd-platform-rail-left,
+.esbd-platform-rail-right {
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  width: 3px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.6;
+}
+
+.esbd-platform-rail-left {
+  left: 0;
+  background: linear-gradient(180deg, transparent 0%, #10b981 30%, transparent 60%, #ef4444 80%, transparent 100%);
+  box-shadow: 0 0 8px #10b981;
+}
+
+.esbd-platform-rail-right {
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, #ef4444 30%, transparent 60%, #10b981 80%, transparent 100%);
+  box-shadow: 0 0 8px #ef4444;
+}
+
+/* -----------------------------------------------------------------------------
+   3. ANIMATED 3D GRAPHIC BARS (TOP & BOTTOM)
+   ----------------------------------------------------------------------------- */
+.esbd-graphic-bar-top,
+.esbd-graphic-bar-bottom {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 18px;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 17, 23, 0.92) 20%, rgba(13, 17, 23, 0.92) 80%, rgba(239, 68, 68, 0.08) 100%);
+  border-left: 2px solid #10b981;
+  border-right: 2px solid #ef4444;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 20;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8b949e;
+  overflow: hidden;
+}
+
+.esbd-graphic-bar-top {
+  border-top: 1px solid rgba(16, 185, 129, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 4px;
+}
+
+.esbd-graphic-bar-bottom {
+  border-bottom: 1px solid rgba(239, 68, 68, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0 0 12px 12px;
+  margin-top: 4px;
+}
+
+/* Traveling Neon Laser Beam */
+.esbd-laser-runner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 28%;
+  background: linear-gradient(90deg, transparent 0%, #10b981 50%, #38bdf8 80%, #ffffff 100%);
+  filter: drop-shadow(0 0 6px #10b981) drop-shadow(0 0 12px #38bdf8);
+  animation: esbdLaserRun 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.esbd-graphic-bar-bottom .esbd-laser-runner {
+  top: auto;
+  bottom: 0;
+  background: linear-gradient(90deg, #ffffff 0%, #ef4444 30%, #f59e0b 70%, transparent 100%);
+  filter: drop-shadow(0 0 6px #ef4444) drop-shadow(0 0 12px #f59e0b);
+  animation: esbdLaserRunReverse 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes esbdLaserRun {
+  0% { left: -30%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 105%; opacity: 0; }
+}
+
+@keyframes esbdLaserRunReverse {
+  0% { left: 105%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: -30%; opacity: 0; }
+}
+
+/* Micro-HUD Telemetry Elements inside Graphic Bar */
+.esbd-bar-telemetry-left,
+.esbd-bar-telemetry-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.esbd-bar-telemetry-left {
+  color: #10b981;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+.esbd-bar-telemetry-right {
+  color: #ef4444;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.esbd-bar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: esbdDotPulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes esbdDotPulse {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Center Animated Equalizer / Cyber Audio Frequency Bars */
+.esbd-eq-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+}
+
+.esbd-eq-bar {
+  width: 2.5px;
+  height: 100%;
+  background: linear-gradient(180deg, #38bdf8 0%, #10b981 100%);
+  border-radius: 1px;
+  transform-origin: bottom;
+  animation: esbdEqBounce 1.2s ease-in-out infinite alternate;
+}
+
+.esbd-eq-bar:nth-child(1) { height: 40%; animation-delay: -0.2s; }
+.esbd-eq-bar:nth-child(2) { height: 75%; animation-delay: -0.5s; }
+.esbd-eq-bar:nth-child(3) { height: 100%; animation-delay: -0.1s; }
+.esbd-eq-bar:nth-child(4) { height: 60%; animation-delay: -0.7s; }
+.esbd-eq-bar:nth-child(5) { height: 85%; animation-delay: -0.3s; }
+.esbd-eq-bar:nth-child(6) { height: 50%; animation-delay: -0.6s; }
+
+@keyframes esbdEqBounce {
+  0% { transform: scaleY(0.25); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(0.4); opacity: 0.7; }
+}
+
+/* -----------------------------------------------------------------------------
+   4. HIGH-TECH 3D CORNER BRACKETS
+   ----------------------------------------------------------------------------- */
+.esbd-bracket-3d {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 25;
+}
+
+.esbd-bracket-tl {
+  top: -2px;
+  left: -2px;
+  border-top: 2px solid #10b981;
+  border-left: 2px solid #10b981;
+  box-shadow: -2px -2px 8px rgba(16, 185, 129, 0.4);
+}
+
+.esbd-bracket-tr {
+  top: -2px;
+  right: -2px;
+  border-top: 2px solid #ef4444;
+  border-right: 2px solid #ef4444;
+  box-shadow: 2px -2px 8px rgba(239, 68, 68, 0.4);
+}
+
+.esbd-bracket-bl {
+  bottom: -2px;
+  left: -2px;
+  border-bottom: 2px solid #10b981;
+  border-left: 2px solid #10b981;
+  box-shadow: -2px 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+.esbd-bracket-br {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 2px solid #ef4444;
+  border-right: 2px solid #ef4444;
+  box-shadow: 2px 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* -----------------------------------------------------------------------------
+   5. REAL 3D GAMING OBJECTS (CONTROLLER, TROPHY, CORE, RADAR)
+   ----------------------------------------------------------------------------- */
+.esbd-3d-object-wrap {
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Floating 3D Cyber Controller */
+.esbd-3d-controller {
+  width: 140px;
+  height: 95px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: esbdControllerFloat 8s ease-in-out infinite;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(16, 185, 129, 0.4));
+}
+
+.esbd-controller-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px 28px 36px 36px;
+  background: linear-gradient(145deg, #18222d, #0d1217);
+  border: 1.5px solid rgba(16, 185, 129, 0.55);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.2), 0 0 15px rgba(16, 185, 129, 0.25);
+  transform: translateZ(10px);
+}
+
+/* D-pad */
+.esbd-controller-dpad {
+  position: absolute;
+  top: 34px;
+  left: 22px;
+  width: 24px;
+  height: 24px;
+  transform: translateZ(14px);
+}
+.esbd-controller-dpad::before,
+.esbd-controller-dpad::after {
+  content: '';
+  position: absolute;
+  background: #2a3441;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+.esbd-controller-dpad::before { top: 0; left: 8px; width: 8px; height: 24px; }
+.esbd-controller-dpad::after { top: 8px; left: 0; width: 24px; height: 8px; }
+
+/* Action buttons */
+.esbd-controller-btns {
+  position: absolute;
+  top: 32px;
+  right: 22px;
+  width: 26px;
+  height: 26px;
+  transform: translateZ(14px);
+}
+.esbd-controller-btn {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+.btn-y { top: 0; left: 9.5px; background: #f59e0b; color: #f59e0b; }
+.btn-b { top: 9.5px; right: 0; background: #ef4444; color: #ef4444; }
+.btn-a { bottom: 0; left: 9.5px; background: #10b981; color: #10b981; }
+.btn-x { top: 9.5px; left: 0; background: #38bdf8; color: #38bdf8; }
+
+/* Thumbsticks */
+.esbd-controller-stick-left,
+.esbd-controller-stick-right {
+  position: absolute;
+  bottom: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #334155 0%, #0f172a 100%);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.35);
+  transform: translateZ(18px);
+}
+.esbd-controller-stick-left { left: 42px; }
+.esbd-controller-stick-right { right: 42px; }
+
+/* Center glowing gem */
+.esbd-controller-gem {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(16px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 12px #10b981, 0 0 22px rgba(16, 185, 129, 0.8);
+  animation: esbdGemPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes esbdGemPulse {
+  0% { transform: translateX(-50%) translateZ(16px) scale(0.9); opacity: 0.7; }
+  100% { transform: translateX(-50%) translateZ(16px) scale(1.15); opacity: 1; }
+}
+
+@keyframes esbdControllerFloat {
+  0%, 100% { transform: perspective(800px) rotateY(-18deg) rotateX(12deg) translateY(0px) rotateZ(-4deg); }
+  50% { transform: perspective(800px) rotateY(15deg) rotateX(-8deg) translateY(-14px) rotateZ(6deg); }
+}
+
+/* Floating 3D Championship Trophy */
+.esbd-3d-trophy {
+  width: 90px;
+  height: 120px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: esbdTrophyRotate 10s ease-in-out infinite;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.45));
+}
+
+.esbd-trophy-cup {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(10px);
+  width: 55px;
+  height: 50px;
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 60%, #78350f 100%);
+  border-radius: 0 0 26px 26px;
+  border: 1.5px solid #fbbf24;
+  box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(245, 158, 11, 0.5);
+}
+
+.esbd-trophy-handle-left,
+.esbd-trophy-handle-right {
+  position: absolute;
+  top: 15px;
+  width: 18px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #fbbf24;
+}
+.esbd-trophy-handle-left { left: 4px; border-right: none; }
+.esbd-trophy-handle-right { right: 4px; border-left: none; }
+
+.esbd-trophy-stem {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(5px);
+  width: 14px;
+  height: 22px;
+  background: #d97706;
+  border: 1px solid #fbbf24;
+}
+
+.esbd-trophy-base {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 18px;
+  background: #1e293b;
+  border: 1.5px solid #f59e0b;
+  border-radius: 4px;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.3);
+}
+
+.esbd-trophy-ring {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  border: 1px dashed rgba(16, 185, 129, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(75deg);
+  animation: esbdRingSpin 6s linear infinite;
+}
+
+@keyframes esbdTrophyRotate {
+  0%, 100% { transform: perspective(800px) rotateY(-15deg) translateY(0px); }
+  50% { transform: perspective(800px) rotateY(15deg) translateY(-12px); }
+}
+
+@keyframes esbdRingSpin {
+  0% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
+  100% { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+}
+
+/* Floating 3D Cyber Polyhedra / Energy Core */
+.esbd-3d-polyhedron {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: esbdPolySpin 12s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.45));
+}
+
+.esbd-poly-face {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(56, 189, 248, 0.7);
+  background: rgba(56, 189, 248, 0.08);
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
+}
+.esbd-poly-f1 { transform: rotateY(0deg) translateZ(36px); }
+.esbd-poly-f2 { transform: rotateY(90deg) translateZ(36px); border-color: rgba(16, 185, 129, 0.7); }
+.esbd-poly-f3 { transform: rotateY(180deg) translateZ(36px); }
+.esbd-poly-f4 { transform: rotateY(-90deg) translateZ(36px); border-color: rgba(239, 68, 68, 0.7); }
+.esbd-poly-f5 { transform: rotateX(90deg) translateZ(36px); border-color: rgba(245, 158, 11, 0.7); }
+.esbd-poly-f6 { transform: rotateX(-90deg) translateZ(36px); }
+
+.esbd-poly-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 20px #38bdf8, 0 0 40px #10b981;
+  animation: esbdGemPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes esbdPolySpin {
+  0% { transform: perspective(600px) rotateX(15deg) rotateY(0deg); }
+  100% { transform: perspective(600px) rotateX(15deg) rotateY(360deg); }
+}
+
+/* Floating 3D Tactical Holo-Reticle */
+.esbd-3d-reticle {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border: 1.5px solid rgba(16, 185, 129, 0.4);
+  border-radius: 50%;
+  animation: esbdReticleSpin 20s linear infinite;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.esbd-reticle-inner {
+  position: absolute;
+  inset: 16px;
+  border: 1px dashed rgba(239, 68, 68, 0.5);
+  border-radius: 50%;
+  animation: esbdReticleSpinReverse 14s linear infinite;
+}
+
+.esbd-reticle-cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+}
+.esbd-reticle-cross::before,
+.esbd-reticle-cross::after {
+  content: '';
+  position: absolute;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+.esbd-reticle-cross::before { top: 0; left: 6px; width: 2px; height: 14px; }
+.esbd-reticle-cross::after { top: 6px; left: 0; width: 14px; height: 2px; }
+
+@keyframes esbdReticleSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes esbdReticleSpinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .esbd-graphic-bar-top,
+  .esbd-graphic-bar-bottom {
+    padding: 4px 10px;
+    font-size: 0.6rem;
+  }
+  .esbd-eq-visualizer {
+    display: none;
+  }
+  .esbd-3d-controller {
+    transform: scale(0.75);
+  }
+  .esbd-3d-trophy {
+    transform: scale(0.75);
+  }
+  .esbd-3d-polyhedron {
+    transform: scale(0.75);
+  }
+}
