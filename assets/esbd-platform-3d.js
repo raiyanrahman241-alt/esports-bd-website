@@ -1,32 +1,72 @@
 /**
- * E-SPORTS BANGLADESH (ESBD) — PREMIER 3D GAMING PLATFORM & ATMOSPHERE ENGINE
- * Full-Page Persistent 3D Arena Core, 3D Animated Bar System, 3D Scroll Perspective & Tilt
+ * E-SPORTS BANGLADESH (ESBD) — MASTER 3D GAMING PLATFORM & ATMOSPHERE ENGINE
+ * 
+ * Features:
+ * 1. Signature 3D Globe with 3D Holographic ESBD Logo inside (counter-rotating, glowing reticles).
+ * 2. Leaderboards-grade 5-layer volumetric cosmic atmosphere and floating cyber dust.
+ * 3. Ultra-glow 3D animated bar with dual opposing laser runners, equalizers, and breathing neon aura.
+ * 4. Section 3D Scroll Entrance & Viewport Center-of-Attention Focus Engine:
+ *    - 3D perspective reveal on scroll
+ *    - Center-of-attention focus detection with holographic cyber corner HUD brackets
+ *    - Ambient stadium spotlight and idle 3D micro-floating on cards
+ *    - 3D extrusion shadows on key stat numbers
+ * 5. Kinetic 3D Globe scroll coordination and sleek laser dividers between major sections.
  */
 
 (function () {
   'use strict';
 
-  if (window.__ESBD_PLATFORM_3D_INITIALIZED__) return;
-  window.__ESBD_PLATFORM_3D_INITIALIZED__ = true;
+  if (window.__ESBD_PLATFORM_MASTER_INITIALIZED__) return;
+  window.__ESBD_PLATFORM_MASTER_INITIALIZED__ = true;
 
   // ===========================================================================
-  // 1. INJECT VOLUMETRIC AMBIENT NEBULA GLOWS
+  // 1. INJECT VOLUMETRIC AMBIENT NEBULA GLOWS & FULL-PAGE COSMIC DEPTH
   // ===========================================================================
-  function setupAmbientNebula() {
-    if (document.getElementById('esbd-ambient-nebula')) return;
-    const nebula = document.createElement('div');
-    nebula.id = 'esbd-ambient-nebula';
-    nebula.className = 'esbd-ambient-nebula';
-    nebula.innerHTML = `
-      <div class="esbd-nebula-glow esbd-nebula-green"></div>
-      <div class="esbd-nebula-glow esbd-nebula-red"></div>
-      <div class="esbd-nebula-glow esbd-nebula-cyan"></div>
-    `;
-    document.body.prepend(nebula);
+  function setupAmbientAtmosphere() {
+    // 1.1 Five-Layer Volumetric Nebula System
+    if (!document.getElementById('esbd-ambient-nebula')) {
+      const nebula = document.createElement('div');
+      nebula.id = 'esbd-ambient-nebula';
+      nebula.className = 'esbd-ambient-nebula';
+      nebula.innerHTML = `
+        <div class="esbd-nebula-glow esbd-nebula-emerald-primary"></div>
+        <div class="esbd-nebula-glow esbd-nebula-crimson-core"></div>
+        <div class="esbd-nebula-glow esbd-nebula-cyan-accent"></div>
+        <div class="esbd-nebula-glow esbd-nebula-gold-subtle"></div>
+        <div class="esbd-nebula-glow esbd-nebula-deep-space"></div>
+      `;
+      document.body.prepend(nebula);
+    }
+
+    // 1.2 Ambient Floating Cyber Dust Particles
+    if (!document.getElementById('esbd-floating-particles')) {
+      const pContainer = document.createElement('div');
+      pContainer.id = 'esbd-floating-particles';
+      pContainer.className = 'esbd-floating-particles';
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        pContainer.appendChild(p);
+      }
+      document.body.prepend(pContainer);
+    }
+
+    // 1.3 Hero Volumetric Light Beams
+    if (!document.getElementById('esbd-hero-light-beams')) {
+      const beams = document.createElement('div');
+      beams.id = 'esbd-hero-light-beams';
+      beams.className = 'esbd-hero-light-beams';
+      beams.innerHTML = `
+        <div class="beam beam-emerald"></div>
+        <div class="beam beam-crimson"></div>
+        <div class="beam beam-cyan"></div>
+      `;
+      document.body.prepend(beams);
+    }
   }
 
   // ===========================================================================
-  // 2. FULL-PAGE PERSISTENT 3D THREE.JS ARENA CORE & COSMIC ENVIRONMENT
+  // 2. FULL-PAGE PERSISTENT 3D THREE.JS ARENA CORE WITH 3D LOGO INSIDE
   // ===========================================================================
   let threeRenderer = null;
   let arenaGroup = null;
@@ -36,21 +76,31 @@
   let orbitalRings = [];
   let orbitalNodes = [];
   let starPoints = null;
+  let starMat = null;
   let cyberGridGroup = null;
   let threeCamera = null;
   let threeScene = null;
+
+  // 3D Logo Components inside Globe
+  let logo3DGroup = null;
+  let logoPlaneFront = null;
+  let logoPlaneBack = null;
+  let logoGlowMesh = null;
+  let logoHaloMesh = null;
+  let logoRingRed = null;
+  let logoRingGreen = null;
+  let logoCircuitLine = null;
 
   // Inertia and motion state
   let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
   let scrollY = window.scrollY || 0;
   let targetScrollY = scrollY;
   let scrollVelocity = 0;
-  let lastScrollY = scrollY;
 
   function initThreeArenaCore() {
     if (!window.THREE) {
-      console.warn('[ESBD 3D] Three.js not loaded, loading fallback...');
-      setupFallbackCanvas();
+      console.warn('[ESBD 3D] Three.js not yet loaded, retrying...');
+      setTimeout(initThreeArenaCore, 250);
       return;
     }
 
@@ -68,7 +118,7 @@
     const colorCyan = new THREE.Color('#38bdf8');
     const colorGold = new THREE.Color('#f59e0b');
 
-    // 1. Scene & Camera
+    // 1. Scene & Perspective Camera
     threeScene = new THREE.Scene();
     threeCamera = new THREE.PerspectiveCamera(
       42,
@@ -78,7 +128,7 @@
     );
     threeCamera.position.set(0, 0, 9.2);
 
-    // 2. WebGL Renderer
+    // 2. WebGL Renderer with Native Alpha
     try {
       threeRenderer = new THREE.WebGLRenderer({
         canvas: canvas,
@@ -91,7 +141,6 @@
       threeRenderer.setSize(window.innerWidth, window.innerHeight);
     } catch (e) {
       console.warn('[ESBD 3D] WebGL init failed:', e);
-      setupFallbackCanvas();
       return;
     }
 
@@ -99,10 +148,10 @@
     arenaGroup = new THREE.Group();
     threeScene.add(arenaGroup);
 
-    // Initial position aligned to top hero (right-hand side)
+    // Initial position aligned to top hero (right-hand composition)
     arenaGroup.position.set(2.4, 0.25, 0);
 
-    // --- Outer Emerald Green Wireframe Sphere (Icosahedron) ---
+    // --- Outer Emerald Green Wireframe Sphere (Icosahedron radius 2.7) ---
     const outerGeo = new THREE.IcosahedronGeometry(2.7, 2);
     const outerMat = new THREE.MeshBasicMaterial({
       color: colorGreen,
@@ -120,39 +169,231 @@
       new THREE.LineBasicMaterial({
         color: colorGreen,
         transparent: true,
-        opacity: 0.65,
+        opacity: 0.70,
       })
     );
     arenaGroup.add(outerSphereLines);
 
-    // --- Inner Crimson Red Energy Core ---
-    const innerGeo = new THREE.IcosahedronGeometry(1.15, 1);
+    // --- Inner Crimson Red Energy Lattice (Radius 1.65 - cages the 3D logo) ---
+    const innerGeo = new THREE.IcosahedronGeometry(1.65, 1);
     const innerMat = new THREE.MeshBasicMaterial({
       color: colorRed,
       wireframe: false,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.05,
     });
     innerCoreMesh = new THREE.Mesh(innerGeo, innerMat);
     arenaGroup.add(innerCoreMesh);
 
-    const innerWireGeo = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.15, 1));
+    const innerWireGeo = new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.65, 1));
     innerCoreLines = new THREE.LineSegments(
       innerWireGeo,
       new THREE.LineBasicMaterial({
         color: colorRed,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.35,
       })
     );
     arenaGroup.add(innerCoreLines);
 
+    // =========================================================================
+    // 3D HOLOGRAPHIC COMPANY LOGO INSIDE THE GLOBE CORE
+    // =========================================================================
+    logo3DGroup = new THREE.Group();
+    arenaGroup.add(logo3DGroup);
+
+    // Dynamic offscreen canvas processor to generate 100% transparent texture
+    const logoImg = new Image();
+    logoImg.crossOrigin = 'anonymous';
+    logoImg.src = '/img/3d-logo/esbd-3d-logo-front.png';
+    logoImg.onload = function () {
+      try {
+        const offscreen = document.createElement('canvas');
+        offscreen.width = logoImg.width;
+        offscreen.height = logoImg.height;
+        const ctx = offscreen.getContext('2d');
+        ctx.drawImage(logoImg, 0, 0);
+
+        const imgData = ctx.getImageData(0, 0, offscreen.width, offscreen.height);
+        const data = imgData.data;
+        const h = offscreen.height;
+
+        for (let i = 0; i < data.length; i += 4) {
+          let r = data[i];
+          let g = data[i + 1];
+          let b = data[i + 2];
+          const row = Math.floor((i / 4) / offscreen.width);
+
+          // Fade out table floor reflection below 72% height
+          let reflectionFade = 1.0;
+          if (row > h * 0.72) {
+            reflectionFade = Math.max(0, 1.0 - (row - h * 0.72) / (h * 0.08));
+          }
+
+          const maxRGB = Math.max(r, g, b);
+          if (maxRGB < 15 || reflectionFade <= 0) {
+            data[i + 3] = 0; // Black background completely transparent
+          } else {
+            // Boost vibrancy of the metallic and neon elements
+            data[i] = Math.min(255, Math.round(r * 1.35));
+            data[i + 1] = Math.min(255, Math.round(g * 1.35));
+            data[i + 2] = Math.min(255, Math.round(b * 1.35));
+
+            let alpha = 255;
+            if (maxRGB < 45) {
+              alpha = Math.round(((maxRGB - 15) / 30) * 255);
+            }
+            data[i + 3] = Math.round(alpha * reflectionFade);
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+
+        const logoTexture = new THREE.CanvasTexture(offscreen);
+        logoTexture.minFilter = THREE.LinearFilter;
+        logoTexture.magFilter = THREE.LinearFilter;
+        logoTexture.generateMipmaps = false;
+
+        // Front 3D Logo Plane (Width: 2.8, Height: 1.4)
+        const logoPlaneGeo = new THREE.PlaneGeometry(2.8, 1.4);
+        const logoPlaneMat = new THREE.MeshBasicMaterial({
+          map: logoTexture,
+          transparent: true,
+          opacity: 1.0,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: false,
+        });
+
+        logoPlaneFront = new THREE.Mesh(logoPlaneGeo, logoPlaneMat);
+        logoPlaneFront.position.set(0, 0, 0.05);
+        logoPlaneFront.renderOrder = 999;
+        logo3DGroup.add(logoPlaneFront);
+
+        // Additive Glow Mesh for neon radiance
+        const logoGlowMat = new THREE.MeshBasicMaterial({
+          map: logoTexture,
+          transparent: true,
+          opacity: 0.85,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: false,
+          blending: THREE.AdditiveBlending,
+        });
+        logoGlowMesh = new THREE.Mesh(logoPlaneGeo, logoGlowMat);
+        logoGlowMesh.position.set(0, 0, 0.06);
+        logoGlowMesh.renderOrder = 1000;
+        logo3DGroup.add(logoGlowMesh);
+
+        // Subtle Back Plane for dimensional thickness & emerald backlight
+        const logoBackMat = new THREE.MeshBasicMaterial({
+          map: logoTexture,
+          transparent: true,
+          opacity: 0.70,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: false,
+          color: colorGreen,
+          blending: THREE.AdditiveBlending,
+        });
+        logoPlaneBack = new THREE.Mesh(logoPlaneGeo, logoBackMat);
+        logoPlaneBack.position.set(0, 0, -0.05);
+        logoPlaneBack.renderOrder = 998;
+        logo3DGroup.add(logoPlaneBack);
+
+        // Holographic Backing Aura Ring
+        const haloGeo = new THREE.RingGeometry(0.95, 1.45, 64);
+        const haloMat = new THREE.MeshBasicMaterial({
+          color: colorGreen,
+          transparent: true,
+          opacity: 0.32,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: false,
+          blending: THREE.AdditiveBlending,
+        });
+        logoHaloMesh = new THREE.Mesh(haloGeo, haloMat);
+        logoHaloMesh.position.set(0, 0, -0.08);
+        logoHaloMesh.renderOrder = 997;
+        logo3DGroup.add(logoHaloMesh);
+      } catch (err) {
+        console.warn('[ESBD 3D] Logo processing fallback:', err);
+      }
+    };
+
+    // 3D Segmented Crimson Reticle Ring around the "e" Mark (Offset x ~ -0.74)
+    const ringRedGeo = new THREE.TorusGeometry(0.62, 0.024, 8, 48);
+    const ringRedMat = new THREE.MeshBasicMaterial({
+      color: colorRed,
+      transparent: true,
+      opacity: 0.92,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    logoRingRed = new THREE.Mesh(ringRedGeo, ringRedMat);
+    logoRingRed.position.set(-0.74, 0.02, 0.08);
+    logoRingRed.renderOrder = 1001;
+    logo3DGroup.add(logoRingRed);
+
+    // Inner Concentric Emerald Ring around "e"
+    const ringGreenGeo = new THREE.TorusGeometry(0.48, 0.016, 8, 36);
+    const ringGreenMat = new THREE.MeshBasicMaterial({
+      color: colorGreen,
+      transparent: true,
+      opacity: 0.85,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    logoRingGreen = new THREE.Mesh(ringGreenGeo, ringGreenMat);
+    logoRingGreen.position.set(-0.74, 0.02, 0.09);
+    logoRingGreen.renderOrder = 1002;
+    logo3DGroup.add(logoRingGreen);
+
+    // 3D Glowing Cyber Circuit Trace Line with Terminal Spheres underneath Logo
+    const circuitPoints = [
+      new THREE.Vector3(-1.35, -0.50, 0.06),
+      new THREE.Vector3(-0.65, -0.50, 0.06),
+      new THREE.Vector3(-0.42, -0.26, 0.06),
+      new THREE.Vector3(0.65, -0.26, 0.06),
+    ];
+    const circuitGeo = new THREE.BufferGeometry().setFromPoints(circuitPoints);
+    const circuitMat = new THREE.LineBasicMaterial({
+      color: colorGreen,
+      transparent: true,
+      opacity: 0.95,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    logoCircuitLine = new THREE.Line(circuitGeo, circuitMat);
+    logoCircuitLine.renderOrder = 1001;
+    logo3DGroup.add(logoCircuitLine);
+
+    // Glowing Terminal Spheres on circuit trace
+    const sphereTerminalGeo = new THREE.SphereGeometry(0.05, 12, 12);
+    const sphereTerminalMat = new THREE.MeshBasicMaterial({
+      color: colorGreen,
+      depthWrite: false,
+      depthTest: false,
+    });
+    
+    const term1 = new THREE.Mesh(sphereTerminalGeo, sphereTerminalMat);
+    term1.position.copy(circuitPoints[0]);
+    term1.renderOrder = 1002;
+    logo3DGroup.add(term1);
+
+    const term2 = new THREE.Mesh(sphereTerminalGeo, sphereTerminalMat);
+    term2.position.copy(circuitPoints[circuitPoints.length - 1]);
+    term2.renderOrder = 1002;
+    logo3DGroup.add(term2);
+
     // --- 3 3D Orbital Rings (Torus) ---
     orbitalRings = [];
     const ringConfigs = [
-      { radius: 3.6, tube: 0.014, color: colorGreen, opacity: 0.7, rx: Math.PI / 2.2, rz: 0 },
-      { radius: 4.4, tube: 0.010, color: colorCyan, opacity: 0.5, rx: Math.PI / 1.7, rz: Math.PI / 5 },
-      { radius: 3.1, tube: 0.009, color: colorRed, opacity: 0.55, rx: Math.PI / 2.6, rz: -Math.PI / 4 },
+      { radius: 3.6, tube: 0.014, color: colorGreen, opacity: 0.72, rx: Math.PI / 2.2, rz: 0 },
+      { radius: 4.4, tube: 0.010, color: colorCyan, opacity: 0.52, rx: Math.PI / 1.7, rz: Math.PI / 5 },
+      { radius: 3.1, tube: 0.009, color: colorRed, opacity: 0.58, rx: Math.PI / 2.6, rz: -Math.PI / 4 },
     ];
 
     ringConfigs.forEach((cfg) => {
@@ -185,25 +426,25 @@
       arenaGroup.add(nodeMesh);
     }
 
-    // --- 3D Cosmic Particle Starfield (1,200 points with depth) ---
-    const starCount = 1200;
+    // --- 3D Cosmic Particle Starfield (2,200 points with rich depth & color) ---
+    const starCount = 2200;
     const starPositions = new Float32Array(starCount * 3);
     const starColors = new Float32Array(starCount * 3);
 
     for (let i = 0; i < starCount; i++) {
-      const dist = 5.5 + Math.random() * 14;
+      const dist = 5.0 + Math.random() * 18;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
 
       starPositions[i * 3] = dist * Math.sin(phi) * Math.cos(theta);
-      starPositions[i * 3 + 1] = dist * Math.cos(phi) * 0.6;
+      starPositions[i * 3 + 1] = dist * Math.cos(phi) * 0.65;
       starPositions[i * 3 + 2] = dist * Math.sin(phi) * Math.sin(theta);
 
       const rnd = Math.random();
       let c = colorGreen;
-      if (rnd < 0.2) c = colorRed;
-      else if (rnd < 0.45) c = colorCyan;
-      else if (rnd < 0.6) c = colorGold;
+      if (rnd < 0.22) c = colorRed;
+      else if (rnd < 0.48) c = colorCyan;
+      else if (rnd < 0.65) c = colorGold;
 
       starColors[i * 3] = c.r;
       starColors[i * 3 + 1] = c.g;
@@ -214,11 +455,11 @@
     starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
     starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
 
-    const starMat = new THREE.PointsMaterial({
-      size: 0.05,
+    starMat = new THREE.PointsMaterial({
+      size: 0.055,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.88,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
@@ -227,9 +468,9 @@
 
     // --- 3D Receding Horizon Cyber Grid ---
     cyberGridGroup = new THREE.Group();
-    const gridHelper = new THREE.GridHelper(50, 40, 0x10b981, 0x059669);
+    const gridHelper = new THREE.GridHelper(55, 45, 0x10b981, 0x059669);
     gridHelper.position.set(0, -3.8, 0);
-    gridHelper.material.opacity = 0.18;
+    gridHelper.material.opacity = 0.22;
     gridHelper.material.transparent = true;
     cyberGridGroup.add(gridHelper);
     threeScene.add(cyberGridGroup);
@@ -285,56 +526,97 @@
     const docHeight = document.documentElement.scrollHeight - window.innerHeight || 1;
     const scrollProgress = Math.min(1, Math.max(0, scrollY / docHeight));
 
-    // Dynamic 3D Position Path across the Page as user scrolls
-    // 0% (Hero): x: 2.4, y: 0.25 (right side)
-    // 25% (Tournaments): x: -2.2, y: -0.3 (glides to left)
-    // 50% (Leaderboards/Stats): x: 2.2, y: 0.45 (glides to right)
-    // 75% (Communities/Creators): x: -2.0, y: 0.1
-    // 100% (News/Shop/Footer): x: 0, y: -0.4, z: -0.8 (grand center)
+    // Kinetic 5-Waypoint 3D Position Path across Page Sections
     const p = scrollProgress;
     let targetX, targetY, targetZ;
 
-    if (p < 0.25) {
-      const t = p / 0.25;
-      targetX = 2.4 + (-2.2 - 2.4) * t;
-      targetY = 0.25 + (-0.3 - 0.25) * t;
-      targetZ = 0 + 0.4 * t;
-    } else if (p < 0.5) {
-      const t = (p - 0.25) / 0.25;
-      targetX = -2.2 + (2.2 - -2.2) * t;
-      targetY = -0.3 + (0.45 - -0.3) * t;
-      targetZ = 0.4 + (-0.3 - 0.4) * t;
-    } else if (p < 0.75) {
-      const t = (p - 0.5) / 0.25;
-      targetX = 2.2 + (-2.0 - 2.2) * t;
-      targetY = 0.45 + (0.1 - 0.45) * t;
-      targetZ = -0.3 + (0.3 - -0.3) * t;
+    if (p < 0.20) {
+      // 1. Hero: Glides at upper right composition
+      const t = p / 0.20;
+      targetX = 2.4 + (-2.3 - 2.4) * t;
+      targetY = 0.25 + (0.05 - 0.25) * t;
+      targetZ = 0 + (-0.2 - 0) * t;
+    } else if (p < 0.45) {
+      // 2. Who We Are / Metrics: Glides to left background
+      const t = (p - 0.20) / 0.25;
+      targetX = -2.3 + (2.3 - -2.3) * t;
+      targetY = 0.05 + (0.25 - 0.05) * t;
+      targetZ = -0.2 + (-0.1 - -0.2) * t;
+    } else if (p < 0.70) {
+      // 3. Live Tournaments & Sponsors: Glides to right background
+      const t = (p - 0.45) / 0.25;
+      targetX = 2.3 + (-2.1 - 2.3) * t;
+      targetY = 0.25 + (0.15 - 0.25) * t;
+      targetZ = -0.1 + (-0.3 - -0.1) * t;
+    } else if (p < 0.88) {
+      // 4. Broadcast, Creators & Community: Glides left
+      const t = (p - 0.70) / 0.18;
+      targetX = -2.1 + (0 - -2.1) * t;
+      targetY = 0.15 + (-0.35 - 0.15) * t;
+      targetZ = -0.3 + (-0.7 - -0.3) * t;
     } else {
-      const t = (p - 0.75) / 0.25;
-      targetX = -2.0 + (0 - -2.0) * t;
-      targetY = 0.1 + (-0.4 - 0.1) * t;
-      targetZ = 0.3 + (-0.9 - 0.3) * t;
+      // 5. News, Shop & Global Alliance Portal: Anchors grand center
+      targetX = 0;
+      targetY = -0.35;
+      targetZ = -0.7;
     }
 
     if (arenaGroup) {
-      // Smooth glide to scroll position
+      // Smooth glide to scroll waypoint
       arenaGroup.position.x += (targetX - arenaGroup.position.x) * 0.06;
       arenaGroup.position.y += (targetY - arenaGroup.position.y) * 0.06;
       arenaGroup.position.z += (targetZ - arenaGroup.position.z) * 0.06;
 
-      // 3D Rotation driven by constant clock + scroll momentum + mouse parallax
-      const scrollRotDelta = scrollVelocity * 0.0018;
+      // 3D Rotation driven by constant clock + scroll momentum tilt + mouse parallax
+      const scrollTilt = Math.min(0.4, Math.max(-0.4, scrollVelocity * 0.0018));
       arenaGroup.rotation.y = clock * 0.14 + mouse.x + scrollY * 0.0012;
-      arenaGroup.rotation.x = Math.sin(clock * 0.25) * 0.08 + mouse.y + scrollRotDelta;
+      arenaGroup.rotation.x = Math.sin(clock * 0.25) * 0.08 + mouse.y + scrollTilt;
 
-      // Core pulsing
+      // Inner Crimson Core pulsing
       if (innerCoreMesh && innerCoreLines) {
-        const pulse = 1 + Math.sin(clock * 1.8) * 0.065;
+        const pulse = 1 + Math.sin(clock * 1.8) * 0.055;
         innerCoreMesh.scale.setScalar(pulse);
         innerCoreLines.scale.setScalar(pulse);
         innerCoreMesh.rotation.y = clock * 0.45;
         innerCoreMesh.rotation.x = clock * 0.3;
         innerCoreLines.rotation.copy(innerCoreMesh.rotation);
+      }
+
+      // =======================================================================
+      // ANIMATE 3D LOGO INSIDE THE GLOBE (ALWAYS MAJESTICALLY FACING VIEWER)
+      // =======================================================================
+      if (logo3DGroup) {
+        // Vertical micro-levitation bobbing in the center of the globe
+        logo3DGroup.position.y = Math.sin(clock * 1.6) * 0.06;
+
+        // Counter-rotate against arenaGroup so the logo stays facing the audience,
+        // with gentle holographic 3D tilt rocking
+        logo3DGroup.rotation.y = -arenaGroup.rotation.y + Math.sin(clock * 0.8) * 0.18 + mouse.x * 0.35;
+        logo3DGroup.rotation.x = -arenaGroup.rotation.x + Math.sin(clock * 1.1) * 0.10 + mouse.y * 0.25;
+
+        // Pulsing scale
+        const logoPulse = 1 + Math.sin(clock * 2.0) * 0.025;
+        logo3DGroup.scale.setScalar(logoPulse);
+
+        // Rotate the reticle ring around the "e"
+        if (logoRingRed) {
+          logoRingRed.rotation.z = clock * 0.6;
+        }
+        if (logoRingGreen) {
+          logoRingGreen.rotation.z = -clock * 0.9;
+        }
+
+        // Pulse the circuit trace line
+        if (logoCircuitLine) {
+          logoCircuitLine.material.opacity = 0.80 + Math.sin(clock * 3) * 0.18;
+        }
+
+        // Rotate holographic backing halo
+        if (logoHaloMesh) {
+          logoHaloMesh.rotation.z = clock * 0.25;
+          const haloScale = 1 + Math.sin(clock * 1.5) * 0.08;
+          logoHaloMesh.scale.set(haloScale, haloScale, 1);
+        }
       }
 
       // Orbital rings rotation
@@ -354,10 +636,12 @@
       });
     }
 
-    // Starfield subtle cosmic drift
-    if (starPoints) {
+    // Starfield kinetic momentum flaring
+    if (starPoints && starMat) {
       starPoints.rotation.y = clock * 0.02 + mouse.x * 0.3;
       starPoints.rotation.x = Math.sin(clock * 0.1) * 0.04 + mouse.y * 0.2;
+      const flare = Math.min(0.035, Math.abs(scrollVelocity) * 0.0005);
+      starMat.size = 0.055 + flare;
     }
 
     // Perspective Cyber Grid Parallax
@@ -369,70 +653,18 @@
     threeRenderer.render(threeScene, threeCamera);
   }
 
-  // Fallback 2D Canvas if WebGL is unavailable
-  function setupFallbackCanvas() {
-    if (document.getElementById('esbd-fallback-canvas')) return;
-    const canvas = document.createElement('canvas');
-    canvas.id = 'esbd-fallback-canvas';
-    canvas.style.cssText =
-      'position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;mix-blend-mode:screen;opacity:0.85;';
-    document.body.prepend(canvas);
-
-    const ctx = canvas.getContext('2d');
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-
-    const particles = [];
-    for (let i = 0; i < 180; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2 + 0.8,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: -Math.random() * 0.4 - 0.1,
-        color: Math.random() < 0.25 ? '#ef4444' : '#10b981',
-      });
-    }
-
-    function render2D() {
-      ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 8;
-        ctx.fill();
-      }
-      requestAnimationFrame(render2D);
-    }
-    requestAnimationFrame(render2D);
-  }
-
   // ===========================================================================
-  // 3. 3D ANIMATED BAR SYSTEM (EXACT REPLICA OF USER SCREENSHOT 1)
+  // 3. ULTRA-GLOW 3D ANIMATED BAR SYSTEM & SLEEK LASER DIVIDERS
   // ===========================================================================
   function create3DAnimatedBar(options = {}) {
     const telemetry = options.telemetry || 'ESBD CORE PLATFORM // TOURNAMENTS LIVE';
-    const code = options.code || 'SYS_144HZ_ACTIVE';
     const status = options.status || 'ANTI-CHEAT: ONLINE • ARBITRATION ACTIVE';
 
     const bar = document.createElement('div');
-    bar.className = 'esbd-3d-animated-bar esbd-scroll-reveal-3d';
+    bar.className = 'esbd-3d-animated-bar';
     bar.innerHTML = `
-      <div class="esbd-3d-laser-runner"></div>
+      <div class="esbd-3d-laser-runner-top"></div>
+      <div class="esbd-3d-laser-runner-bottom"></div>
       <div class="esbd-bar-telemetry-left">
         <span class="esbd-bar-dot"></span>
         <span>${telemetry}</span>
@@ -458,202 +690,182 @@
     return bar;
   }
 
-  function create3DLaserDivider() {
+  // Sleek 3D Laser Divider using Image 5
+  function createSleekLaserDivider() {
     const divider = document.createElement('div');
-    divider.className = 'esbd-3d-laser-divider esbd-scroll-reveal-3d';
-    divider.innerHTML = `<div class="esbd-3d-laser-divider-line"></div>`;
+    divider.className = 'esbd-sleek-laser-divider';
+    divider.innerHTML = `
+      <div class="esbd-sleek-laser-image"></div>
+      <div class="esbd-sleek-laser-glow"></div>
+      <div class="esbd-sleek-laser-sparkler"></div>
+    `;
     return divider;
   }
 
-  // Inject 3D Animated Bars in key strategic locations across the page
-  function inject3DAnimatedBars() {
+  // Clean up duplicate consecutive bars
+  function cleanupRedundantBars() {
+    const bars = document.querySelectorAll('.esbd-3d-animated-bar');
+    let lastText = '';
+    bars.forEach((bar, idx) => {
+      const text = (bar.textContent || '').trim().substring(0, 50);
+      if (idx > 0 && text === lastText) {
+        bar.style.display = 'none';
+      }
+      lastText = text;
+    });
+  }
+
+  // Inject Spacious 3D Bars & Laser Dividers without touching ad/sponsor slots
+  function injectSpacious3DBars() {
+    cleanupRedundantBars();
+
     // 1. Below Hero section (Prominent grand 3D animated bar)
     const heroSection = document.querySelector('section.min-h-\\[100svh\\], #root section:first-of-type');
     if (heroSection && !document.getElementById('esbd-hero-bar')) {
       const heroBar = create3DAnimatedBar({
         telemetry: 'NATIONAL ESPORTS HUB // DHAKA 128-TICK',
-        code: 'CORE_ONLINE',
         status: 'VERIFIED PRIZE POOLS • INSTANT ESCROW',
       });
       heroBar.id = 'esbd-hero-bar';
       heroSection.parentNode.insertBefore(heroBar, heroSection.nextSibling);
     }
 
-    // 2. Subpages Hero Bar (newsroom and shop)
+    // 2. Subpages Hero Bar (newsroom and shop only)
     const subpageHeader = document.querySelector('.news-header, .shop-header, .page-header');
     if (subpageHeader && !document.getElementById('esbd-subpage-bar')) {
       const isShop = window.location.pathname.includes('shop');
       const subBar = create3DAnimatedBar({
         telemetry: isShop ? 'OFFICIAL PRO GEAR SHOP // HARDWARE DECK' : 'ESBD NEWSROOM // PATCH NOTES & ROSTERS',
-        code: isShop ? 'GEAR_VERIFIED' : 'PRESS_NODE',
         status: isShop ? 'AUTHENTIC HARDWARE • 2-YR WARRANTY' : 'LIVE JOURNALISM • 24/7 DISPATCH',
       });
       subBar.id = 'esbd-subpage-bar';
       subpageHeader.parentNode.insertBefore(subBar, subpageHeader.nextSibling);
     }
 
-    // 3. Frame Major Content Sections
+    // 3. Insert Sleek Laser Dividers between major sections (Spaced generously)
     const sections = document.querySelectorAll(
-      '#root section, main section, .shop-section, .news-section'
+      '#root > div > section, #root > div > main > section, main section, #root section'
     );
 
-    sections.forEach((sec, idx) => {
-      if (sec.dataset.esbdBarsInjected === 'true') return;
-      sec.dataset.esbdBarsInjected = 'true';
-
-      // Skip hero or partner ticker to avoid stacking
-      if (idx === 0 && sec.classList.contains('min-h-[100svh]')) return;
-      if (sec.classList.contains('esbd-sponsor-billboard') || sec.offsetHeight < 120) return;
-
-      const target = sec.querySelector(':scope > div.mx-auto, :scope > div.max-w-\\[1280px\\]') || sec;
-      target.classList.add('esbd-platform-frame');
-
-      // Add Corner Brackets
-      const bTL = document.createElement('div');
-      bTL.className = 'esbd-corner-bracket esbd-bracket-tl';
-      const bTR = document.createElement('div');
-      bTR.className = 'esbd-corner-bracket esbd-bracket-tr';
-      const bBL = document.createElement('div');
-      bBL.className = 'esbd-corner-bracket esbd-bracket-bl';
-      const bBR = document.createElement('div');
-      bBR.className = 'esbd-corner-bracket esbd-bracket-br';
-      target.appendChild(bTL);
-      target.appendChild(bTR);
-      target.appendChild(bBL);
-      target.appendChild(bBR);
-
-      // Add Side Rails
-      const railL = document.createElement('div');
-      railL.className = 'esbd-platform-rail-left';
-      const railR = document.createElement('div');
-      railR.className = 'esbd-platform-rail-right';
-      target.appendChild(railL);
-      target.appendChild(railR);
-
-      // Section-specific top bar with custom telemetry
-      const text = (sec.textContent || '').toLowerCase();
-      let label = 'ARENA ZONE // ' + String(idx).padStart(2, '0');
-      let status = 'SERVER-SIDE ARBITRATION ACTIVE';
-
-      if (text.includes('tournament')) {
-        label = 'THE ARENA // LIVE & OPEN TOURNAMENTS';
-        status = 'SLOTS CLOSING • SERVER-VERIFIED';
-      } else if (text.includes('ranking') || text.includes('leaderboard')) {
-        label = 'GLOBAL RANKINGS // VERIFIED CHAMPIONS';
-        status = 'PRO LEAGUE POINTS UPDATED';
-      } else if (text.includes('who we are') || text.includes('dominate') || text.includes('operator')) {
-        label = 'OPERATIONS // LAN & ESPORTS PRODUCTION';
-        status = '15+ YEARS • 1200+ EVENTS DELIVERED';
-      } else if (text.includes('creator') || text.includes('influencer')) {
-        label = 'CREATOR ROSTER // 30M+ AUDIENCE NETWORK';
-        status = 'OFFICIAL PARTNER TALENT';
-      } else if (text.includes('community') || text.includes('clan')) {
-        label = 'COMMUNITY HUBS // VERIFIED CLANS';
-        status = 'REGIONAL ROSTERS ACTIVE';
-      } else if (text.includes('how it works') || text.includes('pipeline')) {
-        label = 'SYSTEM PIPELINE // ENTRY TO PAYOUT';
-        status = 'INSTANT ESCROW VERIFICATION';
-      }
-
-      const topBar = document.createElement('div');
-      topBar.className = 'esbd-graphic-bar-top';
-      topBar.innerHTML = `
-        <div class="esbd-3d-laser-runner"></div>
-        <div class="esbd-bar-telemetry-left">
-          <span class="esbd-bar-dot"></span>
-          <span>${label}</span>
-        </div>
-        <div class="esbd-eq-visualizer">
-          <span class="esbd-eq-bar"></span>
-          <span class="esbd-eq-bar"></span>
-          <span class="esbd-eq-bar"></span>
-          <span class="esbd-eq-bar"></span>
-          <span class="esbd-eq-bar"></span>
-          <span class="esbd-eq-bar"></span>
-        </div>
-        <div class="esbd-bar-telemetry-right">
-          <span>${status}</span>
-          <span class="esbd-bar-dot esbd-bar-dot-red"></span>
-        </div>
-      `;
-
-      target.insertBefore(topBar, target.firstChild);
-    });
+    if (sections.length > 1) {
+      sections.forEach((sec, idx) => {
+        // Skip hero, skip very short sections, preserve sponsor/ad container spacing
+        if (idx > 0 && sec.offsetHeight > 140) {
+          if (!sec.nextElementSibling || !sec.nextElementSibling.classList.contains('esbd-sleek-laser-divider')) {
+            const divider = createSleekLaserDivider();
+            sec.parentNode.insertBefore(divider, sec.nextSibling);
+          }
+        }
+      });
+    }
   }
 
   // ===========================================================================
-  // 4. 3D SCROLL EFFECTS & INTERACTIVE 3D MOUSE PARALLAX TILT
+  // 4. SECTION 3D SCROLL & VIEWPORT ATTENTION ENGINE
   // ===========================================================================
-  function setup3DScrollEffects() {
-    // 1. Intersection Observer for 3D Perspective Reveal
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
+  let activeFocusSection = null;
+
+  function setupSection3DEngine() {
+    const sections = document.querySelectorAll(
+      '#root section, main section, #root > div > section, #root > div > main > section'
     );
 
-    const revealElements = document.querySelectorAll(
-      '.esbd-scroll-reveal-3d, .esbd-platform-frame, .bg-card, [data-testid="tournament-card"], .news-card, .product-card'
-    );
-    revealElements.forEach((el) => {
-      el.classList.add('esbd-scroll-reveal-3d');
-      revealObserver.observe(el);
-    });
+    sections.forEach((sec, idx) => {
+      if (sec.dataset.esbd3dInitialized === 'true') return;
+      sec.dataset.esbd3dInitialized = 'true';
+      sec.classList.add('esbd-3d-section');
 
-    // 2. Interactive 3D Card Mouse Parallax Tilt (Pinterest / 3D web design standard)
-    const tiltCards = document.querySelectorAll(
-      '.bg-card, [data-testid="tournament-card"], .news-card, .product-card, .stat-card, [data-testid="leaderboard-row"]'
-    );
-
-    tiltCards.forEach((card) => {
-      if (card.dataset.has3DTilt === 'true') return;
-      card.dataset.has3DTilt = 'true';
-      card.classList.add('esbd-3d-tilt-card');
-
-      // Inject Holographic Sheen
-      if (!card.querySelector('.esbd-holo-sheen')) {
-        const sheen = document.createElement('div');
-        sheen.className = 'esbd-holo-sheen';
-        card.appendChild(sheen);
+      // Always mark first section (Hero) as immediately revealed
+      if (idx === 0) {
+        sec.classList.add('esbd-section-revealed');
       }
 
-      card.addEventListener('pointermove', (e) => {
-        if (window.innerWidth < 768) return;
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+      // Inject 4 Cyber HUD Corner Reticles for each major section
+      if (sec.offsetHeight > 160 && !sec.querySelector('.esbd-hud-corner')) {
+        const hudTL = document.createElement('div'); hudTL.className = 'esbd-hud-corner esbd-hud-tl';
+        const hudTR = document.createElement('div'); hudTR.className = 'esbd-hud-corner esbd-hud-tr';
+        const hudBL = document.createElement('div'); hudBL.className = 'esbd-hud-corner esbd-hud-bl';
+        const hudBR = document.createElement('div'); hudBR.className = 'esbd-hud-corner esbd-hud-br';
+        sec.appendChild(hudTL);
+        sec.appendChild(hudTR);
+        sec.appendChild(hudBL);
+        sec.appendChild(hudBR);
+      }
+    });
 
-        const rotateX = ((y - centerY) / centerY) * -11;
-        const rotateY = ((x - centerX) / centerX) * 11;
+    updateSectionFocus();
+  }
 
-        card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(16px) scale3d(1.025, 1.025, 1.025)`;
-        card.style.boxShadow = `0 20px 45px -10px rgba(0, 0, 0, 0.85), 0 0 25px rgba(16, 185, 129, 0.3)`;
+  function updateSectionFocus() {
+    const sections = document.querySelectorAll('.esbd-3d-section');
+    if (!sections.length) return;
 
-        const sheen = card.querySelector('.esbd-holo-sheen');
-        if (sheen) {
-          sheen.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.18) 0%, rgba(16, 185, 129, 0.12) 35%, transparent 70%)`;
+    const vh = window.innerHeight;
+    const centerY = vh / 2;
+
+    let closestSec = null;
+    let closestDist = Infinity;
+
+    sections.forEach((sec) => {
+      const rect = sec.getBoundingClientRect();
+
+      // Check if revealed in viewport (top enters bottom 90% of screen)
+      if (rect.top < vh * 0.90) {
+        sec.classList.add('esbd-section-revealed');
+      }
+
+      // Check distance to center of viewport
+      const secCenter = rect.top + rect.height / 2;
+      const dist = Math.abs(secCenter - centerY);
+
+      // Only consider if in active viewport range
+      if (rect.bottom > vh * 0.15 && rect.top < vh * 0.85) {
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestSec = sec;
         }
+      }
+    });
+
+    // Update active focus section
+    if (closestSec && closestSec !== activeFocusSection) {
+      if (activeFocusSection) {
+        activeFocusSection.classList.remove('esbd-section-in-focus');
+      }
+      activeFocusSection = closestSec;
+      activeFocusSection.classList.add('esbd-section-in-focus');
+    }
+  }
+
+  // ===========================================================================
+  // 5. 3D CARD TILT, HIGHLIGHTS & INTERACTION POLISH
+  // ===========================================================================
+  function setup3DCardInteractions() {
+    const cards = document.querySelectorAll(
+      '.bg-card, [data-testid="tournament-card"], [data-testid="stat-card"], .esbd-interactive-3d'
+    );
+
+    cards.forEach((card) => {
+      if (card.__3d_tilt_bound) return;
+      card.__3d_tilt_bound = true;
+
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        card.style.transform = `perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-6px) scale3d(1.02, 1.02, 1.02)`;
       });
 
       card.addEventListener('pointerleave', () => {
         card.style.transform = '';
-        card.style.boxShadow = '';
       });
     });
   }
 
-  // ===========================================================================
-  // 5. ENHANCE SECTION HIGHLIGHTS (RADAR, GLOWING PRIZE POOL, LEADERBOARD)
-  // ===========================================================================
+  // Highlight key stats with radiant glowing effects & 3D extrusion
   function enhanceSectionHighlights() {
-    // 1. Highlight LIVE tournament tags with pulsing radar dot
+    // 1. Live tournament badges with radar dot
     const liveBadges = document.querySelectorAll(
       '.bg-destructive, [class*="text-destructive"], .badge-live, [data-testid="badge-live"]'
     );
@@ -668,52 +880,61 @@
       }
     });
 
-    // 2. Highlight prize pool numbers (৳2.5Cr, etc.)
-    const prizeTexts = document.querySelectorAll('h3, p, span, div');
-    prizeTexts.forEach((el) => {
-      if (el.children.length === 0 && (el.textContent.includes('৳') || el.textContent.includes('2.5Cr'))) {
-        el.classList.add('esbd-prize-glow');
+    // 2. Highlight prize pool numbers (৳2.5Cr, ৳1.8L, ৳1.5L) and key counts (1,200+, 200+, 80K+, 85K)
+    const allText = document.querySelectorAll('h2, h3, span, div');
+    allText.forEach((el) => {
+      if (el.children.length > 2) return;
+      if (el.dataset.esbdStatGlow === 'true') return;
+      const text = (el.textContent || '').trim();
+      if (/^[\d৳,\.]+[\+KkMm]?[Cc]?[Rr]?$/.test(text) || /^\d+\+?$/.test(text)) {
+        const fontSize = parseFloat(window.getComputedStyle(el).fontSize);
+        if (fontSize >= 20) {
+          el.dataset.esbdStatGlow = 'true';
+          el.classList.add('esbd-stat-highlight');
+        }
       }
-    });
-
-    // 3. Highlight top 3 leaderboard ranks
-    const leaderRows = document.querySelectorAll('[data-testid="leaderboard-row"], tr, .leaderboard-item');
-    leaderRows.forEach((row, i) => {
-      if (i === 0) row.classList.add('esbd-rank-1-badge');
-      else if (i === 1) row.classList.add('esbd-rank-2-badge');
-      else if (i === 2) row.classList.add('esbd-rank-3-badge');
     });
   }
 
   // ===========================================================================
-  // 6. MASTER INITIALIZATION & CONTINUOUS ROUTE OBSERVER
+  // 6. MASTER INITIALIZATION
   // ===========================================================================
   function masterScan() {
-    inject3DAnimatedBars();
-    setup3DScrollEffects();
+    injectSpacious3DBars();
+    setupSection3DEngine();
+    setup3DCardInteractions();
     enhanceSectionHighlights();
   }
 
-  function init() {
-    setupAmbientNebula();
+  function initPlatformMaster() {
+    setupAmbientAtmosphere();
     initThreeArenaCore();
-    masterScan();
 
-    // Re-scan when React re-renders or updates
+    // Check periodically as React SPA mounts DOM elements
+    let attempts = 0;
+    const interval = setInterval(() => {
+      attempts++;
+      masterScan();
+      if (attempts > 20) clearInterval(interval);
+    }, 400);
+
+    // Scroll listener for real-time section focus detection
+    window.addEventListener('scroll', updateSectionFocus, { passive: true });
+
+    // Re-scan when React re-renders routes or components
     const observer = new MutationObserver(() => {
       masterScan();
     });
-
     const root = document.getElementById('root') || document.body;
     observer.observe(root, { childList: true, subtree: true });
 
-    // Periodic check to ensure dynamic data (tourneys, news, shop) get framed
-    setInterval(masterScan, 1500);
+    // Continuous smooth scan
+    setInterval(masterScan, 2500);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', initPlatformMaster);
   } else {
-    init();
+    initPlatformMaster();
   }
 })();

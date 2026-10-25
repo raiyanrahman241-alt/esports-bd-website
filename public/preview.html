@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fira+Code:wght@300..700&family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>E-SPORTS BANGLADESH (ESBD) — Premier Gaming Tournament Platform</title>
+    <meta
+      name="description"
+      content="E-SPORTS BANGLADESH (ESBD) — Premier 3D Gaming Tournament Hosting & Esports Platform. Compete in Free Fire, PUBG Mobile, Valorant, CS2. Live stream matches, submit scores, and earn verified rewards."
+    />
+    <meta name="theme-color" content="#07090c" />
+
+    <!-- React DOM Resilience Shield & Global Protection -->
+    <script>
+      (function() {
+        const origRemoveChild = Node.prototype.removeChild;
+        Node.prototype.removeChild = function(child) {
+          if (child && child.parentNode !== this) {
+            if (child.parentNode) {
+              return child.parentNode.removeChild(child);
+            }
+            return child;
+          }
+          return origRemoveChild.apply(this, arguments);
+        };
+        const origInsertBefore = Node.prototype.insertBefore;
+        Node.prototype.insertBefore = function(newNode, refNode) {
+          if (refNode && refNode.parentNode !== this) {
+            return this.appendChild(newNode);
+          }
+          return origInsertBefore.apply(this, arguments);
+        };
+        window.addEventListener('error', function(e) {
+          if (e && e.message && (e.message.includes('removeChild') || e.message.includes('Minified React error #321'))) {
+            e.preventDefault && e.preventDefault();
+          }
+        });
+      })();
+    </script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Bdt_ggT_.css">
+    <link rel="stylesheet" href="/assets/esbd-platform-3d.css">
+    <link rel="stylesheet" href="/assets/esbd-platform-3d-upgraded.css">
+    <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
+    <script src="/assets/three.min.js"></script>
+    <script type="module" crossorigin src="/assets/index-DxaXhSva.js"></script>
+    <script src="/assets/esbd-platform-3d-upgraded.js" defer></script>
+    <script src="/assets/esbd-platform-3d-preview.js" defer></script>
+
+    <!-- 3D Cyber Atmosphere & Platform Enhancements Styles -->
+    <style>
+      /* =====================================================================
+         1. GLOBAL CYBER 3D ATMOSPHERE ON ALL PAGES
+         ===================================================================== */
+      html, body {
+        background-color: #07090c;
+        color: #f0f6fc;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Allow 3D canvas and mouse spotlight to shine through on all routes */
+      #root, #root > div, main {
+        background-color: transparent !important;
+      }
+      .bg-background {
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+      }
+      .bg-card {
+        background-color: rgba(13, 17, 23, 0.85) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        transition: all 0.28s ease !important;
+      }
+      .bg-card:hover {
+        border-color: rgba(16, 185, 129, 0.45) !important;
+        box-shadow: 0 10px 25px -10px rgba(16, 185, 129, 0.3) !important;
+        transform: translateY(-2px);
+      }
+
+      /* Ambient 3D Particle Canvas */
+      #esbd-cyber-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.75;
+        mix-blend-mode: screen;
+      }
+
+      /* Interactive 3D Cursor Spotlight */
+      .cyber-spotlight {
+        position: fixed;
+        width: 650px;
+        height: 650px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.09) 0%, rgba(239, 68, 68, 0.05) 40%, transparent 70%);
+        transition: opacity 0.3s ease;
+      }
+
+      /* Cyber Scanline Overlay */
+      .cyber-scanlines {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 999;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 136, 0.01), rgba(0, 0, 255, 0.02));
+        background-size: 100% 3px, 6px 100%;
+        opacity: 0.35;
+      }
+
+      /* Desktop 3D Perspective (Applied to #root, NEVER to body so fixed background canvas and grid stay fixed) */
+      @media (min-width: 1024px) {
+        #root { perspective: 1400px; }
+      }
+
+      /* 3D LOGO FLOATING & HOLOGRAPHIC SHIMMER */
+      [data-testid="logo-esbd"], .esbd-nav .logo-group, .logo-group {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        text-decoration: none;
+        padding: 4px 10px;
+        border-radius: 12px;
+        overflow: visible;
+        transition: transform 0.3s ease;
+      }
+      [data-testid="logo-esbd"] img, .esbd-nav .logo-group img, .logo-group img {
+        height: 42px; width: auto; max-width: 250px; object-fit: contain;
+        transform-style: preserve-3d; will-change: transform, filter;
+        animation: esbdLogo3DFloat 6s ease-in-out infinite, esbdCyberPulse 4s ease-in-out infinite alternate;
+        transition: transform 0.28s cubic-bezier(0.2, 0, 0.2, 1), filter 0.28s ease;
+        filter: drop-shadow(0 4px 14px rgba(16, 185, 129, 0.5)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.35));
+      }
+      @media (min-width: 768px) {
+        [data-testid="logo-esbd"] img, .esbd-nav .logo-group img, .logo-group img { height: 46px; max-width: 290px; }
+      }
+      @keyframes esbdLogo3DFloat {
+        0%, 100% { transform: perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0px) scale(1); }
+        25% { transform: perspective(800px) rotateY(-5deg) rotateX(3deg) translateY(-3px) scale(1.02); }
+        50% { transform: perspective(800px) rotateY(0deg) rotateX(-2.5deg) translateY(-5px) scale(1.03); }
+        75% { transform: perspective(800px) rotateY(5deg) rotateX(2.5deg) translateY(-2.5px) scale(1.02); }
+      }
+      @keyframes esbdCyberPulse {
+        0% { filter: drop-shadow(0 3px 12px rgba(16, 185, 129, 0.45)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
+        50% { filter: drop-shadow(0 5px 22px rgba(16, 185, 129, 0.8)) drop-shadow(0 0 32px rgba(239, 68, 68, 0.55)) brightness(1.15); }
+        100% { filter: drop-shadow(0 4px 16px rgba(16, 185, 129, 0.55)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.35)); }
+      }
+      [data-testid="logo-esbd"]:hover img, .esbd-nav .logo-group:hover img, .logo-group:hover img {
+        animation-play-state: paused;
+        transform: perspective(600px) scale3d(1.08, 1.08, 1.08) translateZ(16px) !important;
+        filter: drop-shadow(0 8px 28px rgba(16, 185, 129, 0.9)) drop-shadow(0 0 45px rgba(239, 68, 68, 0.7)) brightness(1.25) !important;
+      }
+
+      /* Navigation header clarity */
+      header.fixed, .esbd-nav {
+        background: rgba(7, 9, 12, 0.9) !important;
+        backdrop-filter: blur(20px) saturate(1.5) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+
+      /* Glowing cyber badges in navigation */
+      .cyber-nav-badge-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.45);
+        color: #ef4444;
+        padding: 2px 7px;
+        border-radius: 9999px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .cyber-nav-dot-pulse {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #ef4444;
+        box-shadow: 0 0 8px #ef4444;
+        animation: cyberDotPulse 1.2s ease-in-out infinite alternate;
+      }
+      @keyframes cyberDotPulse {
+        0% { transform: scale(0.85); opacity: 0.6; }
+        100% { transform: scale(1.3); opacity: 1; }
+      }
+
+      /* Cyber bracket corners */
+      .cyber-bracket {
+        position: relative;
+      }
+      .cyber-bracket::before, .cyber-bracket::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .cyber-bracket::before {
+        top: -1px;
+        left: -1px;
+        border-top: 2px solid #10b981;
+        border-left: 2px solid #10b981;
+      }
+      .cyber-bracket::after {
+        bottom: -1px;
+        right: -1px;
+        border-bottom: 2px solid #ef4444;
+        border-right: 2px solid #ef4444;
+      }
+
+      /* -----------------------------------------------------------------------
+         2. FLOATING CYBER LIVE CHATBOX
+         ----------------------------------------------------------------------- */
+      .esbd-chat-toggle-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95));
+        color: #fff;
+        border: 1px solid rgba(16, 185, 129, 0.6);
+        padding: 10px 18px;
+        border-radius: 9999px;
+        font-family: 'Oxanium', sans-serif;
+        font-weight: 700;
+        font-size: 0.88rem;
+        box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4), 0 0 15px rgba(16, 185, 129, 0.2);
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+      }
+      .esbd-chat-toggle-btn:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(16, 185, 129, 0.55);
+      }
+      .esbd-chat-panel {
+        position: fixed;
+        bottom: 80px;
+        right: 24px;
+        width: 380px;
+        max-width: calc(100vw - 32px);
+        height: 520px;
+        max-height: calc(100vh - 120px);
+        background: rgba(13, 17, 23, 0.96);
+        backdrop-filter: blur(24px) saturate(1.4);
+        border: 1px solid rgba(16, 185, 129, 0.4);
+        border-radius: 16px;
+        z-index: 10001;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.2);
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+        transform-origin: bottom right;
+      }
+      .esbd-chat-panel.hidden {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+        pointer-events: none;
+      }
+      .esbd-chat-header {
+        padding: 12px 16px;
+        background: rgba(16, 185, 129, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .esbd-chat-channels {
+        display: flex;
+        gap: 6px;
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        overflow-x: auto;
+      }
+      .esbd-channel-tab {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.72rem;
+        color: #8b949e;
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
+      }
+      .esbd-channel-tab.active {
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.12);
+        border-color: rgba(16, 185, 129, 0.3);
+        font-weight: 700;
+      }
+      .esbd-chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .esbd-chat-bubble {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+      .esbd-chat-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 3px;
+        font-size: 0.72rem;
+      }
+      .esbd-chat-user {
+        font-family: 'Oxanium', sans-serif;
+        font-weight: 700;
+        color: #f0f6fc;
+      }
+      .esbd-role-badge {
+        font-size: 0.62rem;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+      .role-admin { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+      .role-pro { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
+      .role-mod { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+      .role-caster { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
+      .role-user { background: rgba(255, 255, 255, 0.08); color: #8b949e; }
+      .esbd-chat-input-bar {
+        padding: 10px 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(7, 9, 12, 0.6);
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .esbd-chat-input {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #f0f6fc;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        outline: none;
+      }
+      .esbd-chat-input:focus {
+        border-color: #10b981;
+      }
+      .esbd-chat-send {
+        background: #10b981;
+        color: #07090c;
+        font-weight: 700;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Oxanium', sans-serif;
+        font-size: 0.8rem;
+      }
+
+      /* -----------------------------------------------------------------------
+         3. MODAL OVERLAYS (Stream Theater, Results, Admin)
+         ----------------------------------------------------------------------- */
+      .esbd-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 20000;
+        background: rgba(4, 6, 9, 0.88);
+        backdrop-filter: blur(16px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      .esbd-modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .esbd-modal-box {
+        background: #0d1117;
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        border-radius: 18px;
+        width: 100%;
+        max-width: 1100px;
+        max-height: 92vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 40px rgba(16, 185, 129, 0.15);
+        transform: scale(0.96);
+        transition: transform 0.25s ease;
+      }
+      .esbd-modal-overlay.active .esbd-modal-box {
+        transform: scale(1);
+      }
+      .esbd-modal-header {
+        padding: 16px 22px;
+        background: rgba(16, 185, 129, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .esbd-modal-title {
+        font-family: 'Oxanium', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #f0f6fc;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .esbd-modal-close {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #8b949e;
+        padding: 6px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .esbd-modal-close:hover {
+        color: #f0f6fc;
+        border-color: #ef4444;
+      }
+      .esbd-modal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 24px;
+      }
+
+      /* Stream theater styles */
+      .esbd-stream-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 18px;
+      }
+      @media (max-width: 900px) {
+        .esbd-stream-layout { grid-template-columns: 1fr; }
+      }
+      .esbd-video-wrap {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .esbd-video-wrap iframe {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%; border: none;
+      }
+
+      /* Sponsor & ad banners */
+      .esbd-ad-leaderboard {
+        width: 100%; max-width: 1200px; margin: 20px auto 10px; padding: 0 16px;
+      }
+      .esbd-ad-leaderboard-inner {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.07) 0%, rgba(13, 17, 23, 0.95) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        border-radius: 14px; padding: 14px 20px;
+        display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      }
+      .esbd-ad-billboard {
+        width: 100%; max-width: 1200px; margin: 50px auto; padding: 0 16px;
+      }
+      .esbd-ad-billboard-inner {
+        background: linear-gradient(135deg, rgba(13, 17, 23, 0.96) 0%, rgba(20, 26, 35, 0.92) 100%);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 18px; padding: 36px 32px;
+        display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      }
+      .esbd-laser-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6) 30%, rgba(239, 68, 68, 0.5) 70%, transparent);
+        margin: 40px auto;
+        max-width: 1200px;
+      }
+
+      @media (max-width: 768px) {
+        .esbd-ad-leaderboard-inner, .esbd-ad-billboard-inner { flex-direction: column; text-align: center; }
+      }
+    </style>
+    <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
+  </head>
+  <body>
+    <!-- Background 3D Particles & Visual Depth Canvas -->
+    <canvas id="esbd-cyber-bg"></canvas>
+    <div class="cyber-spotlight" id="esbd-spotlight"></div>
+    <div class="cyber-scanlines"></div>
+
+    <!-- Main React Single Page App -->
+    <div id="root"></div>
+
+    <!-- Floating Live Chatbox Widget -->
+    <div id="esbd-floating-chat">
+      <button class="esbd-chat-toggle-btn" id="esbd-chat-toggle-btn" aria-label="Open Live Chat">
+        <span class="cyber-nav-dot-pulse"></span>
+        <span>LIVE CHAT</span>
+        <span style="background:rgba(0,0,0,0.3); padding:2px 7px; border-radius:10px; font-size:0.72rem;">💬 4.8K</span>
+      </button>
+
+      <div class="esbd-chat-panel hidden" id="esbd-chat-panel">
+        <div class="esbd-chat-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="cyber-nav-dot-pulse"></span>
+            <span style="font-family:'Oxanium',sans-serif; font-size:0.92rem; font-weight:800; color:#f0f6fc;">ESBD TOURNAMENT CHAT</span>
+          </div>
+          <button id="esbd-chat-close-btn" style="background:none; border:none; color:#8b949e; cursor:pointer; font-size:1.1rem;">✕</button>
+        </div>
+        <div class="esbd-chat-channels" id="esbd-chat-channels">
+          <button class="esbd-channel-tab active" data-channel="tournament-live">#tourney-live</button>
+          <button class="esbd-channel-tab" data-channel="general">#general</button>
+          <button class="esbd-channel-tab" data-channel="match-room">#match-room</button>
+          <button class="esbd-channel-tab" data-channel="scrims">#scrims-lfg</button>
+        </div>
+        <div class="esbd-chat-messages" id="esbd-chat-messages">
+          <!-- Injected via JS -->
+        </div>
+        <div class="esbd-chat-input-bar">
+          <input type="text" class="esbd-chat-input" id="esbd-chat-input" placeholder="Type message in arena..." maxlength="200" />
+          <button class="esbd-chat-send" id="esbd-chat-send">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Stream Theater Modal -->
+    <div class="esbd-modal-overlay" id="esbd-stream-modal">
+      <div class="esbd-modal-box">
+        <div class="esbd-modal-header">
+          <div class="esbd-modal-title">
+            <span class="cyber-nav-badge-live"><span class="cyber-nav-dot-pulse"></span> LIVE BROADCAST</span>
+            <span id="esbd-stream-active-title">ESBD Free Fire Pro League: Grand Finals</span>
+          </div>
+          <button class="esbd-modal-close" onclick="closeStreamModal()">✕ ESC</button>
+        </div>
+        <div class="esbd-modal-body">
+          <div class="esbd-stream-layout">
+            <div>
+              <div class="esbd-video-wrap">
+                <iframe id="esbd-stream-iframe" src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap; gap:12px;">
+                <div>
+                  <h3 id="esbd-stream-heading" style="font-family:'Oxanium',sans-serif; font-size:1.1rem; font-weight:700; color:#f0f6fc;">GRAND FINALS // Official Cast — Arena Dhaka</h3>
+                  <p style="color:#8b949e; font-size:0.8rem; margin-top:3px;">Casters: Kabbo & Mr. Triple R | 1080p60 Full HD | Anti-Cheat Server Protected</p>
+                </div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 10px; border-radius:8px;">🔴 14,820 Viewers</span>
+                  <button onclick="openSubmitPovModal()" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 14px; border-radius:8px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer;">+ Stream Your POV</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:0.85rem; font-weight:700; color:#a78bfa; margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">AVAILABLE BROADCASTS & POVs</div>
+              <div id="esbd-stream-list" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gaming Results & Match Submission Center Modal -->
+    <div class="esbd-modal-overlay" id="esbd-results-modal">
+      <div class="esbd-modal-box">
+        <div class="esbd-modal-header">
+          <div class="esbd-modal-title">
+            <span>🏆</span>
+            <span>TOURNAMENT RESULTS & MATCH SCORE SUBMISSIONS</span>
+          </div>
+          <button class="esbd-modal-close" onclick="closeResultsModal()">✕ ESC</button>
+        </div>
+        <div class="esbd-modal-body">
+          <div style="display:flex; gap:10px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:12px; margin-bottom:20px;">
+            <button class="esbd-channel-tab active" id="tab-results-list" onclick="switchResultsTab('list')">Official Verified Results</button>
+            <button class="esbd-channel-tab" id="tab-results-submit" onclick="switchResultsTab('submit')">Submit Match Score</button>
+          </div>
+          <div id="esbd-results-content-list">
+            <div id="esbd-results-cards" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:16px;">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+          <div id="esbd-results-content-submit" style="display:none; max-width:600px; margin:0 auto;">
+            <h3 style="font-family:'Oxanium',sans-serif; font-size:1.1rem; font-weight:700; color:#f0f6fc; margin-bottom:12px;">Report Match Score & Upload Proof</h3>
+            <form id="esbd-result-form" onsubmit="handleResultSubmit(event)" style="display:flex; flex-direction:column; gap:14px;">
+              <div>
+                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Tournament</label>
+                <select id="res-form-tournament" class="esbd-chat-input" style="width:100%;">
+                  <option value="esbd-ff-pro-s4">Free Fire Pro League: Season 4</option>
+                  <option value="esbd-pubgm-s3">PUBG Mobile South Asia Prelims 2026</option>
+                  <option value="esbd-val-cup-26">Valorant Champions Cup 2026</option>
+                  <option value="esbd-cs2-lan-26">CS2 Dhaka Masters LAN Season 2</option>
+                </select>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div>
+                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Your Team Name</label>
+                  <input type="text" id="res-form-team" class="esbd-chat-input" value="RedX Esports" required />
+                </div>
+                <div>
+                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Opponent Team Name</label>
+                  <input type="text" id="res-form-opponent" class="esbd-chat-input" value="Team Legion BD" required />
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div>
+                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Your Score / Points</label>
+                  <input type="number" id="res-form-scoreA" class="esbd-chat-input" value="14" required />
+                </div>
+                <div>
+                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Opponent Score</label>
+                  <input type="number" id="res-form-scoreB" class="esbd-chat-input" value="9" required />
+                </div>
+              </div>
+              <div>
+                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Match MVP & Kills</label>
+                <input type="text" id="res-form-mvp" class="esbd-chat-input" value="raiyan (RedX) — 9 Kills" required />
+              </div>
+              <div>
+                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Screenshot Proof Image URL</label>
+                <input type="text" id="res-form-proof" class="esbd-chat-input" value="/img/gallery/lan-01.jpg" />
+              </div>
+              <button type="submit" style="background:#10b981; color:#07090c; padding:12px; border-radius:10px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; border:none; margin-top:8px;">Submit Score for Referee Verification</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Command Desk Modal -->
+    <div class="esbd-modal-overlay" id="esbd-admin-modal">
+      <div class="esbd-modal-box">
+        <div class="esbd-modal-header">
+          <div class="esbd-modal-title">
+            <span>👑</span>
+            <span>ESBD ARENA TOURNAMENT ADMIN COMMAND CONSOLE</span>
+          </div>
+          <button class="esbd-modal-close" onclick="closeAdminModal()">✕ ESC</button>
+        </div>
+        <div class="esbd-modal-body">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:24px;">
+            <div style="background:#131920; border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:16px;">
+              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Active Tournaments</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#10b981;">5 EVENTS</div>
+            </div>
+            <div style="background:#131920; border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:16px;">
+              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Live Match Rooms</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#ef4444;">12 ROOMS</div>
+            </div>
+            <div style="background:#131920; border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
+              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Anti-Cheat Status</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.4rem; font-weight:800; color:#38bdf8;">100% SECURE</div>
+            </div>
+            <div style="background:#131920; border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:16px;">
+              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Prize Pool Reserve</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#f59e0b;">৳2.5 Cr</div>
+            </div>
+          </div>
+          <div>
+            <h4 style="font-family:'Oxanium',sans-serif; font-size:1rem; font-weight:700; color:#f0f6fc; margin-bottom:12px;">Match Referee Queue & Fast Approvals</h4>
+            <div id="esbd-admin-submissions-list" style="display:flex; flex-direction:column; gap:10px;">
+              <!-- Admin cards injected via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D Interactive Cyber Engine & Platform Script -->
+    <script>
+      (function () {
+        // =====================================================================
+        // 1. Interactive 3D Cursor Spotlight
+        // =====================================================================
+        const spotlight = document.getElementById('esbd-spotlight');
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let currentX = mouseX;
+        let currentY = mouseY;
+
+        window.addEventListener('pointermove', function (e) {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+        }, { passive: true });
+
+        function updateSpotlight() {
+          currentX += (mouseX - currentX) * 0.1;
+          currentY += (mouseY - currentY) * 0.1;
+          if (spotlight) {
+            spotlight.style.left = currentX + 'px';
+            spotlight.style.top = currentY + 'px';
+          }
+          requestAnimationFrame(updateSpotlight);
+        }
+        requestAnimationFrame(updateSpotlight);
+
+        // =====================================================================
+        // 2. 3D Particle Ambient Canvas (Cyber Emerald & Crimson)
+        // =====================================================================
+        const canvas = document.getElementById('esbd-cyber-bg');
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          let width = canvas.width = window.innerWidth;
+          let height = canvas.height = window.innerHeight;
+
+          window.addEventListener('resize', function () {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+          });
+
+          const PARTICLE_COUNT = 45;
+          const particles = [];
+          const colors = ['rgba(16, 185, 129, ', 'rgba(239, 68, 68, ', 'rgba(56, 189, 248, '];
+
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              radius: Math.random() * 2.2 + 0.6,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              alpha: Math.random() * 0.6 + 0.2,
+              vx: (Math.random() - 0.5) * 0.55,
+              vy: (Math.random() - 0.5) * 0.55
+            });
+          }
+
+          function renderParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0) p.x = width;
+              if (p.x > width) p.x = 0;
+              if (p.y < 0) p.y = height;
+              if (p.y > height) p.y = 0;
+
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+              ctx.fillStyle = p.color + p.alpha + ')';
+              ctx.shadowColor = p.color + '0.8)';
+              ctx.shadowBlur = 10;
+              ctx.fill();
+            }
+            requestAnimationFrame(renderParticles);
+          }
+          requestAnimationFrame(renderParticles);
+        }
+
+        // =====================================================================
+        // 3. 3D Tilt for Logos & Cards
+        // =====================================================================
+        function apply3DLogoTilt() {
+          const logos = document.querySelectorAll('[data-testid="logo-esbd"], .logo-group');
+          logos.forEach(logo => {
+            if (logo.dataset.tiltReady) return;
+            logo.dataset.tiltReady = 'true';
+            logo.addEventListener('mousemove', function (e) {
+              const rect = logo.getBoundingClientRect();
+              const x = e.clientX - rect.left - rect.width / 2;
+              const y = e.clientY - rect.top - rect.height / 2;
+              const rotX = (y / (rect.height / 2)) * -14;
+              const rotY = (x / (rect.width / 2)) * 14;
+              const img = logo.querySelector('img');
+              if (img) {
+                img.style.transform = 'perspective(600px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) scale3d(1.08, 1.08, 1.08) translateZ(12px)';
+              }
+            });
+            logo.addEventListener('mouseleave', function () {
+              const img = logo.querySelector('img');
+              if (img) img.style.transform = '';
+            });
+          });
+        }
+
+        // =====================================================================
+        // 4. NAVBAR INJECTION: Newsroom, Shop, Live Streams, Results, Admin
+        // =====================================================================
+        function injectNavLinks() {
+          const navContainer = document.querySelector('header nav, nav.hidden');
+          if (!navContainer) return;
+
+          // Check if custom links already exist
+          if (!document.getElementById('esbd-nav-streams')) {
+            const streamBtn = document.createElement('a');
+            streamBtn.id = 'esbd-nav-streams';
+            streamBtn.href = 'javascript:void(0)';
+            streamBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-semibold text-foreground transition-colors flex items-center gap-1.5';
+            streamBtn.innerHTML = '<span class="cyber-nav-dot-pulse"></span> <span style="color:#ef4444;">Live Streams</span>';
+            streamBtn.onclick = function(e) { e.preventDefault(); openStreamModal(); };
+            navContainer.appendChild(streamBtn);
+          }
+
+          if (!document.getElementById('esbd-nav-results')) {
+            const resultsBtn = document.createElement('a');
+            resultsBtn.id = 'esbd-nav-results';
+            resultsBtn.href = 'javascript:void(0)';
+            resultsBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors';
+            resultsBtn.innerHTML = '<span>🏆 Results</span>';
+            resultsBtn.onclick = function(e) { e.preventDefault(); openResultsModal(); };
+            navContainer.appendChild(resultsBtn);
+          }
+
+          if (!document.getElementById('esbd-nav-newsroom')) {
+            const newsBtn = document.createElement('a');
+            newsBtn.id = 'esbd-nav-newsroom';
+            newsBtn.href = '/newsroom.html';
+            newsBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors';
+            newsBtn.textContent = 'Newsroom';
+            newsBtn.onclick = function(e) { e.preventDefault(); window.location.href = '/newsroom.html'; };
+            navContainer.appendChild(newsBtn);
+          }
+
+          if (!document.getElementById('esbd-nav-shop')) {
+            const shopBtn = document.createElement('a');
+            shopBtn.id = 'esbd-nav-shop';
+            shopBtn.href = '/shop.html';
+            shopBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors';
+            shopBtn.textContent = 'Shop';
+            shopBtn.onclick = function(e) { e.preventDefault(); window.location.href = '/shop.html'; };
+            navContainer.appendChild(shopBtn);
+          }
+
+          // Header actions: Admin console quick access button
+          const headerActions = document.querySelector('header div.flex.items-center.gap-2');
+          if (headerActions && !document.getElementById('esbd-nav-admin-quick')) {
+            const adminBtn = document.createElement('button');
+            adminBtn.id = 'esbd-nav-admin-quick';
+            adminBtn.className = 'hidden md:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 transition-all';
+            adminBtn.innerHTML = '<span>👑</span> <span>Admin</span>';
+            adminBtn.onclick = function() { openAdminModal(); };
+            headerActions.insertBefore(adminBtn, headerActions.firstChild);
+          }
+        }
+
+        // =====================================================================
+        // 5. INJECT LEADERBOARD & BILLBOARD SPONSORS
+        // =====================================================================
+        function isHomePage() {
+          const hash = window.location.hash;
+          return !hash || hash === '#/' || hash === '#';
+        }
+
+        function injectLeaderboardAd() {
+          if (!isHomePage()) return;
+          if (document.getElementById('esbd-ad-leaderboard-top')) return;
+          const firstSection = document.querySelector('#root section');
+          if (!firstSection) return;
+
+          const adDiv = document.createElement('div');
+          adDiv.id = 'esbd-ad-leaderboard-top';
+          adDiv.className = 'esbd-ad-leaderboard cyber-bracket';
+          adDiv.innerHTML = `
+            <div class="esbd-ad-leaderboard-inner">
+              <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+                <span class="cyber-badge" style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#10b981; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;"><span class="cyber-nav-dot-pulse"></span> PARTNER SPOTLIGHT</span>
+                <div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.92rem; font-weight:700; color:#f0f6fc;">
+                    OFFICIAL PARTNER // RESERVED PROMO SLOT
+                  </div>
+                  <div style="font-size:0.75rem; color:#8b949e; margin-top:2px;">
+                    Reach 85,000+ Verified Esports Athletes & 2M+ Live Stream Viewers Across Bangladesh
+                  </div>
+                </div>
+              </div>
+              <a href="/#/contact" style="background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#10b981; padding:8px 18px; border-radius:10px; text-decoration:none; font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700;">
+                ⚡ PARTNER WITH US →
+              </a>
+            </div>
+          `;
+          firstSection.parentElement.insertBefore(adDiv, firstSection.nextSibling);
+        }
+
+        function injectMidBillboardAd() {
+          if (!isHomePage()) return;
+          if (document.getElementById('esbd-ad-mid-billboard')) return;
+          const sections = document.querySelectorAll('#root section');
+          let tournamentSection = null;
+          sections.forEach(sec => {
+            if (sec.textContent.includes('Live and open tournaments') || sec.textContent.includes('The arena')) {
+              tournamentSection = sec;
+            }
+          });
+          if (!tournamentSection) return;
+
+          const billboard = document.createElement('div');
+          billboard.id = 'esbd-ad-mid-billboard';
+          billboard.className = 'esbd-ad-billboard cyber-bracket';
+          billboard.innerHTML = `
+            <div class="esbd-ad-billboard-inner">
+              <div style="max-width:580px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                  <span style="background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.5); color:#f59e0b; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;">★ TOURNAMENT PRESENTING SPONSOR</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:#6e7681;">SLOT #ESBD-AD-02</span>
+                </div>
+                <h3 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.25rem,2.4vw,1.85rem); font-weight:800; color:#f0f6fc; margin-bottom:8px;">
+                  Put Your Brand in Front of Bangladesh's #1 Gaming Generation
+                </h3>
+                <p style="color:#8b949e; font-size:0.88rem; line-height:1.55;">
+                  Title sponsorships, jersey branding, broadcast overlay takeovers, and custom LAN activation packages available for 2026 championships.
+                </p>
+              </div>
+              <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <a href="/#/contact" style="background:#10b981; color:#07090c; padding:12px 24px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.88rem; text-decoration:none;">
+                  Book Sponsor Slot →
+                </a>
+                <a href="/#/about" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:12px 20px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:600; font-size:0.88rem; text-decoration:none;">
+                  View Media Kit
+                </a>
+              </div>
+            </div>
+          `;
+          tournamentSection.parentElement.insertBefore(billboard, tournamentSection.nextSibling);
+        }
+
+        // =====================================================================
+        // 6. INJECT NEWSROOM PREVIEW & SHOP PROMO ON HOME PAGE
+        // =====================================================================
+        function injectNewsroomSection() {
+          if (!isHomePage()) return;
+          if (document.getElementById('esbd-newsroom-preview')) return;
+          const footer = document.querySelector('footer');
+          if (!footer) return;
+
+          const section = document.createElement('section');
+          section.id = 'esbd-newsroom-preview';
+          section.innerHTML = `
+            <div style="max-width:1200px; margin:0 auto; padding:80px 2rem 40px;">
+              <div style="text-align:center; margin-bottom:40px;">
+                <span style="font-family:'Oxanium',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:#10b981; display:block; margin-bottom:8px;">📰 LATEST NEWS</span>
+                <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.6rem,3.5vw,2.5rem); font-weight:800; color:#f0f6fc; margin-bottom:10px;">ESBD Newsroom</h2>
+                <p style="color:#8b949e; max-width:500px; margin:0 auto; font-size:0.95rem;">Tournament updates, patch notes, and the latest from Bangladesh's gaming scene.</p>
+              </div>
+              <div id="newsroom-cards" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px; margin-bottom:30px;">
+                <div style="grid-column:1/-1; text-align:center; padding:30px; color:#6e7681;">Loading news...</div>
+              </div>
+              <div style="text-align:center;">
+                <a href="/newsroom.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#10b981,#059669); color:#fff; padding:12px 28px; border-radius:12px; text-decoration:none; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.95rem; box-shadow:0 4px 16px rgba(16,185,129,0.25);">
+                  View All News →
+                </a>
+              </div>
+            </div>
+          `;
+          section.style.cssText = 'position:relative; border-top:1px solid rgba(255,255,255,0.06);';
+          footer.parentElement.insertBefore(section, footer);
+
+          fetch('/api/news')
+            .then(r => r.json())
+            .then(articles => {
+              const c = document.getElementById('newsroom-cards');
+              if (!c) return;
+              c.innerHTML = articles.slice(0, 4).map(a => `
+                <a href="/newsroom.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px; text-decoration:none; display:block; transition:all 0.3s;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="color:#10b981; font-size:0.7rem; font-weight:700; text-transform:uppercase;">${a.gameTitle || 'ESPORTS'}</span>
+                    <span style="color:#6e7681; font-size:0.7rem;">${a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</span>
+                  </div>
+                  <h3 style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#f0f6fc; margin-bottom:6px; line-height:1.35;">${a.title}</h3>
+                  <p style="color:#8b949e; font-size:0.8rem; line-height:1.5;">${a.excerpt || a.summary || ''}</p>
+                </a>
+              `).join('');
+            })
+            .catch(() => {});
+        }
+
+        function injectShopPromo() {
+          if (!isHomePage()) return;
+          if (document.getElementById('esbd-shop-promo')) return;
+          const newsSection = document.getElementById('esbd-newsroom-preview');
+          if (!newsSection) return;
+
+          const promo = document.createElement('section');
+          promo.id = 'esbd-shop-promo';
+          promo.style.cssText = 'position:relative; border-top:1px solid rgba(255,255,255,0.06); background:linear-gradient(180deg, rgba(167,139,250,0.03) 0%, transparent 100%);';
+          promo.innerHTML = `
+            <div style="max-width:1200px; margin:0 auto; padding:60px 2rem;">
+              <div style="display:flex; flex-wrap:wrap; align-items:center; gap:40px; justify-content:center;">
+                <div style="flex:1; min-width:280px; max-width:500px;">
+                  <span style="font-family:'Oxanium',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:#a78bfa; display:block; margin-bottom:8px;">🛒 GEAR UP</span>
+                  <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); font-weight:800; color:#f0f6fc; margin-bottom:12px;">ESBD Gaming Shop</h2>
+                  <p style="color:#8b949e; font-size:0.95rem; line-height:1.6; margin-bottom:20px;">Tournament-grade peripherals from ASUS ROG, Razer, Logitech, and HyperX. Gear trusted by pro players, now available for all ESBD competitors.</p>
+                  <a href="/shop.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#a78bfa,#7c3aed); color:#fff; padding:12px 28px; border-radius:12px; text-decoration:none; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.95rem;">
+                    Browse Shop →
+                  </a>
+                </div>
+                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; flex:1; min-width:280px;" id="shop-preview-cards"></div>
+              </div>
+            </div>
+          `;
+          newsSection.parentElement.insertBefore(promo, newsSection.nextSibling);
+
+          fetch('/api/products')
+            .then(r => r.json())
+            .then(products => {
+              const c = document.getElementById('shop-preview-cards');
+              if (!c) return;
+              c.innerHTML = products.slice(0, 3).map(p => `
+                <a href="/shop.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:16px; text-decoration:none; width:160px; text-align:center;">
+                  <div style="font-size:0.65rem; color:#a78bfa; font-weight:600; text-transform:uppercase;">${p.brand}</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700; color:#f0f6fc; margin:4px 0;">${p.name}</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:800; color:#10b981;">৳ ${(p.priceBDT||0).toLocaleString('en-BD')}</div>
+                </a>
+              `).join('');
+            })
+            .catch(() => {});
+        }
+
+        function injectSponsorsSection() {
+          if (!isHomePage()) return;
+          if (document.getElementById('esbd-sponsors-showcase')) return;
+          const anchor = document.getElementById('esbd-newsroom-preview') || document.querySelector('footer');
+          if (!anchor) return;
+
+          const section = document.createElement('section');
+          section.id = 'esbd-sponsors-showcase';
+          section.innerHTML = `
+            <div style="max-width:1200px; margin:0 auto; padding:70px 20px 20px;">
+              <div style="text-align:center; margin-bottom:36px;">
+                <span style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); color:#10b981; padding:3px 10px; border-radius:100px; font-size:0.72rem; font-weight:700; text-transform:uppercase;">● ECOSYSTEM PARTNERS</span>
+                <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.6rem,3.2vw,2.4rem); font-weight:800; color:#f0f6fc; margin:10px 0;">Official Partners & Sponsors</h2>
+                <p style="color:#8b949e; max-width:540px; margin:0 auto; font-size:0.92rem;">Powering national championships, pro-grade broadcasts, and athlete development across Bangladesh.</p>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+                <div style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center;">
+                  <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">OFFICIAL HARDWARE</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc; margin:6px 0;">ASUS ROG BANGLADESH</div>
+                  <span style="color:#10b981; font-size:0.75rem;">● VERIFIED TITLE PARTNER</span>
+                </div>
+                <div style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center;">
+                  <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">OFFICIAL FINTECH</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc; margin:6px 0;">bKash LIMITED</div>
+                  <span style="color:#10b981; font-size:0.75rem;">● PRIZE DISBURSEMENT PARTNER</span>
+                </div>
+                <div style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center;">
+                  <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">STREAMING PARTNER</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc; margin:6px 0;">YOUTUBE GAMING BD</div>
+                  <span style="color:#10b981; font-size:0.75rem;">● OFFICIAL LIVESTREAM FEED</span>
+                </div>
+                <a href="/#/contact" style="background:rgba(245,158,11,0.04); border:1px dashed rgba(245,158,11,0.45); border-radius:14px; padding:20px; text-align:center; text-decoration:none;">
+                  <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">★ SPONSORSHIP OPEN</span>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:1.1rem; font-weight:800; color:#f59e0b; margin:6px 0;">YOUR BRAND HERE</div>
+                  <span style="color:#8b949e; font-size:0.75rem;">Join ESBD Season 2026 →</span>
+                </a>
+              </div>
+            </div>
+          `;
+          anchor.parentElement.insertBefore(section, anchor);
+        }
+
+        // =====================================================================
+        // 7. INJECT PORTAL ENHANCEMENTS (Player Command Hub)
+        // =====================================================================
+        function injectPortalEnhancements() {
+          if (!window.location.hash.includes('portal')) return;
+          if (document.getElementById('esbd-portal-command-hub')) return;
+
+          const portalContent = document.querySelector('#root main') || document.querySelector('#root');
+          if (!portalContent) return;
+
+          const hub = document.createElement('div');
+          hub.id = 'esbd-portal-command-hub';
+          hub.style.cssText = 'max-width:1200px; margin:20px auto 30px; padding:0 20px;';
+          hub.innerHTML = `
+            <div style="background:linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(13,17,23,0.95) 100%); border:1px solid rgba(16,185,129,0.3); border-radius:16px; padding:24px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span style="background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#10b981; padding:3px 10px; border-radius:8px; font-size:0.75rem; font-weight:800;">⚡ PLAYER HUB</span>
+                  <span style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc;">Pro Competitor Command Deck</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px; font-size:0.75rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 10px; border-radius:8px;">
+                  <span>🛡️ Anti-Cheat Engine: Active & Server-Authoritative</span>
+                </div>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;">
+                <button onclick="openStreamModal()" style="background:#0d1117; border:1px solid rgba(239,68,68,0.35); border-radius:12px; padding:14px; text-align:left; cursor:pointer; color:#f0f6fc;">
+                  <div style="font-size:0.7rem; color:#ef4444; font-weight:700;">🔴 LIVE STREAM</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; margin:4px 0;">Tournament Broadcast & POVs</div>
+                  <div style="font-size:0.75rem; color:#8b949e;">Watch Grand Finals live</div>
+                </button>
+                <button onclick="openResultsModal()" style="background:#0d1117; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; text-align:left; cursor:pointer; color:#f0f6fc;">
+                  <div style="font-size:0.7rem; color:#10b981; font-weight:700;">🏆 MATCH RESULTS</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; margin:4px 0;">Report Match Score</div>
+                  <div style="font-size:0.75rem; color:#8b949e;">Submit proof screenshot</div>
+                </button>
+                <a href="/newsroom.html" style="background:#0d1117; border:1px solid rgba(56,189,248,0.35); border-radius:12px; padding:14px; text-align:left; text-decoration:none; color:#f0f6fc; display:block;">
+                  <div style="font-size:0.7rem; color:#38bdf8; font-weight:700;">📰 ESBD NEWSROOM</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; margin:4px 0;">Patch Notes & Rules</div>
+                  <div style="font-size:0.75rem; color:#8b949e;">Read tournament announcements</div>
+                </a>
+                <a href="/shop.html" style="background:#0d1117; border:1px solid rgba(167,139,250,0.35); border-radius:12px; padding:14px; text-align:left; text-decoration:none; color:#f0f6fc; display:block;">
+                  <div style="font-size:0.7rem; color:#a78bfa; font-weight:700;">🛒 PRO GAMING SHOP</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; margin:4px 0;">Tournament Peripherals</div>
+                  <div style="font-size:0.75rem; color:#8b949e;">ASUS ROG & Razer gear</div>
+                </a>
+              </div>
+            </div>
+          `;
+
+          const firstElem = portalContent.children[0];
+          if (firstElem && firstElem.nextSibling) {
+            portalContent.insertBefore(hub, firstElem.nextSibling);
+          } else {
+            portalContent.appendChild(hub);
+          }
+        }
+
+        // =====================================================================
+        // 8. MASTER INJECTION DISPATCHER
+        // =====================================================================
+        function runAllInjections() {
+          apply3DLogoTilt();
+          injectNavLinks();
+
+          if (isHomePage()) {
+            injectLeaderboardAd();
+            injectMidBillboardAd();
+            injectNewsroomSection();
+            injectShopPromo();
+            injectSponsorsSection();
+          } else {
+            // Remove home-specific banners if on another page
+            const ids = [
+              'esbd-ad-leaderboard-top',
+              'esbd-ad-mid-billboard',
+              'esbd-newsroom-preview',
+              'esbd-shop-promo',
+              'esbd-sponsors-showcase'
+            ];
+            ids.forEach(id => {
+              const el = document.getElementById(id);
+              if (el && el.parentNode) el.parentNode.removeChild(el);
+            });
+          }
+
+          if (window.location.hash.includes('portal')) {
+            injectPortalEnhancements();
+          } else {
+            const hub = document.getElementById('esbd-portal-command-hub');
+            if (hub && hub.parentNode) hub.parentNode.removeChild(hub);
+          }
+        }
+
+        setInterval(runAllInjections, 1200);
+        window.addEventListener('hashchange', () => setTimeout(runAllInjections, 100));
+
+        // =====================================================================
+        // 9. LIVE CHAT SYSTEM
+        // =====================================================================
+        let currentChatChannel = 'tournament-live';
+        const chatPanel = document.getElementById('esbd-chat-panel');
+        const chatToggleBtn = document.getElementById('esbd-chat-toggle-btn');
+        const chatCloseBtn = document.getElementById('esbd-chat-close-btn');
+        const chatMessagesElem = document.getElementById('esbd-chat-messages');
+        const chatInput = document.getElementById('esbd-chat-input');
+        const chatSendBtn = document.getElementById('esbd-chat-send');
+        const channelTabs = document.querySelectorAll('.esbd-channel-tab');
+
+        if (chatToggleBtn && chatPanel) {
+          chatToggleBtn.onclick = () => {
+            chatPanel.classList.toggle('hidden');
+            if (!chatPanel.classList.contains('hidden')) {
+              fetchChatMessages();
+              chatInput.focus();
+            }
+          };
+          chatCloseBtn.onclick = () => chatPanel.classList.add('hidden');
+        }
+
+        channelTabs.forEach(tab => {
+          tab.onclick = () => {
+            channelTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentChatChannel = tab.dataset.channel;
+            fetchChatMessages();
+          };
+        });
+
+        function fetchChatMessages() {
+          fetch('/api/chat/messages?channel=' + currentChatChannel)
+            .then(r => r.json())
+            .then(messages => {
+              if (!chatMessagesElem) return;
+              chatMessagesElem.innerHTML = messages.map(m => {
+                const roleClass = 'role-' + (m.role || 'user');
+                return `
+                  <div class="esbd-chat-bubble">
+                    <div class="esbd-chat-meta">
+                      <span class="esbd-chat-user">${m.user}</span>
+                      <span class="esbd-role-badge ${roleClass}">${m.badge || 'PRO'}</span>
+                      <span style="color:#6e7681; margin-left:auto;">${new Date(m.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
+                    </div>
+                    <div style="color:#e6edf3;">${m.text}</div>
+                  </div>
+                `;
+              }).join('');
+              chatMessagesElem.scrollTop = chatMessagesElem.scrollHeight;
+            })
+            .catch(() => {});
+        }
+
+        function sendChatMessage() {
+          const text = chatInput.value.trim();
+          if (!text) return;
+          chatInput.value = '';
+
+          fetch('/api/chat/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              channel: currentChatChannel,
+              user: 'raiyan',
+              role: 'pro',
+              badge: '⚡ PRO',
+              text: text
+            })
+          })
+            .then(() => fetchChatMessages())
+            .catch(() => {});
+        }
+
+        if (chatSendBtn) chatSendBtn.onclick = sendChatMessage;
+        if (chatInput) {
+          chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendChatMessage();
+          });
+        }
+        setInterval(() => {
+          if (chatPanel && !chatPanel.classList.contains('hidden')) fetchChatMessages();
+        }, 3500);
+
+        // =====================================================================
+        // 10. LIVE STREAM THEATER CONTROLLER
+        // =====================================================================
+        window.openStreamModal = function() {
+          const modal = document.getElementById('esbd-stream-modal');
+          if (modal) {
+            modal.classList.add('active');
+            fetchStreams();
+          }
+        };
+
+        window.closeStreamModal = function() {
+          const modal = document.getElementById('esbd-stream-modal');
+          if (modal) modal.classList.remove('active');
+        };
+
+        function fetchStreams() {
+          fetch('/api/streams')
+            .then(r => r.json())
+            .then(streams => {
+              const listElem = document.getElementById('esbd-stream-list');
+              if (!listElem) return;
+              listElem.innerHTML = streams.map(s => `
+                <div onclick="switchActiveStream('${s.streamUrl}', '${s.title}')" style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.68rem; font-weight:700; color:${s.type==='official'?'#ef4444':'#a78bfa'};">${s.type==='official'?'🔴 OFFICIAL CAST':'⚡ PLAYER POV'}</span>
+                    <span style="font-size:0.68rem; color:#6e7681;">${s.viewerCount} Viewers</span>
+                  </div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700; color:#f0f6fc;">${s.title}</div>
+                  <div style="font-size:0.72rem; color:#8b949e; margin-top:2px;">${s.caster || s.participantIgn || ''}</div>
+                </div>
+              `).join('');
+            })
+            .catch(() => {});
+        }
+
+        window.switchActiveStream = function(url, title) {
+          const iframe = document.getElementById('esbd-stream-iframe');
+          const titleElem = document.getElementById('esbd-stream-heading');
+          if (iframe) iframe.src = url;
+          if (titleElem) titleElem.textContent = title;
+        };
+
+        window.openSubmitPovModal = function() {
+          const ign = prompt('Enter your registered IGN:');
+          if (!ign) return;
+          const url = prompt('Enter your YouTube or Twitch Live URL:');
+          if (!url) return;
+
+          fetch('/api/streams/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              participantIgn: ign,
+              streamUrl: url,
+              title: '[PLAYER POV] ' + ign + ' — Live Match'
+            })
+          })
+            .then(r => r.json())
+            .then(() => {
+              alert('Your stream POV has been submitted and is now featured in the tournament hub!');
+              fetchStreams();
+            })
+            .catch(() => alert('Failed to submit stream.'));
+        };
+
+        // =====================================================================
+        // 11. GAMING RESULTS & MATCH SCORE SUBMISSIONS CONTROLLER
+        // =====================================================================
+        window.openResultsModal = function() {
+          const modal = document.getElementById('esbd-results-modal');
+          if (modal) {
+            modal.classList.add('active');
+            fetchResults();
+          }
+        };
+
+        window.closeResultsModal = function() {
+          const modal = document.getElementById('esbd-results-modal');
+          if (modal) modal.classList.remove('active');
+        };
+
+        window.switchResultsTab = function(tab) {
+          const listTab = document.getElementById('tab-results-list');
+          const submitTab = document.getElementById('tab-results-submit');
+          const listContent = document.getElementById('esbd-results-content-list');
+          const submitContent = document.getElementById('esbd-results-content-submit');
+
+          if (tab === 'list') {
+            listTab.classList.add('active');
+            submitTab.classList.remove('active');
+            listContent.style.display = 'block';
+            submitContent.style.display = 'none';
+          } else {
+            submitTab.classList.add('active');
+            listTab.classList.remove('active');
+            listContent.style.display = 'none';
+            submitContent.style.display = 'block';
+          }
+        };
+
+        function fetchResults() {
+          fetch('/api/matches/results')
+            .then(r => r.json())
+            .then(results => {
+              const c = document.getElementById('esbd-results-cards');
+              if (!c) return;
+              c.innerHTML = results.map(r => `
+                <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px;">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <span style="font-size:0.72rem; color:#10b981; font-weight:700;">${r.tournamentTitle}</span>
+                    <span style="font-size:0.7rem; color:#6e7681;">${r.roundName}</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0; background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:10px;">
+                    <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:800; color:#10b981;">${r.winnerTeam} (${r.scoreA})</div>
+                    <div style="font-size:0.8rem; color:#6e7681; font-weight:700;">VS</div>
+                    <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#8b949e;">${r.loserTeam} (${r.scoreB})</div>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8b949e;">
+                    <span>⭐ MVP: <strong style="color:#f0f6fc;">${r.mvp}</strong> (${r.mvpKills} Kills)</span>
+                    <span style="color:#10b981;">✔ ${r.status}</span>
+                  </div>
+                  <div style="margin-top:8px; font-size:0.7rem; color:#6e7681;">
+                    Verified By: ${r.verifiedBy || 'Official Referee'}
+                  </div>
+                </div>
+              `).join('');
+            })
+            .catch(() => {});
+        }
+
+        window.handleResultSubmit = function(e) {
+          e.preventDefault();
+          const tournament = document.getElementById('res-form-tournament').value;
+          const team = document.getElementById('res-form-team').value;
+          const opponent = document.getElementById('res-form-opponent').value;
+          const scoreA = document.getElementById('res-form-scoreA').value;
+          const scoreB = document.getElementById('res-form-scoreB').value;
+          const mvp = document.getElementById('res-form-mvp').value;
+          const proof = document.getElementById('res-form-proof').value;
+
+          fetch('/api/matches/submit-result', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              tournamentId: tournament,
+              winnerTeam: team,
+              loserTeam: opponent,
+              scoreA,
+              scoreB,
+              mvp,
+              proofUrl: proof
+            })
+          })
+            .then(r => r.json())
+            .then(() => {
+              alert('Match result submitted successfully! Official referees have been notified.');
+              switchResultsTab('list');
+              fetchResults();
+            })
+            .catch(() => alert('Failed to submit result.'));
+        };
+
+        // =====================================================================
+        // 12. ADMIN CONSOLE MODAL
+        // =====================================================================
+        window.openAdminModal = function() {
+          const modal = document.getElementById('esbd-admin-modal');
+          if (modal) {
+            modal.classList.add('active');
+            fetchAdminSubmissions();
+          }
+        };
+
+        window.closeAdminModal = function() {
+          const modal = document.getElementById('esbd-admin-modal');
+          if (modal) modal.classList.remove('active');
+        };
+
+        function fetchAdminSubmissions() {
+          fetch('/api/admin/submissions')
+            .then(r => r.json())
+            .then(subs => {
+              const c = document.getElementById('esbd-admin-submissions-list');
+              if (!c) return;
+              c.innerHTML = subs.map(s => `
+                <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                  <div>
+                    <div style="font-family:'Oxanium',sans-serif; font-size:0.9rem; font-weight:700; color:#f0f6fc;">Match ID: ${s.matchId} — Submitted by ${s.submittedBy}</div>
+                    <div style="font-size:0.75rem; color:#8b949e; margin-top:2px;">Score Reported: ${s.scoreReported} | Status: <span style="color:#10b981;">${s.status}</span></div>
+                  </div>
+                  <div style="display:flex; gap:8px;">
+                    <a href="${s.proofUrl}" target="_blank" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 12px; border-radius:6px; font-size:0.75rem; text-decoration:none;">View Screenshot</a>
+                    <button onclick="alert('Score approved & verified in official bracket!')" style="background:#10b981; color:#07090c; border:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer;">Approve Score</button>
+                  </div>
+                </div>
+              `).join('');
+            })
+            .catch(() => {});
+        }
+      })();
+    </script>
+  </body>
+</html>

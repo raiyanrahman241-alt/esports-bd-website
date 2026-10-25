@@ -1,0 +1,510 @@
+/* =============================================================================
+   ESBD — PREMIUM HERO & FULL-PAGE ATMOSPHERE UPGRADE
+   Brings Leaderboards-level cosmic depth to the entire landing page.
+   Preserves existing 3D globe, brand colors, and functionality.
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. DEEP COSMIC NEBULA ATMOSPHERE — FULL PAGE COVERAGE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Multiple layered nebula glows for depth throughout the page */
+.esbd-deep-atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-deep-atmosphere .nebula-layer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Primary emerald nebula — top left hero area */
+.esbd-deep-atmosphere .nebula-emerald-primary {
+  width: 900px;
+  height: 900px;
+  top: -15%;
+  left: -12%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(16, 185, 129, 0.06) 40%, transparent 70%);
+  animation: nebulaBreathePrimary 20s ease-in-out infinite alternate;
+}
+
+/* Crimson nebula — right side, behind globe */
+.esbd-deep-atmosphere .nebula-crimson-core {
+  width: 750px;
+  height: 750px;
+  top: 5%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.14) 0%, rgba(239, 68, 68, 0.04) 45%, transparent 70%);
+  animation: nebulaBreatheCrimson 18s ease-in-out infinite alternate;
+  animation-delay: -6s;
+}
+
+/* Cyan accent nebula — mid-page */
+.esbd-deep-atmosphere .nebula-cyan-accent {
+  width: 600px;
+  height: 600px;
+  top: 40%;
+  left: 25%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.10) 0%, rgba(56, 189, 248, 0.03) 50%, transparent 70%);
+  animation: nebulaDriftCyan 22s ease-in-out infinite alternate;
+  animation-delay: -10s;
+}
+
+/* Gold accent — lower sections */
+.esbd-deep-atmosphere .nebula-gold-subtle {
+  width: 500px;
+  height: 500px;
+  bottom: 25%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.07) 0%, transparent 60%);
+  animation: nebulaDriftGold 16s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+
+/* Deep space purple haze for extra cosmic feel */
+.esbd-deep-atmosphere .nebula-deep-space {
+  width: 1200px;
+  height: 1200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(88, 28, 135, 0.06) 0%, rgba(30, 10, 60, 0.03) 40%, transparent 65%);
+  animation: nebulaDeepPulse 25s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaBreathePrimary {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50%  { transform: translate(60px, -40px) scale(1.15); opacity: 1; }
+  100% { transform: translate(-30px, 50px) scale(0.95); opacity: 0.8; }
+}
+
+@keyframes nebulaBreatheCrimson {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  50%  { transform: translate(-50px, 30px) scale(1.12); opacity: 0.9; }
+  100% { transform: translate(40px, -25px) scale(0.88); opacity: 0.7; }
+}
+
+@keyframes nebulaDriftCyan {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  100% { transform: translate(70px, -50px) scale(1.2); opacity: 0.8; }
+}
+
+@keyframes nebulaDriftGold {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  100% { transform: translate(-40px, 30px) scale(1.15); opacity: 0.7; }
+}
+
+@keyframes nebulaDeepPulse {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50%  { transform: translate(-50%, -50%) scale(1.1); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.35; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. HERO SECTION 3D LOGO INSIDE GLOBE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* 3D Logo floating inside the Three.js globe area */
+#esbd-globe-logo-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+  will-change: transform, opacity;
+  transition: opacity 0.6s ease;
+}
+
+#esbd-globe-logo {
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+  filter: 
+    drop-shadow(0 0 25px rgba(16, 185, 129, 0.6))
+    drop-shadow(0 0 50px rgba(239, 68, 68, 0.3))
+    drop-shadow(0 0 80px rgba(16, 185, 129, 0.2));
+  animation: globeLogoFloat 6s ease-in-out infinite, globeLogoPulse 4s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+@keyframes globeLogoFloat {
+  0%, 100% { transform: translateY(0px) rotateY(0deg) scale(1); }
+  25%      { transform: translateY(-8px) rotateY(5deg) scale(1.02); }
+  50%      { transform: translateY(-4px) rotateY(0deg) scale(1.04); }
+  75%      { transform: translateY(-10px) rotateY(-5deg) scale(1.02); }
+}
+
+@keyframes globeLogoPulse {
+  0%   { filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5)) drop-shadow(0 0 40px rgba(239, 68, 68, 0.25)); }
+  50%  { filter: drop-shadow(0 0 35px rgba(16, 185, 129, 0.8)) drop-shadow(0 0 60px rgba(239, 68, 68, 0.45)) brightness(1.1); }
+  100% { filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 50px rgba(56, 189, 248, 0.3)); }
+}
+
+@media (max-width: 768px) {
+  #esbd-globe-logo {
+    width: 120px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. ENHANCED SECTION BACKGROUNDS — GLASSMORPHIC DEPTH
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Every section gets a subtle glassmorphic background to create depth layers */
+#root section,
+main section {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hero section specifically — ensure cosmic depth shows through */
+#root section:first-of-type,
+#root > div > main > section:first-of-type {
+  background: transparent !important;
+}
+
+/* Content sections get subtle frosted overlay for readability while keeping depth */
+.esbd-platform-frame {
+  background: rgba(7, 9, 12, 0.4) !important;
+  backdrop-filter: blur(6px) !important;
+  border-radius: 16px;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.esbd-platform-frame:hover {
+  background: rgba(7, 9, 12, 0.5) !important;
+  box-shadow: 0 0 60px -20px rgba(16, 185, 129, 0.08);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. PREMIUM SCROLL REVEAL ANIMATIONS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Enhanced 3D scroll reveal with stagger */
+.esbd-scroll-reveal-3d {
+  opacity: 0;
+  transform: perspective(1200px) translateY(40px) rotateX(3deg) scale(0.97);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.esbd-scroll-reveal-3d.in-view {
+  opacity: 1;
+  transform: perspective(1200px) translateY(0) rotateX(0) scale(1);
+}
+
+/* Stagger children reveal */
+.esbd-scroll-reveal-3d.in-view .bg-card:nth-child(1),
+.esbd-scroll-reveal-3d.in-view [data-testid="tournament-card"]:nth-child(1) { transition-delay: 0.05s; }
+.esbd-scroll-reveal-3d.in-view .bg-card:nth-child(2),
+.esbd-scroll-reveal-3d.in-view [data-testid="tournament-card"]:nth-child(2) { transition-delay: 0.12s; }
+.esbd-scroll-reveal-3d.in-view .bg-card:nth-child(3),
+.esbd-scroll-reveal-3d.in-view [data-testid="tournament-card"]:nth-child(3) { transition-delay: 0.19s; }
+.esbd-scroll-reveal-3d.in-view .bg-card:nth-child(4),
+.esbd-scroll-reveal-3d.in-view [data-testid="tournament-card"]:nth-child(4) { transition-delay: 0.26s; }
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. SPACIOUS 3D SECTION DIVIDERS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Premium 3D laser divider between sections */
+.esbd-premium-divider {
+  position: relative;
+  height: 3px;
+  margin: 60px auto 50px;
+  max-width: 1200px;
+  overflow: visible;
+}
+
+.esbd-premium-divider::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(16, 185, 129, 0.5) 15%, 
+    rgba(16, 185, 129, 0.8) 30%,
+    rgba(239, 68, 68, 0.6) 50%,
+    rgba(56, 189, 248, 0.5) 70%,
+    rgba(16, 185, 129, 0.5) 85%,
+    transparent 100%
+  );
+  border-radius: 2px;
+}
+
+/* Glowing halo under the divider */
+.esbd-premium-divider::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 10%;
+  right: 10%;
+  height: 24px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(16, 185, 129, 0.15) 30%, 
+    rgba(239, 68, 68, 0.10) 50%,
+    rgba(16, 185, 129, 0.15) 70%, 
+    transparent
+  );
+  filter: blur(12px);
+  border-radius: 50%;
+}
+
+/* Animated light runner on divider */
+.esbd-premium-divider .divider-runner {
+  position: absolute;
+  top: -3px;
+  width: 80px;
+  height: 9px;
+  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.9), transparent);
+  border-radius: 50%;
+  animation: dividerRunnerSlide 4s ease-in-out infinite;
+  filter: blur(2px);
+}
+
+@keyframes dividerRunnerSlide {
+  0%   { left: -80px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: calc(100% + 80px); opacity: 0; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. STAT COUNTER GLOW ENHANCEMENTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Make stat numbers glow with emerald energy */
+.esbd-stat-highlight {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.2);
+  transition: text-shadow 0.3s ease;
+}
+
+.esbd-stat-highlight:hover {
+  text-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 60px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   7. HERO SECTION DEPTH ENHANCEMENT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Hero bottom gradient fade — creates depth transition */
+.esbd-hero-depth-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, 
+    transparent 0%,
+    rgba(7, 9, 12, 0.3) 40%,
+    rgba(7, 9, 12, 0.7) 70%,
+    rgba(7, 9, 12, 0.95) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Horizontal light beams across hero for cinematic depth */
+.esbd-hero-light-beams {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.35;
+}
+
+.esbd-hero-light-beams .beam {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+  animation: beamSweep 12s ease-in-out infinite;
+}
+
+.esbd-hero-light-beams .beam:nth-child(1) {
+  top: 20%;
+  width: 60%;
+  left: -10%;
+  animation-delay: 0s;
+  opacity: 0.6;
+}
+
+.esbd-hero-light-beams .beam:nth-child(2) {
+  top: 45%;
+  width: 45%;
+  right: -10%;
+  left: auto;
+  animation-delay: -4s;
+  opacity: 0.4;
+  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.2), transparent);
+}
+
+.esbd-hero-light-beams .beam:nth-child(3) {
+  top: 70%;
+  width: 50%;
+  left: 15%;
+  animation-delay: -8s;
+  opacity: 0.3;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.2), transparent);
+}
+
+@keyframes beamSweep {
+  0%   { transform: translateX(-100%) scaleY(1); opacity: 0; }
+  20%  { opacity: 1; transform: translateX(0%) scaleY(1.5); }
+  80%  { opacity: 1; transform: translateX(100%) scaleY(1.2); }
+  100% { transform: translateX(200%) scaleY(1); opacity: 0; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   8. ENHANCED CARD HOVER EFFECTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Cards get richer depth on hover */
+.bg-card,
+[data-testid="tournament-card"] {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.bg-card:hover,
+[data-testid="tournament-card"]:hover {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 
+    0 12px 30px -8px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(16, 185, 129, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  transform: translateY(-3px) !important;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   9. ANIMATED FLOATING PARTICLES OVERLAY (CSS-only supplement)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.esbd-floating-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-floating-particles .particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 15s ease-in-out infinite;
+}
+
+.esbd-floating-particles .particle:nth-child(odd) {
+  background: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+}
+
+.esbd-floating-particles .particle:nth-child(even) {
+  background: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.3);
+}
+
+.esbd-floating-particles .particle:nth-child(3n) {
+  background: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
+  width: 3px;
+  height: 3px;
+}
+
+@keyframes particleFloat {
+  0%   { opacity: 0; transform: translateY(100vh) translateX(0); }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(-20vh) translateX(50px); }
+}
+
+/* Individual particle positions and timings */
+.esbd-floating-particles .particle:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 18s; }
+.esbd-floating-particles .particle:nth-child(2) { left: 12%; animation-delay: -3s; animation-duration: 22s; }
+.esbd-floating-particles .particle:nth-child(3) { left: 20%; animation-delay: -6s; animation-duration: 16s; }
+.esbd-floating-particles .particle:nth-child(4) { left: 28%; animation-delay: -1s; animation-duration: 20s; }
+.esbd-floating-particles .particle:nth-child(5) { left: 35%; animation-delay: -8s; animation-duration: 14s; }
+.esbd-floating-particles .particle:nth-child(6) { left: 42%; animation-delay: -2s; animation-duration: 24s; }
+.esbd-floating-particles .particle:nth-child(7) { left: 52%; animation-delay: -5s; animation-duration: 17s; }
+.esbd-floating-particles .particle:nth-child(8) { left: 60%; animation-delay: -10s; animation-duration: 21s; }
+.esbd-floating-particles .particle:nth-child(9) { left: 68%; animation-delay: -7s; animation-duration: 15s; }
+.esbd-floating-particles .particle:nth-child(10) { left: 75%; animation-delay: -4s; animation-duration: 19s; }
+.esbd-floating-particles .particle:nth-child(11) { left: 82%; animation-delay: -9s; animation-duration: 23s; }
+.esbd-floating-particles .particle:nth-child(12) { left: 90%; animation-delay: -11s; animation-duration: 16s; }
+.esbd-floating-particles .particle:nth-child(13) { left: 95%; animation-delay: -2s; animation-duration: 25s; }
+.esbd-floating-particles .particle:nth-child(14) { left: 8%; animation-delay: -12s; animation-duration: 18s; }
+.esbd-floating-particles .particle:nth-child(15) { left: 48%; animation-delay: -6s; animation-duration: 20s; }
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   10. REDUCE REPETITIVE BAR SECTIONS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Remove duplicate/excessive 3D bars that make the page feel repetitive */
+.esbd-3d-animated-bar + .esbd-3d-animated-bar,
+.esbd-graphic-bar-top + .esbd-graphic-bar-top {
+  display: none !important;
+}
+
+/* Keep bars more spacious */
+.esbd-3d-animated-bar {
+  margin-top: 40px !important;
+  margin-bottom: 40px !important;
+}
+
+/* Graphic top bars inside sections — less aggressive, more subtle */
+.esbd-graphic-bar-top {
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   11. RESPONSIVE ADJUSTMENTS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .esbd-deep-atmosphere .nebula-emerald-primary {
+    width: 500px;
+    height: 500px;
+  }
+  .esbd-deep-atmosphere .nebula-crimson-core {
+    width: 400px;
+    height: 400px;
+  }
+  .esbd-deep-atmosphere .nebula-deep-space {
+    width: 600px;
+    height: 600px;
+  }
+  
+  .esbd-premium-divider {
+    margin: 35px auto 30px;
+  }
+  
+  .esbd-hero-light-beams {
+    opacity: 0.2;
+  }
+  
+  .esbd-floating-particles .particle {
+    width: 1.5px;
+    height: 1.5px;
+  }
+}

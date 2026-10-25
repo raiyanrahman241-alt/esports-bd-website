@@ -47,9 +47,12 @@
     </script>
     <link rel="stylesheet" crossorigin href="/assets/index-Bdt_ggT_.css">
     <link rel="stylesheet" href="/assets/esbd-platform-3d.css">
+    <link rel="stylesheet" href="/assets/esbd-platform-3d-upgraded.css">
+    <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
     <script src="/assets/three.min.js"></script>
     <script type="module" crossorigin src="/assets/index-DxaXhSva.js"></script>
-    <script src="/assets/esbd-platform-3d.js" defer></script>
+    <script src="/assets/esbd-platform-3d-upgraded.js" defer></script>
+    <script src="/assets/esbd-platform-3d-preview.js" defer></script>
 
     <!-- 3D Cyber Atmosphere & Platform Enhancements Styles -->
     <style>
@@ -123,9 +126,9 @@
         opacity: 0.35;
       }
 
-      /* Desktop 3D Perspective */
+      /* Desktop 3D Perspective (Applied to #root, NEVER to body so fixed background canvas and grid stay fixed) */
       @media (min-width: 1024px) {
-        body { perspective: 1400px; }
+        #root { perspective: 1400px; }
       }
 
       /* 3D LOGO FLOATING & HOLOGRAPHIC SHIMMER */
@@ -515,6 +518,7 @@
         .esbd-ad-leaderboard-inner, .esbd-ad-billboard-inner { flex-direction: column; text-align: center; }
       }
     </style>
+    <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
   </head>
   <body>
     <!-- Background 3D Particles & Visual Depth Canvas -->

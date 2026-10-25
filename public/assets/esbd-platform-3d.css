@@ -1,10 +1,35 @@
 /* =============================================================================
-   E-SPORTS BANGLADESH (ESBD) — PREMIER 3D GAMING PLATFORM & ATMOSPHERE ENGINE
-   Full-Page Persistent 3D Arena Core, 3D Animated Bar System, 3D Scroll Effects
+   E-SPORTS BANGLADESH (ESBD) — 3D PLATFORM & FULL-PAGE ATMOSPHERE ENGINE
+   Leaderboards-Level Cosmic Depth across Hero & Landing Page
+   Ultra-Glow 3D Bars, Center-of-Attention 3D Sections, Holographic HUD & Laser Dividers
    ============================================================================= */
 
 /* -----------------------------------------------------------------------------
-   1. FULL-PAGE CONTINUOUS 3D THREE.JS WEBGL CANVAS
+   1. GLOBAL BACKGROUND FULLNESS & TRANSPARENCY
+   ----------------------------------------------------------------------------- */
+html, body {
+  background-color: #07090c !important;
+  color: #f0f6fc;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+#root, #root > div, main {
+  background-color: transparent !important;
+}
+
+/* Hero Section: Keep gentle vignette without blocking 3D background */
+#root section:first-of-type > div[class*="bg-gradient-to-r"] {
+  background: linear-gradient(90deg, rgba(7, 9, 12, 0.45) 0%, rgba(7, 9, 12, 0.15) 60%, transparent 100%) !important;
+}
+
+#root section:first-of-type > div[class*="bg-gradient-to-t"] {
+  background: linear-gradient(0deg, rgba(7, 9, 12, 0.5) 0%, transparent 100%) !important;
+}
+
+/* -----------------------------------------------------------------------------
+   2. THREE.JS PERSISTENT 3D CANVAS
    ----------------------------------------------------------------------------- */
 #esbd-three-arena-canvas {
   position: fixed;
@@ -14,17 +39,14 @@
   height: 100vh;
   pointer-events: none;
   z-index: 0;
-  mix-blend-mode: screen;
-  opacity: 0.98;
+  mix-blend-mode: normal;
+  opacity: 1;
   will-change: transform;
 }
 
-/* Hide duplicate local hero canvas so master 3D arena engine takes over smoothly */
-[data-testid="canvas-arena-core"] {
-  display: none !important;
-}
-
-/* Continuous Volumetric Nebula Glows */
+/* -----------------------------------------------------------------------------
+   3. FIVE-LAYER VOLUMETRIC COSMIC NEBULA SYSTEM (FULL-PAGE DEPTH)
+   ----------------------------------------------------------------------------- */
 .esbd-ambient-nebula {
   position: fixed;
   inset: 0;
@@ -36,551 +58,610 @@
 .esbd-nebula-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(130px);
-  opacity: 0.38;
+  filter: blur(120px);
   pointer-events: none;
   will-change: transform, opacity;
-  animation: esbdNebulaFloat 18s ease-in-out infinite alternate;
 }
 
-.esbd-nebula-green {
-  width: 700px;
-  height: 700px;
-  top: 10%;
-  left: -180px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.45) 0%, rgba(16, 185, 129, 0) 70%);
+/* Emerald Primary Nebula — Top Hero Area */
+.esbd-nebula-emerald-primary {
+  width: 900px;
+  height: 900px;
+  top: -15%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 45%, transparent 70%);
+  animation: esbdNebulaBreatheEmerald 20s ease-in-out infinite alternate;
 }
 
-.esbd-nebula-red {
+/* Crimson Core Nebula — Behind 3D Globe */
+.esbd-nebula-crimson-core {
+  width: 780px;
+  height: 780px;
+  top: 4%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.18) 0%, rgba(239, 68, 68, 0.06) 50%, transparent 75%);
+  animation: esbdNebulaBreatheCrimson 18s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+
+/* Cyan Cyber Accent — Mid-Page Depth */
+.esbd-nebula-cyan-accent {
   width: 650px;
   height: 650px;
-  bottom: 15%;
-  right: -150px;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.38) 0%, rgba(239, 68, 68, 0) 70%);
-  animation-delay: -9s;
+  top: 42%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(56, 189, 248, 0.04) 50%, transparent 70%);
+  animation: esbdNebulaDriftCyan 22s ease-in-out infinite alternate;
+  animation-delay: -10s;
 }
 
-.esbd-nebula-cyan {
-  width: 550px;
-  height: 550px;
-  top: 55%;
-  left: 35%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(56, 189, 248, 0) 70%);
+/* Gold Champion Accent — Lower Sections */
+.esbd-nebula-gold-subtle {
+  width: 520px;
+  height: 520px;
+  bottom: 22%;
+  right: 12%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, transparent 65%);
+  animation: esbdNebulaDriftGold 16s ease-in-out infinite alternate;
   animation-delay: -4s;
 }
 
-@keyframes esbdNebulaFloat {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-  50% { transform: translate(45px, -35px) scale(1.18); opacity: 0.48; }
-  100% { transform: translate(-35px, 40px) scale(0.92); opacity: 0.34; }
+/* Deep Space Cosmic Gradient Haze */
+.esbd-nebula-deep-space {
+  width: 1300px;
+  height: 1300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(88, 28, 135, 0.08) 0%, rgba(30, 10, 60, 0.04) 40%, transparent 70%);
+  animation: esbdNebulaDeepPulse 24s ease-in-out infinite alternate;
+}
+
+@keyframes esbdNebulaBreatheEmerald {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.75; }
+  50%  { transform: translate(50px, -35px) scale(1.12); opacity: 1; }
+  100% { transform: translate(-25px, 45px) scale(0.95); opacity: 0.8; }
+}
+
+@keyframes esbdNebulaBreatheCrimson {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.65; }
+  50%  { transform: translate(-45px, 25px) scale(1.10); opacity: 0.95; }
+  100% { transform: translate(35px, -20px) scale(0.90); opacity: 0.7; }
+}
+
+@keyframes esbdNebulaDriftCyan {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(60px, -40px) scale(1.15); opacity: 0.85; }
+}
+
+@keyframes esbdNebulaDriftGold {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  100% { transform: translate(-35px, 25px) scale(1.12); opacity: 0.75; }
+}
+
+@keyframes esbdNebulaDeepPulse {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+  50%  { transform: translate(-50%, -50%) scale(1.08); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(0.94); opacity: 0.45; }
 }
 
 /* -----------------------------------------------------------------------------
-   2. 3D ANIMATED BAR SYSTEM (EXACT MATCH TO USER SCREENSHOT 1)
+   4. AMBIENT FLOATING PARTICLES & LIGHT BEAMS
    ----------------------------------------------------------------------------- */
-/* Multi-layered 3D Animated Bar with Glowing Laser Track & Telemetry */
+.esbd-floating-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-floating-particles .particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: esbdParticleFloatUp linear infinite;
+}
+
+.esbd-floating-particles .particle:nth-child(1)  { width: 4px; height: 4px; left: 12%; background: #10b981; animation-duration: 22s; animation-delay: 0s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(2)  { width: 3px; height: 3px; left: 24%; background: #ef4444; animation-duration: 28s; animation-delay: -5s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(3)  { width: 5px; height: 5px; left: 38%; background: #38bdf8; animation-duration: 20s; animation-delay: -12s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(4)  { width: 3px; height: 3px; left: 52%; background: #10b981; animation-duration: 25s; animation-delay: -7s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(5)  { width: 4px; height: 4px; left: 68%; background: #f59e0b; animation-duration: 23s; animation-delay: -15s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(6)  { width: 3px; height: 3px; left: 82%; background: #ef4444; animation-duration: 27s; animation-delay: -3s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(7)  { width: 4px; height: 4px; left: 91%; background: #10b981; animation-duration: 21s; animation-delay: -9s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(8)  { width: 5px; height: 5px; left: 18%; background: #38bdf8; animation-duration: 26s; animation-delay: -18s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(9)  { width: 3px; height: 3px; left: 33%; background: #10b981; animation-duration: 24s; animation-delay: -6s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(10) { width: 4px; height: 4px; left: 61%; background: #ef4444; animation-duration: 29s; animation-delay: -11s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(11) { width: 3px; height: 3px; left: 75%; background: #10b981; animation-duration: 22s; animation-delay: -14s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(12) { width: 5px; height: 5px; left: 88%; background: #f59e0b; animation-duration: 25s; animation-delay: -8s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(13) { width: 3px; height: 3px; left: 6%;  background: #38bdf8; animation-duration: 23s; animation-delay: -2s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(14) { width: 4px; height: 4px; left: 45%; background: #10b981; animation-duration: 27s; animation-delay: -16s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(15) { width: 3px; height: 3px; left: 70%; background: #ef4444; animation-duration: 24s; animation-delay: -10s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(16) { width: 4px; height: 4px; left: 84%; background: #10b981; animation-duration: 26s; animation-delay: -4s; opacity: 0.45; }
+
+@keyframes esbdParticleFloatUp {
+  0% {
+    transform: translateY(105vh) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Hero Light Beams */
+.esbd-hero-light-beams {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55vw;
+  height: 85vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-hero-light-beams .beam {
+  position: absolute;
+  top: -20%;
+  right: 10%;
+  width: 2px;
+  height: 120%;
+  transform: rotate(35deg);
+  transform-origin: top center;
+  opacity: 0.15;
+}
+
+.esbd-hero-light-beams .beam-emerald {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.5) 0%, rgba(16, 185, 129, 0) 75%);
+  right: 18%;
+  filter: blur(8px);
+}
+
+.esbd-hero-light-beams .beam-crimson {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.4) 0%, rgba(239, 68, 68, 0) 70%);
+  right: 32%;
+  filter: blur(12px);
+  animation-delay: -4s;
+}
+
+.esbd-hero-light-beams .beam-cyan {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0) 65%);
+  right: 8%;
+  filter: blur(10px);
+  animation-delay: -8s;
+}
+
+/* -----------------------------------------------------------------------------
+   5. ULTRA-GLOW 3D ANIMATED BAR SYSTEM (MAXIMUM VIBRANT NEON)
+   ----------------------------------------------------------------------------- */
 .esbd-3d-animated-bar {
   position: relative;
-  width: 100%;
+  width: calc(100% - 48px);
   max-width: 1280px;
-  margin: 32px auto;
-  padding: 8px 20px;
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 17, 23, 0.94) 15%, rgba(13, 17, 23, 0.94) 85%, rgba(239, 68, 68, 0.08) 100%);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(16, 185, 129, 0.45);
-  border-bottom: 1px solid rgba(239, 68, 68, 0.45);
-  border-left: 3px solid #10b981;
-  border-right: 3px solid #ef4444;
-  border-radius: 8px;
+  margin: 44px auto;
+  height: 52px;
+  background: linear-gradient(90deg, rgba(8, 14, 20, 0.96) 0%, rgba(16, 24, 34, 0.98) 50%, rgba(8, 14, 20, 0.96) 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.75);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.15);
+  padding: 0 28px;
+  box-shadow: 
+    0 14px 45px rgba(0, 0, 0, 0.85),
+    0 0 35px rgba(16, 185, 129, 0.55),
+    0 0 75px rgba(16, 185, 129, 0.3),
+    0 0 120px rgba(16, 185, 129, 0.18),
+    inset 0 0 25px rgba(16, 185, 129, 0.22),
+    inset 0 1px 2px rgba(16, 185, 129, 0.9);
   overflow: hidden;
-  z-index: 20;
-  transition: all 0.3s ease;
+  z-index: 10;
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: esbdBarGlowPulse 4s ease-in-out infinite alternate;
 }
 
-.esbd-3d-animated-bar:hover {
-  border-top-color: rgba(16, 185, 129, 0.75);
-  border-bottom-color: rgba(239, 68, 68, 0.75);
-  box-shadow: 0 14px 40px -5px rgba(0, 0, 0, 0.9), 0 0 30px rgba(16, 185, 129, 0.25);
+@keyframes esbdBarGlowPulse {
+  0% {
+    border-color: rgba(16, 185, 129, 0.65);
+    box-shadow: 
+      0 14px 45px rgba(0, 0, 0, 0.85),
+      0 0 30px rgba(16, 185, 129, 0.45),
+      0 0 65px rgba(16, 185, 129, 0.25),
+      0 0 110px rgba(16, 185, 129, 0.15),
+      inset 0 0 20px rgba(16, 185, 129, 0.18),
+      inset 0 1px 2px rgba(16, 185, 129, 0.8);
+  }
+  50% {
+    border-color: rgba(56, 189, 248, 0.85);
+    box-shadow: 
+      0 14px 45px rgba(0, 0, 0, 0.85),
+      0 0 45px rgba(56, 189, 248, 0.6),
+      0 0 90px rgba(16, 185, 129, 0.35),
+      0 0 140px rgba(56, 189, 248, 0.25),
+      inset 0 0 30px rgba(56, 189, 248, 0.25),
+      inset 0 1px 2px rgba(56, 189, 248, 0.9);
+  }
+  100% {
+    border-color: rgba(16, 185, 129, 0.9);
+    box-shadow: 
+      0 14px 45px rgba(0, 0, 0, 0.85),
+      0 0 40px rgba(16, 185, 129, 0.65),
+      0 0 85px rgba(16, 185, 129, 0.35),
+      0 0 130px rgba(16, 185, 129, 0.2),
+      inset 0 0 25px rgba(16, 185, 129, 0.25),
+      inset 0 1px 2px rgba(16, 185, 129, 0.95);
+  }
 }
 
-/* Center Horizontal Glowing Line (Green -> Red -> Green, exact screenshot 1) */
-.esbd-3d-animated-bar::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  transform: translateY(-50%);
-  background: linear-gradient(90deg, transparent 0%, #10b981 20%, #ef4444 50%, #10b981 80%, transparent 100%);
-  box-shadow: 0 0 12px #10b981, 0 0 20px #ef4444;
-  opacity: 0.85;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Traveling Neon Laser Beam */
-.esbd-3d-laser-runner {
+/* Dual Laser Runners: Top (Emerald/Cyan) and Bottom (Crimson/Gold) */
+.esbd-3d-laser-runner-top {
   position: absolute;
   top: 0;
-  height: 2px;
-  left: -25%;
-  width: 25%;
-  background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.4) 30%, #38bdf8 70%, #ffffff 100%);
-  filter: drop-shadow(0 0 6px #10b981) drop-shadow(0 0 12px #38bdf8);
-  animation: esbdLaserRun 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.95;
+  left: -60%;
+  width: 60%;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #10b981 30%, #38bdf8 70%, transparent);
+  filter: drop-shadow(0 0 8px #10b981) drop-shadow(0 0 16px #38bdf8);
+  animation: esbdLaserRunTop 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-.esbd-graphic-bar-bottom .esbd-3d-laser-runner {
-  top: auto;
+.esbd-3d-laser-runner-bottom {
+  position: absolute;
   bottom: 0;
-  background: linear-gradient(90deg, #ffffff 0%, #ef4444 30%, #f59e0b 70%, transparent 100%);
-  filter: drop-shadow(0 0 6px #ef4444) drop-shadow(0 0 12px #f59e0b);
-  animation: esbdLaserRunReverse 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  right: -60%;
+  width: 60%;
+  height: 2.5px;
+  background: linear-gradient(270deg, transparent, #ef4444 30%, #f59e0b 70%, transparent);
+  filter: drop-shadow(0 0 8px #ef4444) drop-shadow(0 0 16px #f59e0b);
+  animation: esbdLaserRunBottom 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -1.75s;
 }
 
-@keyframes esbdLaserRunReverse {
-  0% { left: 105%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: -25%; opacity: 0; }
+@keyframes esbdLaserRunTop {
+  0%   { left: -60%; }
+  100% { left: 160%; }
 }
 
-@keyframes esbdLaserRun {
-  0% { left: -25%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: 105%; opacity: 0; }
+@keyframes esbdLaserRunBottom {
+  0%   { right: -60%; }
+  100% { right: 160%; }
 }
 
-/* Telemetry HUD Labels */
 .esbd-bar-telemetry-left,
 .esbd-bar-telemetry-right {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  z-index: 3;
-}
-
-.esbd-bar-telemetry-left {
-  color: #10b981;
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-}
-
-.esbd-bar-telemetry-right {
-  color: #ef4444;
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+  gap: 12px;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
 .esbd-bar-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 10px #10b981, 0 0 16px #10b981;
-  animation: esbdBarDotPulse 1.4s ease-in-out infinite alternate;
+  background-color: #10b981;
+  box-shadow: 0 0 12px #10b981, 0 0 24px rgba(16, 185, 129, 0.8);
+  animation: esbdDotPulse 2s ease-in-out infinite;
 }
 
 .esbd-bar-dot-red {
-  background: #ef4444;
-  box-shadow: 0 0 10px #ef4444, 0 0 16px #ef4444;
+  background-color: #ef4444;
+  box-shadow: 0 0 12px #ef4444, 0 0 24px rgba(239, 68, 68, 0.8);
 }
 
-@keyframes esbdBarDotPulse {
-  0% { transform: scale(0.85); opacity: 0.65; }
-  100% { transform: scale(1.35); opacity: 1; }
+@keyframes esbdDotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50%      { transform: scale(1.4); opacity: 1; }
 }
 
-/* Center Brand Accent in Bar */
 .esbd-bar-center-brand {
-  position: relative;
-  z-index: 3;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-family: 'Oxanium', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 2.5px;
+  gap: 14px;
   color: #f0f6fc;
-  background: rgba(13, 17, 23, 0.95);
-  padding: 4px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
 }
 
-/* Audio EQ Frequency Bars */
 .esbd-eq-visualizer {
-  display: inline-flex;
+  display: flex;
   align-items: flex-end;
-  gap: 3px;
+  gap: 3.5px;
   height: 14px;
 }
 
 .esbd-eq-bar {
   width: 3px;
-  background: #10b981;
-  border-radius: 1px;
+  background-color: #10b981;
+  border-radius: 1.5px;
+  box-shadow: 0 0 8px #10b981;
   animation: esbdEqPulse 1.2s ease-in-out infinite alternate;
 }
 
-.esbd-eq-bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
-.esbd-eq-bar:nth-child(2) { height: 90%; animation-delay: 0.4s; background: #38bdf8; }
-.esbd-eq-bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
-.esbd-eq-bar:nth-child(4) { height: 100%; animation-delay: 0.5s; background: #ef4444; }
-.esbd-eq-bar:nth-child(5) { height: 75%; animation-delay: 0.3s; }
-.esbd-eq-bar:nth-child(6) { height: 50%; animation-delay: 0.6s; }
+.esbd-eq-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+.esbd-eq-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.esbd-eq-bar:nth-child(3) { height: 65%; animation-delay: 0.6s; }
 
 @keyframes esbdEqPulse {
-  0% { transform: scaleY(0.35); }
-  100% { transform: scaleY(1); }
+  0%   { height: 30%; }
+  100% { height: 100%; }
 }
 
-/* Standalone Sleek 3D Laser Divider Bar (Matching exact user screenshot) */
-.esbd-3d-laser-divider {
+/* -----------------------------------------------------------------------------
+   6. SLEEK 3D LASER DIVIDERS (IMAGE 5 REFERENCE)
+   ----------------------------------------------------------------------------- */
+.esbd-sleek-laser-divider {
   position: relative;
   width: 100%;
-  max-width: 1240px;
-  height: 28px;
-  margin: 36px auto;
+  max-width: 1280px;
+  margin: 52px auto;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  z-index: 15;
+  z-index: 5;
 }
 
-.esbd-3d-laser-divider-line {
-  position: relative;
+.esbd-sleek-laser-image {
+  position: absolute;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.8) 25%, #ef4444 50%, rgba(16, 185, 129, 0.8) 75%, transparent 100%);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.7), 0 0 18px rgba(239, 68, 68, 0.6);
-  border-radius: 2px;
+  height: 22px;
+  background: url('/img/3d-logo/esbd-3d-divider-laser.png') center center no-repeat;
+  background-size: 100% 100%;
+  opacity: 0.98;
+  filter: 
+    drop-shadow(0 0 14px rgba(16, 185, 129, 0.8)) 
+    drop-shadow(0 0 28px rgba(239, 68, 68, 0.5))
+    drop-shadow(0 0 45px rgba(16, 185, 129, 0.3));
 }
 
-.esbd-3d-laser-divider-line::after {
+.esbd-sleek-laser-glow {
+  position: absolute;
+  width: 75%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.95) 25%, rgba(239, 68, 68, 1) 50%, rgba(16, 185, 129, 0.95) 75%, transparent 100%);
+  filter: blur(2px);
+  animation: esbdLaserGlowPulse 2.8s ease-in-out infinite alternate;
+}
+
+.esbd-sleek-laser-sparkler {
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 15px #10b981, 0 0 30px #ffffff;
+  animation: esbdSparklerRun 5s ease-in-out infinite;
+}
+
+@keyframes esbdLaserGlowPulse {
+  0%   { opacity: 0.65; transform: scaleX(0.95); }
+  100% { opacity: 1; transform: scaleX(1.05); }
+}
+
+@keyframes esbdSparklerRun {
+  0%   { transform: translateX(-45vw); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(45vw); opacity: 0; }
+}
+
+/* -----------------------------------------------------------------------------
+   7. SECTION 3D SCROLL ENTRANCE & ATTENTION FOCUS ENGINE
+   ----------------------------------------------------------------------------- */
+.esbd-3d-section {
+  position: relative;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
+  will-change: transform, opacity;
+}
+
+/* Scroll Entrance Initial State */
+.esbd-3d-section:not(.esbd-section-revealed):not(:first-of-type) {
+  opacity: 0.15;
+  transform: perspective(1200px) rotateX(6deg) translateY(35px) scale(0.98);
+  filter: blur(2px);
+}
+
+/* Revealed in Viewport */
+.esbd-3d-section.esbd-section-revealed {
+  opacity: 1;
+  transform: perspective(1200px) rotateX(0deg) translateY(0px) scale(1);
+  filter: blur(0px);
+}
+
+/* -----------------------------------------------------------------------------
+   8. CENTER OF ATTENTION FOCUS STATE (.esbd-section-in-focus)
+   ----------------------------------------------------------------------------- */
+.esbd-3d-section.esbd-section-in-focus {
+  z-index: 2;
+}
+
+/* Ambient Center Spotlight for the Active Section */
+.esbd-3d-section.esbd-section-in-focus::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 90%;
+  height: 90%;
   transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  background: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 0 14px #ffffff, 0 0 24px #ef4444, 0 0 35px #10b981;
-  animation: esbdDividerDiamondPulse 2.2s ease-in-out infinite;
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.08) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(80px);
+  animation: esbdSpotlightBreathe 8s ease-in-out infinite alternate;
 }
 
-@keyframes esbdDividerDiamondPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.8; }
-  50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+@keyframes esbdSpotlightBreathe {
+  0%   { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
 }
 
-/* -----------------------------------------------------------------------------
-   3. 3D SCROLL EFFECTS & PERSPECTIVE ANIMATIONS (REFERENCE PIN)
-   ----------------------------------------------------------------------------- */
-/* Perspective wrapper on sections */
-section,
-.esbd-platform-section,
-.shop-section,
-.news-section {
-  position: relative !important;
-  z-index: 10;
-  perspective: 1200px !important;
-  transform-style: preserve-3d !important;
-}
-
-/* Translucent Cyber Gaming Platform Frame */
-.esbd-platform-frame {
-  position: relative !important;
-  border-radius: 20px !important;
-  background: linear-gradient(180deg, rgba(13, 17, 23, 0.74) 0%, rgba(7, 9, 12, 0.85) 100%) !important;
-  backdrop-filter: blur(14px) saturate(1.3) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 
-    0 18px 50px -12px rgba(0, 0, 0, 0.85),
-    0 0 0 1px rgba(16, 185, 129, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(16, 185, 129, 0.15) !important;
-  transition: all 0.35s cubic-bezier(0.2, 0, 0.2, 1) !important;
-  overflow: visible !important;
-}
-
-.esbd-platform-frame:hover {
-  border-color: rgba(16, 185, 129, 0.45) !important;
-  box-shadow: 
-    0 26px 65px -15px rgba(0, 0, 0, 0.9),
-    0 0 35px -5px rgba(16, 185, 129, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(239, 68, 68, 0.3) !important;
-  transform: translateY(-2px);
-}
-
-/* 3D Scroll Reveal Animation */
-.esbd-scroll-reveal-3d {
-  opacity: 0;
-  transform: perspective(1000px) rotateX(6deg) translateY(32px) scale(0.97);
-  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s ease;
-  will-change: transform, opacity;
-}
-
-.esbd-scroll-reveal-3d.in-view {
-  opacity: 1;
-  transform: perspective(1000px) rotateX(0deg) translateY(0px) scale(1);
-}
-
-/* Interactive 3D Mouse Parallax Tilt on Cards */
-.esbd-3d-tilt-card {
-  position: relative;
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform 0.18s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.esbd-3d-tilt-card:hover {
-  z-index: 15;
-}
-
-/* Dynamic Holographic Sheen Overlay */
-.esbd-holo-sheen {
+/* Holographic Cyber Corner HUD Reticles for Focused Section */
+.esbd-hud-corner {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(16, 185, 129, 0.85);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  mix-blend-mode: overlay;
-  z-index: 5;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 10;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8));
 }
 
-.esbd-3d-tilt-card:hover .esbd-holo-sheen {
+.esbd-section-in-focus .esbd-hud-corner {
   opacity: 1;
 }
 
+.esbd-hud-corner.esbd-hud-tl {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.esbd-hud-corner.esbd-hud-tr {
+  top: 10px;
+  right: 10px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  border-color: rgba(239, 68, 68, 0.85);
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8));
+}
+.esbd-hud-corner.esbd-hud-bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+.esbd-hud-corner.esbd-hud-br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  border-color: rgba(56, 189, 248, 0.85);
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.8));
+}
+
+/* Staggered Idle 3D Micro-Floating on Cards in Focused Section */
+.esbd-section-in-focus .bg-card:nth-child(odd),
+.esbd-section-in-focus [data-testid="tournament-card"]:nth-child(odd) {
+  animation: esbdCardFloatA 6s ease-in-out infinite alternate;
+}
+
+.esbd-section-in-focus .bg-card:nth-child(even),
+.esbd-section-in-focus [data-testid="tournament-card"]:nth-child(even) {
+  animation: esbdCardFloatB 6s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+@keyframes esbdCardFloatA {
+  0%   { transform: translateY(0px) rotateX(0deg) scale(1); }
+  50%  { transform: translateY(-4px) rotateX(1deg) scale(1.008); }
+  100% { transform: translateY(0px) rotateX(0deg) scale(1); }
+}
+
+@keyframes esbdCardFloatB {
+  0%   { transform: translateY(0px) rotateX(0deg) scale(1); }
+  50%  { transform: translateY(-5px) rotateX(-1deg) scale(1.008); }
+  100% { transform: translateY(0px) rotateX(0deg) scale(1); }
+}
+
+/* Card Glow and Depth in Focused Section */
+.esbd-section-in-focus .bg-card,
+.esbd-section-in-focus [data-testid="tournament-card"],
+.esbd-section-in-focus [data-testid="stat-card"] {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 
+    0 16px 36px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Section Header Shimmer Highlight */
+.esbd-section-in-focus h2,
+.esbd-section-in-focus .esbd-section-title {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.15);
+}
+
 /* -----------------------------------------------------------------------------
-   4. TOURNAMENT CARDS & HIGHLIGHTED SECTIONS
+   9. 3D CARD HOVER, STAT HIGHLIGHTS & LIVE RADAR
    ----------------------------------------------------------------------------- */
-/* Live pulse badge */
+.bg-card, [data-testid="tournament-card"], [data-testid="stat-card"] {
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.bg-card:hover, [data-testid="tournament-card"]:hover {
+  border-color: rgba(16, 185, 129, 0.55) !important;
+  box-shadow: 
+    0 20px 42px rgba(0, 0, 0, 0.75),
+    0 0 30px rgba(16, 185, 129, 0.28) !important;
+}
+
+/* 3D Extrusion on Key Stat Numbers */
+.esbd-stat-highlight {
+  position: relative;
+  color: #10b981 !important;
+  text-shadow: 
+    0 1px 0 #059669,
+    0 2px 0 #047857,
+    0 3px 0 #065f46,
+    0 0 20px rgba(16, 185, 129, 0.8),
+    0 0 45px rgba(16, 185, 129, 0.4) !important;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Live Tournament Radar */
 .esbd-live-radar {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: rgba(239, 68, 68, 0.16);
-  border: 1px solid rgba(239, 68, 68, 0.55);
-  color: #ef4444;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-family: 'Oxanium', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+  gap: 6px;
 }
 
 .esbd-radar-dot {
-  position: relative;
-  width: 7px;
-  height: 7px;
-  background: #ef4444;
+  display: inline-block;
+  width: 6.5px;
+  height: 6.5px;
   border-radius: 50%;
-  box-shadow: 0 0 8px #ef4444;
+  background-color: #ef4444;
+  box-shadow: 0 0 10px #ef4444, 0 0 20px rgba(239, 68, 68, 0.8);
+  animation: esbdRadarBlink 1.4s ease-in-out infinite;
 }
 
-.esbd-radar-dot::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  border: 1px solid #ef4444;
-  border-radius: 50%;
-  animation: esbdRadarRipple 1.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+@keyframes esbdRadarBlink {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.6); opacity: 0.4; }
 }
 
-@keyframes esbdRadarRipple {
-  0% { transform: scale(0.6); opacity: 1; }
-  100% { transform: scale(2.6); opacity: 0; }
-}
-
-/* Registration open badge */
-.esbd-open-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(16, 185, 129, 0.14);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: #10b981;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-family: 'Oxanium', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
-}
-
-/* Glowing Prize Pool Typography */
-.esbd-prize-glow {
-  font-family: 'Oxanium', sans-serif;
-  color: #10b981;
-  font-weight: 800;
-  text-shadow: 0 0 14px rgba(16, 185, 129, 0.6), 0 0 28px rgba(16, 185, 129, 0.3);
-}
-
-/* 3D Corner Brackets on Cards & Platforms */
-.esbd-corner-bracket {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.esbd-bracket-tl {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid #10b981;
-  border-left: 2px solid #10b981;
-  border-top-left-radius: 4px;
-}
-
-.esbd-bracket-tr {
-  top: -1px;
-  right: -1px;
-  border-top: 2px solid #ef4444;
-  border-right: 2px solid #ef4444;
-  border-top-right-radius: 4px;
-}
-
-.esbd-bracket-bl {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 2px solid #ef4444;
-  border-left: 2px solid #ef4444;
-  border-bottom-left-radius: 4px;
-}
-
-.esbd-bracket-br {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid #10b981;
-  border-right: 2px solid #10b981;
-  border-bottom-right-radius: 4px;
-}
-
-/* Side Rail Accents */
-.esbd-platform-rail-left,
-.esbd-platform-rail-right {
-  position: absolute;
-  top: 40px;
-  bottom: 40px;
-  width: 3px;
-  pointer-events: none;
-  z-index: 5;
-  opacity: 0.6;
-}
-
-.esbd-platform-rail-left {
-  left: 0;
-  background: linear-gradient(180deg, transparent 0%, #10b981 30%, transparent 60%, #ef4444 80%, transparent 100%);
-  box-shadow: 0 0 8px #10b981;
-}
-
-.esbd-platform-rail-right {
-  right: 0;
-  background: linear-gradient(180deg, transparent 0%, #ef4444 30%, transparent 60%, #10b981 80%, transparent 100%);
-  box-shadow: 0 0 8px #ef4444;
-}
-
-/* -----------------------------------------------------------------------------
-   5. TOP & BOTTOM HUD BARS FOR KEY PLATFORM SECTIONS
-   ----------------------------------------------------------------------------- */
-.esbd-graphic-bar-top,
-.esbd-graphic-bar-bottom {
-  position: relative;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 18px;
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0.08) 0%, rgba(13, 17, 23, 0.92) 20%, rgba(13, 17, 23, 0.92) 80%, rgba(239, 68, 68, 0.08) 100%);
-  border-left: 2px solid #10b981;
-  border-right: 2px solid #ef4444;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-  pointer-events: none;
-  z-index: 20;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #8b949e;
-  overflow: hidden;
-}
-
-.esbd-graphic-bar-top {
-  border-top: 1px solid rgba(16, 185, 129, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px 12px 0 0;
-  margin-bottom: 4px;
-}
-
-.esbd-graphic-bar-bottom {
-  border-bottom: 1px solid rgba(239, 68, 68, 0.5);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 0 0 12px 12px;
-  margin-top: 4px;
-}
-
-/* Leaderboard Top 3 Holographic Podium Medals */
-.esbd-rank-1-badge {
-  border-color: rgba(245, 158, 11, 0.6) !important;
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.35) !important;
-}
-
-.esbd-rank-2-badge {
-  border-color: rgba(203, 213, 225, 0.6) !important;
-  box-shadow: 0 0 16px rgba(203, 213, 225, 0.3) !important;
-}
-
-.esbd-rank-3-badge {
-  border-color: rgba(217, 119, 6, 0.6) !important;
-  box-shadow: 0 0 16px rgba(217, 119, 6, 0.3) !important;
-}
-
-/* Responsive adjustments */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .esbd-3d-animated-bar {
-    padding: 8px 12px;
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+    height: 42px;
+    padding: 0 14px;
+    font-size: 9.5px;
   }
   .esbd-bar-telemetry-left,
   .esbd-bar-telemetry-right {
-    font-size: 0.65rem;
+    font-size: 8px;
   }
-  .esbd-eq-visualizer {
-    display: none;
+  .esbd-sleek-laser-divider {
+    margin: 32px auto;
   }
 }

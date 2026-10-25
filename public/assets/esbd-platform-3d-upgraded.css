@@ -1,0 +1,667 @@
+/* =============================================================================
+   E-SPORTS BANGLADESH (ESBD) — 3D PLATFORM & FULL-PAGE ATMOSPHERE ENGINE
+   Leaderboards-Level Cosmic Depth across Hero & Landing Page
+   Ultra-Glow 3D Bars, Center-of-Attention 3D Sections, Holographic HUD & Laser Dividers
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   1. GLOBAL BACKGROUND FULLNESS & TRANSPARENCY
+   ----------------------------------------------------------------------------- */
+html, body {
+  background-color: #07090c !important;
+  color: #f0f6fc;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+#root, #root > div, main {
+  background-color: transparent !important;
+}
+
+/* Hero Section: Keep gentle vignette without blocking 3D background */
+#root section:first-of-type > div[class*="bg-gradient-to-r"] {
+  background: linear-gradient(90deg, rgba(7, 9, 12, 0.45) 0%, rgba(7, 9, 12, 0.15) 60%, transparent 100%) !important;
+}
+
+#root section:first-of-type > div[class*="bg-gradient-to-t"] {
+  background: linear-gradient(0deg, rgba(7, 9, 12, 0.5) 0%, transparent 100%) !important;
+}
+
+/* -----------------------------------------------------------------------------
+   2. THREE.JS PERSISTENT 3D CANVAS
+   ----------------------------------------------------------------------------- */
+#esbd-three-arena-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: normal;
+  opacity: 1;
+  will-change: transform;
+}
+
+/* -----------------------------------------------------------------------------
+   3. FIVE-LAYER VOLUMETRIC COSMIC NEBULA SYSTEM (FULL-PAGE DEPTH)
+   ----------------------------------------------------------------------------- */
+.esbd-ambient-nebula {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-nebula-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Emerald Primary Nebula — Top Hero Area */
+.esbd-nebula-emerald-primary {
+  width: 900px;
+  height: 900px;
+  top: -15%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 45%, transparent 70%);
+  animation: esbdNebulaBreatheEmerald 20s ease-in-out infinite alternate;
+}
+
+/* Crimson Core Nebula — Behind 3D Globe */
+.esbd-nebula-crimson-core {
+  width: 780px;
+  height: 780px;
+  top: 4%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.18) 0%, rgba(239, 68, 68, 0.06) 50%, transparent 75%);
+  animation: esbdNebulaBreatheCrimson 18s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+
+/* Cyan Cyber Accent — Mid-Page Depth */
+.esbd-nebula-cyan-accent {
+  width: 650px;
+  height: 650px;
+  top: 42%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.14) 0%, rgba(56, 189, 248, 0.04) 50%, transparent 70%);
+  animation: esbdNebulaDriftCyan 22s ease-in-out infinite alternate;
+  animation-delay: -10s;
+}
+
+/* Gold Champion Accent — Lower Sections */
+.esbd-nebula-gold-subtle {
+  width: 520px;
+  height: 520px;
+  bottom: 22%;
+  right: 12%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.09) 0%, transparent 65%);
+  animation: esbdNebulaDriftGold 16s ease-in-out infinite alternate;
+  animation-delay: -4s;
+}
+
+/* Deep Space Cosmic Gradient Haze */
+.esbd-nebula-deep-space {
+  width: 1300px;
+  height: 1300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(88, 28, 135, 0.08) 0%, rgba(30, 10, 60, 0.04) 40%, transparent 70%);
+  animation: esbdNebulaDeepPulse 24s ease-in-out infinite alternate;
+}
+
+@keyframes esbdNebulaBreatheEmerald {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.75; }
+  50%  { transform: translate(50px, -35px) scale(1.12); opacity: 1; }
+  100% { transform: translate(-25px, 45px) scale(0.95); opacity: 0.8; }
+}
+
+@keyframes esbdNebulaBreatheCrimson {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.65; }
+  50%  { transform: translate(-45px, 25px) scale(1.10); opacity: 0.95; }
+  100% { transform: translate(35px, -20px) scale(0.90); opacity: 0.7; }
+}
+
+@keyframes esbdNebulaDriftCyan {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(60px, -40px) scale(1.15); opacity: 0.85; }
+}
+
+@keyframes esbdNebulaDriftGold {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  100% { transform: translate(-35px, 25px) scale(1.12); opacity: 0.75; }
+}
+
+@keyframes esbdNebulaDeepPulse {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+  50%  { transform: translate(-50%, -50%) scale(1.08); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(0.94); opacity: 0.45; }
+}
+
+/* -----------------------------------------------------------------------------
+   4. AMBIENT FLOATING PARTICLES & LIGHT BEAMS
+   ----------------------------------------------------------------------------- */
+.esbd-floating-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-floating-particles .particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: esbdParticleFloatUp linear infinite;
+}
+
+.esbd-floating-particles .particle:nth-child(1)  { width: 4px; height: 4px; left: 12%; background: #10b981; animation-duration: 22s; animation-delay: 0s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(2)  { width: 3px; height: 3px; left: 24%; background: #ef4444; animation-duration: 28s; animation-delay: -5s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(3)  { width: 5px; height: 5px; left: 38%; background: #38bdf8; animation-duration: 20s; animation-delay: -12s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(4)  { width: 3px; height: 3px; left: 52%; background: #10b981; animation-duration: 25s; animation-delay: -7s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(5)  { width: 4px; height: 4px; left: 68%; background: #f59e0b; animation-duration: 23s; animation-delay: -15s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(6)  { width: 3px; height: 3px; left: 82%; background: #ef4444; animation-duration: 27s; animation-delay: -3s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(7)  { width: 4px; height: 4px; left: 91%; background: #10b981; animation-duration: 21s; animation-delay: -9s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(8)  { width: 5px; height: 5px; left: 18%; background: #38bdf8; animation-duration: 26s; animation-delay: -18s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(9)  { width: 3px; height: 3px; left: 33%; background: #10b981; animation-duration: 24s; animation-delay: -6s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(10) { width: 4px; height: 4px; left: 61%; background: #ef4444; animation-duration: 29s; animation-delay: -11s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(11) { width: 3px; height: 3px; left: 75%; background: #10b981; animation-duration: 22s; animation-delay: -14s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(12) { width: 5px; height: 5px; left: 88%; background: #f59e0b; animation-duration: 25s; animation-delay: -8s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(13) { width: 3px; height: 3px; left: 6%;  background: #38bdf8; animation-duration: 23s; animation-delay: -2s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(14) { width: 4px; height: 4px; left: 45%; background: #10b981; animation-duration: 27s; animation-delay: -16s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(15) { width: 3px; height: 3px; left: 70%; background: #ef4444; animation-duration: 24s; animation-delay: -10s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(16) { width: 4px; height: 4px; left: 84%; background: #10b981; animation-duration: 26s; animation-delay: -4s; opacity: 0.45; }
+
+@keyframes esbdParticleFloatUp {
+  0% {
+    transform: translateY(105vh) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Hero Light Beams */
+.esbd-hero-light-beams {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55vw;
+  height: 85vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.esbd-hero-light-beams .beam {
+  position: absolute;
+  top: -20%;
+  right: 10%;
+  width: 2px;
+  height: 120%;
+  transform: rotate(35deg);
+  transform-origin: top center;
+  opacity: 0.15;
+}
+
+.esbd-hero-light-beams .beam-emerald {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.5) 0%, rgba(16, 185, 129, 0) 75%);
+  right: 18%;
+  filter: blur(8px);
+}
+
+.esbd-hero-light-beams .beam-crimson {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.4) 0%, rgba(239, 68, 68, 0) 70%);
+  right: 32%;
+  filter: blur(12px);
+  animation-delay: -4s;
+}
+
+.esbd-hero-light-beams .beam-cyan {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.35) 0%, rgba(56, 189, 248, 0) 65%);
+  right: 8%;
+  filter: blur(10px);
+  animation-delay: -8s;
+}
+
+/* -----------------------------------------------------------------------------
+   5. ULTRA-GLOW 3D ANIMATED BAR SYSTEM (MAXIMUM VIBRANT NEON)
+   ----------------------------------------------------------------------------- */
+.esbd-3d-animated-bar {
+  position: relative;
+  width: calc(100% - 48px);
+  max-width: 1280px;
+  margin: 44px auto;
+  height: 52px;
+  background: linear-gradient(90deg, rgba(8, 14, 20, 0.96) 0%, rgba(16, 24, 34, 0.98) 50%, rgba(8, 14, 20, 0.96) 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.75);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  box-shadow: 
+    0 14px 45px rgba(0, 0, 0, 0.85),
+    0 0 35px rgba(16, 185, 129, 0.55),
+    0 0 75px rgba(16, 185, 129, 0.3),
+    0 0 120px rgba(16, 185, 129, 0.18),
+    inset 0 0 25px rgba(16, 185, 129, 0.22),
+    inset 0 1px 2px rgba(16, 185, 129, 0.9);
+  overflow: hidden;
+  z-index: 10;
+  font-family: 'Geist Mono', 'Fira Code', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  animation: esbdBarGlowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes esbdBarGlowPulse {
+  0% {
+    border-color: rgba(16, 185, 129, 0.65);
+    box-shadow: 
+      0 14px 45px rgba(0, 0, 0, 0.85),
+      0 0 30px rgba(16, 185, 129, 0.45),
+      0 0 65px rgba(16, 185, 129, 0.25),
+      0 0 110px rgba(16, 185, 129, 0.15),
+      inset 0 0 20px rgba(16, 185, 129, 0.18),
+      inset 0 1px 2px rgba(16, 185, 129, 0.8);
+  }
+  50% {
+    border-color: rgba(56, 189, 248, 0.85);
+    box-shadow: 
+      0 14px 45px rgba(0, 0, 0, 0.85),
+      0 0 45px rgba(56, 189, 248, 0.6),
+      0 0 90px rgba(16, 185, 129, 0.35),
+      0 0 140px rgba(56, 189, 248, 0.25),
+      inset 0 0 30px rgba(56, 189, 248, 0.25),
+      inset 0 1px 2px rgba(56, 189, 248, 0.9);
+  }
+  100% {
+    border-color: rgba(16, 185, 129, 0.9);
+    box-shadow: 
+      0 14px 45px rgba(0, 0, 0, 0.85),
+      0 0 40px rgba(16, 185, 129, 0.65),
+      0 0 85px rgba(16, 185, 129, 0.35),
+      0 0 130px rgba(16, 185, 129, 0.2),
+      inset 0 0 25px rgba(16, 185, 129, 0.25),
+      inset 0 1px 2px rgba(16, 185, 129, 0.95);
+  }
+}
+
+/* Dual Laser Runners: Top (Emerald/Cyan) and Bottom (Crimson/Gold) */
+.esbd-3d-laser-runner-top {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #10b981 30%, #38bdf8 70%, transparent);
+  filter: drop-shadow(0 0 8px #10b981) drop-shadow(0 0 16px #38bdf8);
+  animation: esbdLaserRunTop 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.esbd-3d-laser-runner-bottom {
+  position: absolute;
+  bottom: 0;
+  right: -60%;
+  width: 60%;
+  height: 2.5px;
+  background: linear-gradient(270deg, transparent, #ef4444 30%, #f59e0b 70%, transparent);
+  filter: drop-shadow(0 0 8px #ef4444) drop-shadow(0 0 16px #f59e0b);
+  animation: esbdLaserRunBottom 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -1.75s;
+}
+
+@keyframes esbdLaserRunTop {
+  0%   { left: -60%; }
+  100% { left: 160%; }
+}
+
+@keyframes esbdLaserRunBottom {
+  0%   { right: -60%; }
+  100% { right: 160%; }
+}
+
+.esbd-bar-telemetry-left,
+.esbd-bar-telemetry-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.esbd-bar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 12px #10b981, 0 0 24px rgba(16, 185, 129, 0.8);
+  animation: esbdDotPulse 2s ease-in-out infinite;
+}
+
+.esbd-bar-dot-red {
+  background-color: #ef4444;
+  box-shadow: 0 0 12px #ef4444, 0 0 24px rgba(239, 68, 68, 0.8);
+}
+
+@keyframes esbdDotPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50%      { transform: scale(1.4); opacity: 1; }
+}
+
+.esbd-bar-center-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #f0f6fc;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
+}
+
+.esbd-eq-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3.5px;
+  height: 14px;
+}
+
+.esbd-eq-bar {
+  width: 3px;
+  background-color: #10b981;
+  border-radius: 1.5px;
+  box-shadow: 0 0 8px #10b981;
+  animation: esbdEqPulse 1.2s ease-in-out infinite alternate;
+}
+
+.esbd-eq-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+.esbd-eq-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.esbd-eq-bar:nth-child(3) { height: 65%; animation-delay: 0.6s; }
+
+@keyframes esbdEqPulse {
+  0%   { height: 30%; }
+  100% { height: 100%; }
+}
+
+/* -----------------------------------------------------------------------------
+   6. SLEEK 3D LASER DIVIDERS (IMAGE 5 REFERENCE)
+   ----------------------------------------------------------------------------- */
+.esbd-sleek-laser-divider {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 52px auto;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.esbd-sleek-laser-image {
+  position: absolute;
+  width: 100%;
+  height: 22px;
+  background: url('/img/3d-logo/esbd-3d-divider-laser.png') center center no-repeat;
+  background-size: 100% 100%;
+  opacity: 0.98;
+  filter: 
+    drop-shadow(0 0 14px rgba(16, 185, 129, 0.8)) 
+    drop-shadow(0 0 28px rgba(239, 68, 68, 0.5))
+    drop-shadow(0 0 45px rgba(16, 185, 129, 0.3));
+}
+
+.esbd-sleek-laser-glow {
+  position: absolute;
+  width: 75%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.95) 25%, rgba(239, 68, 68, 1) 50%, rgba(16, 185, 129, 0.95) 75%, transparent 100%);
+  filter: blur(2px);
+  animation: esbdLaserGlowPulse 2.8s ease-in-out infinite alternate;
+}
+
+.esbd-sleek-laser-sparkler {
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 15px #10b981, 0 0 30px #ffffff;
+  animation: esbdSparklerRun 5s ease-in-out infinite;
+}
+
+@keyframes esbdLaserGlowPulse {
+  0%   { opacity: 0.65; transform: scaleX(0.95); }
+  100% { opacity: 1; transform: scaleX(1.05); }
+}
+
+@keyframes esbdSparklerRun {
+  0%   { transform: translateX(-45vw); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(45vw); opacity: 0; }
+}
+
+/* -----------------------------------------------------------------------------
+   7. SECTION 3D SCROLL ENTRANCE & ATTENTION FOCUS ENGINE
+   ----------------------------------------------------------------------------- */
+.esbd-3d-section {
+  position: relative;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease;
+  will-change: transform, opacity;
+}
+
+/* Scroll Entrance Initial State */
+.esbd-3d-section:not(.esbd-section-revealed):not(:first-of-type) {
+  opacity: 0.15;
+  transform: perspective(1200px) rotateX(6deg) translateY(35px) scale(0.98);
+  filter: blur(2px);
+}
+
+/* Revealed in Viewport */
+.esbd-3d-section.esbd-section-revealed {
+  opacity: 1;
+  transform: perspective(1200px) rotateX(0deg) translateY(0px) scale(1);
+  filter: blur(0px);
+}
+
+/* -----------------------------------------------------------------------------
+   8. CENTER OF ATTENTION FOCUS STATE (.esbd-section-in-focus)
+   ----------------------------------------------------------------------------- */
+.esbd-3d-section.esbd-section-in-focus {
+  z-index: 2;
+}
+
+/* Ambient Center Spotlight for the Active Section */
+.esbd-3d-section.esbd-section-in-focus::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.08) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(80px);
+  animation: esbdSpotlightBreathe 8s ease-in-out infinite alternate;
+}
+
+@keyframes esbdSpotlightBreathe {
+  0%   { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* Holographic Cyber Corner HUD Reticles for Focused Section */
+.esbd-hud-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: rgba(16, 185, 129, 0.85);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 10;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8));
+}
+
+.esbd-section-in-focus .esbd-hud-corner {
+  opacity: 1;
+}
+
+.esbd-hud-corner.esbd-hud-tl {
+  top: 10px;
+  left: 10px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+.esbd-hud-corner.esbd-hud-tr {
+  top: 10px;
+  right: 10px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  border-color: rgba(239, 68, 68, 0.85);
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8));
+}
+.esbd-hud-corner.esbd-hud-bl {
+  bottom: 10px;
+  left: 10px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+.esbd-hud-corner.esbd-hud-br {
+  bottom: 10px;
+  right: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  border-color: rgba(56, 189, 248, 0.85);
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.8));
+}
+
+/* Staggered Idle 3D Micro-Floating on Cards in Focused Section */
+.esbd-section-in-focus .bg-card:nth-child(odd),
+.esbd-section-in-focus [data-testid="tournament-card"]:nth-child(odd) {
+  animation: esbdCardFloatA 6s ease-in-out infinite alternate;
+}
+
+.esbd-section-in-focus .bg-card:nth-child(even),
+.esbd-section-in-focus [data-testid="tournament-card"]:nth-child(even) {
+  animation: esbdCardFloatB 6s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+@keyframes esbdCardFloatA {
+  0%   { transform: translateY(0px) rotateX(0deg) scale(1); }
+  50%  { transform: translateY(-4px) rotateX(1deg) scale(1.008); }
+  100% { transform: translateY(0px) rotateX(0deg) scale(1); }
+}
+
+@keyframes esbdCardFloatB {
+  0%   { transform: translateY(0px) rotateX(0deg) scale(1); }
+  50%  { transform: translateY(-5px) rotateX(-1deg) scale(1.008); }
+  100% { transform: translateY(0px) rotateX(0deg) scale(1); }
+}
+
+/* Card Glow and Depth in Focused Section */
+.esbd-section-in-focus .bg-card,
+.esbd-section-in-focus [data-testid="tournament-card"],
+.esbd-section-in-focus [data-testid="stat-card"] {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 
+    0 16px 36px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Section Header Shimmer Highlight */
+.esbd-section-in-focus h2,
+.esbd-section-in-focus .esbd-section-title {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.15);
+}
+
+/* -----------------------------------------------------------------------------
+   9. 3D CARD HOVER, STAT HIGHLIGHTS & LIVE RADAR
+   ----------------------------------------------------------------------------- */
+.bg-card, [data-testid="tournament-card"], [data-testid="stat-card"] {
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.bg-card:hover, [data-testid="tournament-card"]:hover {
+  border-color: rgba(16, 185, 129, 0.55) !important;
+  box-shadow: 
+    0 20px 42px rgba(0, 0, 0, 0.75),
+    0 0 30px rgba(16, 185, 129, 0.28) !important;
+}
+
+/* 3D Extrusion on Key Stat Numbers */
+.esbd-stat-highlight {
+  position: relative;
+  color: #10b981 !important;
+  text-shadow: 
+    0 1px 0 #059669,
+    0 2px 0 #047857,
+    0 3px 0 #065f46,
+    0 0 20px rgba(16, 185, 129, 0.8),
+    0 0 45px rgba(16, 185, 129, 0.4) !important;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Live Tournament Radar */
+.esbd-live-radar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.esbd-radar-dot {
+  display: inline-block;
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 10px #ef4444, 0 0 20px rgba(239, 68, 68, 0.8);
+  animation: esbdRadarBlink 1.4s ease-in-out infinite;
+}
+
+@keyframes esbdRadarBlink {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.6); opacity: 0.4; }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .esbd-3d-animated-bar {
+    height: 42px;
+    padding: 0 14px;
+    font-size: 9.5px;
+  }
+  .esbd-bar-telemetry-left,
+  .esbd-bar-telemetry-right {
+    font-size: 8px;
+  }
+  .esbd-sleek-laser-divider {
+    margin: 32px auto;
+  }
+}

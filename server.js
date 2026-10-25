@@ -16,6 +16,12 @@ app.get(['/assets/index-v4-esbd.js', '/assets/index-v2.js'], (req, res) => {
   res.sendFile(path.join(__dirname, 'assets', 'index-DxaXhSva.js'));
 });
 
+// Dedicated route for The Connected Arena Design Direction Preview
+app.get(['/preview', '/preview.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'preview.html'));
+});
+
+
 // Serve static assets with no-cache headers for assets
 app.use('/assets', express.static(path.join(__dirname, 'assets'), {
   setHeaders: (res) => {
