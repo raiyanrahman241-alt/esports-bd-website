@@ -628,6 +628,25 @@
         border-color: #10b981 !important;
         box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3), 0 0 12px rgba(239, 68, 68, 0.25) !important;
       }
+    
+      /* FIX: Ensure ALL opacity-reduced text remains visible */
+      [class*="text-muted-foreground/"] {
+        color: #cbd5e1 !important;
+        opacity: 1 !important;
+      }
+      /* FIX: Font-mono-num (stats, points) visibility */
+      .font-mono-num {
+        color: #10b981 !important;
+        font-weight: 700 !important;
+      }
+      /* FIX: text-gradient uses green instead of red */
+      .text-gradient {
+        background: linear-gradient(135deg, #10b981, #38bdf8, #a78bfa) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+      }
+    
     </style>
     <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
   </head>

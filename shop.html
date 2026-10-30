@@ -322,6 +322,18 @@
       color: #ff4d4d !important;
       border: 1px solid rgba(239, 68, 68, 0.6) !important;
     }
+  
+    /* FIX: Ensure text-secondary and all muted text is visible */
+    .text-secondary, .order-summary p, .size-label, .spec-value {
+      color: #cbd5e1 !important;
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #10b981, #38bdf8, #a78bfa) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+  
   </style>
   <link rel="stylesheet" href="/assets/esbd-platform-3d.css" />
   <script src="/assets/esbd-platform-3d.js" defer></script>

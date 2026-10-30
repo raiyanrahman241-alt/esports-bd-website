@@ -205,7 +205,7 @@
     // Dynamic offscreen canvas processor to generate 100% transparent texture
     const logoImg = new Image();
     logoImg.crossOrigin = 'anonymous';
-    logoImg.src = '/img/3d-logo/esbd-3d-logo-front.png';
+    logoImg.src = '/img/3d-logo/esbd-3d-logo-transparent.png';
     logoImg.onload = function () {
       try {
         const offscreen = document.createElement('canvas');
@@ -231,17 +231,17 @@
           }
 
           const maxRGB = Math.max(r, g, b);
-          if (maxRGB < 15 || reflectionFade <= 0) {
+          if (maxRGB < 8 || reflectionFade <= 0) {
             data[i + 3] = 0; // Black background completely transparent
           } else {
             // Boost vibrancy of the metallic and neon elements
-            data[i] = Math.min(255, Math.round(r * 1.35));
-            data[i + 1] = Math.min(255, Math.round(g * 1.35));
-            data[i + 2] = Math.min(255, Math.round(b * 1.35));
+            data[i] = Math.min(255, Math.round(r * 1.08));
+            data[i + 1] = Math.min(255, Math.round(g * 1.08));
+            data[i + 2] = Math.min(255, Math.round(b * 1.08));
 
             let alpha = 255;
-            if (maxRGB < 45) {
-              alpha = Math.round(((maxRGB - 15) / 30) * 255);
+            if (maxRGB < 35) {
+              alpha = Math.round(((maxRGB - 8) / 27) * 255);
             }
             data[i + 3] = Math.round(alpha * reflectionFade);
           }
