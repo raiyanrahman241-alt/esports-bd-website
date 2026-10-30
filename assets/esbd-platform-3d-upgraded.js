@@ -113,7 +113,7 @@
     const THREE = window.THREE;
 
     // Palette (Neon Emerald Green, Crimson Red, Cyan, Gold)
-    const colorGreen = new THREE.Color('#10b981');
+    const colorGreen = new THREE.Color('#ef4444');
     const colorRed = new THREE.Color('#ef4444');
     const colorCyan = new THREE.Color('#38bdf8');
     const colorGold = new THREE.Color('#f59e0b');
@@ -468,7 +468,7 @@
 
     // --- 3D Receding Horizon Cyber Corridor Grids ---
     cyberGridGroup = new THREE.Group();
-    const floorGrid = new THREE.GridHelper(100, 70, 0x10b981, 0x059669);
+    const floorGrid = new THREE.GridHelper(100, 70, 0xef4444, 0xdc2626);
     floorGrid.position.set(0, -3.2, 0);
     floorGrid.material.opacity = 0.52;
     floorGrid.material.transparent = true;

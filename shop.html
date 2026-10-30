@@ -14,11 +14,11 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg-primary: #07090c; --bg-card: #0d1117; --bg-card-hover: #131920;
-      --border: rgba(255,255,255,0.08); --border-glow: rgba(16,185,129,0.25);
-      --text-primary: #f0f6fc; --text-secondary: #8b949e; --text-muted: #6e7681;
-      --accent-green: #10b981; --accent-red: #ef4444; --accent-blue: #38bdf8;
+      --border: rgba(255,255,255,0.08); --border-glow: rgba(239,68,68,0.25);
+      --text-primary: #f0f6fc; --text-secondary: #cbd5e1; --text-muted: #94a3b8;
+      --accent-green: #ef4444; --accent-red: #ef4444; --accent-blue: #38bdf8;
       --accent-purple: #a78bfa; --accent-orange: #f59e0b;
-      --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --gradient-green: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
       --font-display: 'Oxanium', 'Inter', sans-serif;
       --font-body: 'Inter', 'Space Grotesk', sans-serif;
     }
@@ -48,7 +48,7 @@
       transform-style: preserve-3d; will-change: transform, filter;
       animation: esbdLogo3DFloat 6s ease-in-out infinite, esbdCyberPulse 4s ease-in-out infinite alternate;
       transition: transform 0.28s cubic-bezier(0.2, 0, 0.2, 1), filter 0.28s ease;
-      filter: drop-shadow(0 4px 14px rgba(16, 185, 129, 0.5)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.35));
+      filter: drop-shadow(0 4px 14px rgba(239, 68, 68, 0.5)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.35));
     }
     @media (min-width: 768px) {
       .esbd-nav .logo-group img,
@@ -62,14 +62,14 @@
       100% { transform: perspective(800px) rotateY(0deg) rotateX(0deg) translateY(0px) scale(1); }
     }
     @keyframes esbdCyberPulse {
-      0% { filter: drop-shadow(0 3px 12px rgba(16, 185, 129, 0.45)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
-      50% { filter: drop-shadow(0 5px 22px rgba(16, 185, 129, 0.8)) drop-shadow(0 0 32px rgba(239, 68, 68, 0.55)) brightness(1.15); }
-      100% { filter: drop-shadow(0 4px 16px rgba(16, 185, 129, 0.55)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.35)); }
+      0% { filter: drop-shadow(0 3px 12px rgba(239, 68, 68, 0.45)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
+      50% { filter: drop-shadow(0 5px 22px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 32px rgba(239, 68, 68, 0.55)) brightness(1.15); }
+      100% { filter: drop-shadow(0 4px 16px rgba(239, 68, 68, 0.55)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.35)); }
     }
     .esbd-nav .logo-group::after,
     .logo-group::after {
       content: ''; position: absolute; inset: -8px -20px;
-      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.18) 45%, rgba(16,185,129,0.45) 50%, rgba(239,68,68,0.3) 55%, transparent 80%);
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.18) 45%, rgba(239,68,68,0.45) 50%, rgba(239,68,68,0.3) 55%, transparent 80%);
       transform: translateX(-160%) skewX(-20deg); pointer-events: none;
       animation: esbdLogoShimmer 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
       border-radius: 14px; mix-blend-mode: overlay;
@@ -84,7 +84,7 @@
     .logo-group:hover img {
       animation-play-state: paused;
       transform: perspective(600px) scale3d(1.08, 1.08, 1.08) translateZ(16px) !important;
-      filter: drop-shadow(0 8px 28px rgba(16, 185, 129, 0.9)) drop-shadow(0 0 45px rgba(239, 68, 68, 0.7)) brightness(1.25) !important;
+      filter: drop-shadow(0 8px 28px rgba(239, 68, 68, 0.9)) drop-shadow(0 0 45px rgba(239, 68, 68, 0.7)) brightness(1.25) !important;
     }
     .esbd-nav .nav-links { display: flex; gap: 6px; align-items: center; }
     .esbd-nav .nav-links a {
@@ -239,7 +239,7 @@
       font-weight: 700; font-family: var(--font-display); cursor: pointer;
       transition: all 0.25s;
     }
-    .modal-box .btn-submit:hover { box-shadow: 0 4px 20px rgba(16,185,129,0.35); }
+    .modal-box .btn-submit:hover { box-shadow: 0 4px 20px rgba(239,68,68,0.35); }
     .modal-box .btn-cancel {
       width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 12px;
       background: transparent; color: var(--text-secondary); font-size: 0.9rem;
@@ -247,7 +247,7 @@
     }
     .modal-box .btn-cancel:hover { background: rgba(255,255,255,0.04); }
     .modal-box .order-summary {
-      background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.15);
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15);
       border-radius: 12px; padding: 14px; margin-bottom: 16px;
     }
     .modal-box .order-summary .prod-name { font-weight: 700; margin-bottom: 4px; }
@@ -255,7 +255,7 @@
 
     .toast {
       position: fixed; bottom: 30px; right: 30px; z-index: 300;
-      background: var(--bg-card); border: 1px solid rgba(16,185,129,0.3);
+      background: var(--bg-card); border: 1px solid rgba(239,68,68,0.3);
       border-radius: 14px; padding: 16px 24px; max-width: 400px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(120%);
       transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); font-size: 0.9rem;
@@ -280,6 +280,29 @@
       color: var(--text-muted); font-size: 0.85rem;
     }
     .esbd-footer a { color: var(--accent-green); text-decoration: none; }
+  
+    /* High contrast text upgrade */
+    p, .article-excerpt, .product-desc, .news-meta, .spec-item {
+      color: #cbd5e1 !important;
+    }
+    h1, h2, h3, h4, .article-title, .product-name {
+      color: #ffffff !important;
+      text-shadow: 0 0 16px rgba(239, 68, 68, 0.25) !important;
+    }
+    .price, .badge, .tag, .stat-value {
+      color: #ff3b3b !important;
+      font-weight: 700 !important;
+    }
+    .btn-primary, button[type="submit"], .add-to-cart {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 18px rgba(239, 68, 68, 0.45) !important;
+    }
+    .card:hover, .product-card:hover, .article-card:hover {
+      border-color: rgba(239, 68, 68, 0.6) !important;
+      box-shadow: 0 10px 30px -8px rgba(239, 68, 68, 0.4) !important;
+    }
+  
   </style>
   <link rel="stylesheet" href="/assets/esbd-platform-3d.css" />
   <script src="/assets/esbd-platform-3d.js" defer></script>

@@ -21,7 +21,7 @@
   const THREE = window.THREE;
 
   // Shared Brand Colors
-  const COLOR_GREEN = new THREE.Color('#10b981');
+  const COLOR_GREEN = new THREE.Color('#ef4444');
   const COLOR_RED = new THREE.Color('#ef4444');
   const COLOR_CYAN = new THREE.Color('#38bdf8');
   const COLOR_GOLD = new THREE.Color('#f59e0b');
@@ -98,7 +98,7 @@
     // 2. Subtle Outer Wireframe Grid (Tactical Latitude/Longitude lines)
     const gridGeo = new THREE.SphereGeometry(GLOBE_RADIUS * 1.002, 28, 28);
     const gridMat = new THREE.MeshBasicMaterial({
-      color: 0x10b981,
+      color: 0xef4444,
       wireframe: true,
       transparent: true,
       opacity: 0.16,
@@ -154,7 +154,7 @@
 
     // Glowing core beacon
     const beaconGeo = new THREE.SphereGeometry(0.09, 16, 16);
-    const beaconMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+    const beaconMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
     beaconMesh.position.copy(bdPos);
     globeGroup.add(beaconMesh);
@@ -165,7 +165,7 @@
     laserGeo.translate(0, 0.35, 0);
     laserGeo.rotateX(Math.PI / 2);
     const laserMat = new THREE.MeshBasicMaterial({
-      color: 0x34d399,
+      color: 0xf87171,
       transparent: true,
       opacity: 0.95,
       blending: THREE.AdditiveBlending,
@@ -180,7 +180,7 @@
     for (let r = 0; r < 2; r++) {
       const ringGeo = new THREE.RingGeometry(0.08, 0.12, 24);
       const ringMat = new THREE.MeshBasicMaterial({
-        color: 0x10b981,
+        color: 0xef4444,
         transparent: true,
         opacity: 0.8,
         side: THREE.DoubleSide,
@@ -218,7 +218,7 @@
       const curvePoints = curve.getPoints(50);
       const curveGeo = new THREE.BufferGeometry().setFromPoints(curvePoints);
       const curveMat = new THREE.LineBasicMaterial({
-        color: 0x10b981,
+        color: 0xef4444,
         transparent: true,
         opacity: 0.55,
       });
@@ -266,7 +266,7 @@
     // 7. Soft Atmospheric Emerald Halo
     const haloGeo = new THREE.SphereGeometry(GLOBE_RADIUS * 1.15, 32, 32);
     const haloMat = new THREE.MeshBasicMaterial({
-      color: 0x10b981,
+      color: 0xef4444,
       transparent: true,
       opacity: 0.065,
       side: THREE.BackSide,
@@ -388,14 +388,14 @@
 
     // Wireframe edges for metallic highlight
     const wireGeo = new THREE.WireframeGeometry(bodyGeo);
-    const wireMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.65 });
+    const wireMat = new THREE.LineBasicMaterial({ color: 0xef4444, transparent: true, opacity: 0.65 });
     const wireMesh = new THREE.LineSegments(wireGeo, wireMat);
     monolithGroup.add(wireMesh);
 
     // 2. Central Illuminated Slit
     const slitGeo = new THREE.BoxGeometry(0.06, 1.8, 0.95);
     const slitMat = new THREE.MeshBasicMaterial({
-      color: 0x10b981,
+      color: 0xef4444,
       transparent: true,
       opacity: 0.95,
     });
@@ -412,7 +412,7 @@
     // Floating Electromagnetic Ring under base
     const ringGeo = new THREE.RingGeometry(0.8, 1.1, 32);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x10b981,
+      color: 0xef4444,
       transparent: true,
       opacity: 0.5,
       side: THREE.DoubleSide,
@@ -608,7 +608,7 @@
 
     // Constellation Interconnecting Filaments
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0x10b981,
+      color: 0xef4444,
       transparent: true,
       opacity: 0.45,
     });
@@ -629,7 +629,7 @@
 
     // Concentric boundary aura
     const auraGeo = new THREE.TorusGeometry(1.6, 0.008, 8, 64);
-    const auraMat = new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.25 });
+    const auraMat = new THREE.MeshBasicMaterial({ color: 0xef4444, transparent: true, opacity: 0.25 });
     const aura = new THREE.Mesh(auraGeo, auraMat);
     constGroup.add(aura);
 
@@ -687,7 +687,7 @@
 
     // Central Incandescent Light Core
     const coreGeo = new THREE.IcosahedronGeometry(0.35, 1);
-    const coreMat = new THREE.MeshBasicMaterial({ color: 0x10b981, wireframe: true });
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0xef4444, wireframe: true });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     accelGroup.add(coreMesh);
 
@@ -775,7 +775,7 @@
 
     // Segmented Outer Ring
     const outerRingGeo = new THREE.TorusGeometry(1.6, 0.06, 12, 48);
-    const outerRingMat = new THREE.MeshBasicMaterial({ color: 0x10b981, wireframe: true });
+    const outerRingMat = new THREE.MeshBasicMaterial({ color: 0xef4444, wireframe: true });
     const outerRing = new THREE.Mesh(outerRingGeo, outerRingMat);
     portalGroup.add(outerRing);
 
@@ -787,7 +787,7 @@
 
     // Inner Radiant Gateway Ring
     const innerRingGeo = new THREE.TorusGeometry(0.8, 0.03, 8, 32);
-    const innerRingMat = new THREE.MeshBasicMaterial({ color: 0x10b981 });
+    const innerRingMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
     const innerRing = new THREE.Mesh(innerRingGeo, innerRingMat);
     portalGroup.add(innerRing);
 
@@ -809,7 +809,7 @@
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
     const pMat = new THREE.PointsMaterial({
       size: 0.035,
-      color: 0x10b981,
+      color: 0xef4444,
       transparent: true,
       opacity: 0.8,
     });

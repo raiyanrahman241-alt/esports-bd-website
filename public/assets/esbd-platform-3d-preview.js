@@ -420,7 +420,7 @@
           const timeline = document.createElement('div');
           timeline.className = 'esbd-track-timeline-wrapper';
           timeline.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 10px; color: #10b981; letter-spacing: 0.14em;">
+            <div style="display: flex; align-items: center; justify-content: space-between; font-family: 'Geist Mono', monospace; font-size: 10px; color: #ef4444; letter-spacing: 0.14em;">
               <span>▲ HISTORICAL CHRONOLOGY ARCHIVE</span>
               <span>200+ NATIONAL LAN EXECUTIONS</span>
             </div>
