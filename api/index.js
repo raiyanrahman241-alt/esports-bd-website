@@ -3,16 +3,32 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const { supabase, isSupabaseConfigured } = require('../lib/supabase');
 const seed = require('../lib/seedData');
+const bcrypt = require('bcryptjs');
+const rateLimit = require('express-rate-limit');
+const crypto = require('crypto');
 
 const app = express();
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'esports-bangladesh-production-jwt-2026';
+const BCRYPT_ROUNDS = 12;
 
 const path = require('path');
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: function(origin, callback) {
+    const allowed = [
+      process.env.SITE_URL,
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'https://esportsbd.vercel.app'
+    ].filter(Boolean);
+    if (!origin || allowed.some(o => origin.startsWith(o))) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}));
+app.use(express.json({ limit: '1mb' }));
 
 // Static asset serving fallback in case Vercel routes static paths to API function
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
@@ -24,51 +40,39 @@ app.get('/favicon.png', (req, res) => {
   res.sendFile(p);
 });
 
+// ─── Rate limiters ────────────────────────────────────────────────────────────
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests from this IP. Please try again after 15 minutes.' }
+});
+
+const otpLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many OTP requests. Please wait 10 minutes before trying again.' }
+});
+
+// ─── In-Memory OTP store ───────────────────────────────────────────────────────
+const otpStore = new Map();
+
+function generateOTP() {
+  return String(100000 + (crypto.randomInt ? crypto.randomInt(900000) : Math.floor(Math.random() * 900000))).padStart(6, '0');
+}
+
+async function sendSmsOtp(phone, otp) {
+  console.log(`[OTP] ${phone}: ${otp}`);
+  return true;
+}
+
 // In-Memory Storage for High-Speed Fallback & Local Sessions
 const memoryStore = {
-  users: [
-    {
-      id: "admin-001",
-      email: "admin@esportsbd.com",
-      ign: "esbd_admin",
-      displayName: "ESBD Platform Admin",
-      role: "admin",
-      phone: "+8801700000000",
-      avatarUrl: "/img/esbd-logo.png",
-      walletBalanceMinor: 5000000,
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: "player-demo-01",
-      email: "raiyan@esportsbd.com",
-      ign: "raiyan",
-      displayName: "Raiyan Ahmed",
-      role: "player",
-      phone: "+8801811111111",
-      avatarUrl: "/img/influencers/mr-triple-r.jpg",
-      walletBalanceMinor: 250000,
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: "player-demo-02",
-      email: "vampire@redx.gg",
-      ign: "RedX_Vampire",
-      displayName: "Tanvir Vampire",
-      role: "player",
-      phone: "+8801922222222",
-      avatarUrl: "/img/influencers/itz-kabbo.jpg",
-      walletBalanceMinor: 450000,
-      createdAt: new Date().toISOString()
-    }
-  ],
-  passwords: {
-    "esbd_admin": "esbd2026",
-    "admin@esportsbd.com": "esbd2026",
-    "raiyan": "esbd2026",
-    "raiyan@esportsbd.com": "esbd2026",
-    "RedX_Vampire": "player123",
-    "vampire@redx.gg": "player123"
-  },
+  users: [],
+  passwords: {},
   tournaments: JSON.parse(JSON.stringify(seed.tournaments)),
   games: JSON.parse(JSON.stringify(seed.games)),
   stats: { ...seed.stats },
@@ -83,51 +87,7 @@ const memoryStore = {
   news: JSON.parse(JSON.stringify(seed.news || [])),
   products: JSON.parse(JSON.stringify(seed.products || [])),
   productOrders: [],
-  teams: [
-    {
-      id: "team-redx",
-      name: "RedX Esports",
-      tag: "REDX",
-      gameId: "free-fire",
-      gameName: "Free Fire",
-      captainId: "player-demo-01",
-      captainIgn: "raiyan",
-      members: [
-        { userId: "player-demo-01", ign: "raiyan", role: "captain", avatarUrl: "/img/influencers/mr-triple-r.jpg" },
-        { userId: "player-demo-02", ign: "RedX_Vampire", role: "starter", avatarUrl: "/img/influencers/itz-kabbo.jpg" },
-        { userId: "user-3", ign: "RedX_Ghost", role: "starter", avatarUrl: "/img/influencers/sinister-plays.jpg" },
-        { userId: "user-4", ign: "RedX_Sniper", role: "starter", avatarUrl: "/img/influencers/apollo-gaming.jpg" }
-      ],
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: "team-legion",
-      name: "Team Legion BD",
-      tag: "LGN",
-      gameId: "free-fire",
-      gameName: "Free Fire",
-      captainId: "player-demo-02",
-      captainIgn: "RedX_Vampire",
-      members: [
-        { userId: "player-demo-02", ign: "RedX_Vampire", role: "captain", avatarUrl: "/img/influencers/itz-kabbo.jpg" },
-        { userId: "user-5", ign: "Legion_Ghost", role: "starter", avatarUrl: "/img/influencers/timeburnergg.jpg" }
-      ],
-      createdAt: new Date().toISOString()
-    },
-    {
-      id: "team-velocity",
-      name: "Velocity Gaming BD",
-      tag: "VLY",
-      gameId: "valorant",
-      gameName: "Valorant",
-      captainId: "user-3",
-      captainIgn: "Velocity_Aces",
-      members: [
-        { userId: "user-3", ign: "Velocity_Aces", role: "captain", avatarUrl: "/img/influencers/sinister-plays.jpg" }
-      ],
-      createdAt: new Date().toISOString()
-    }
-  ],
+  teams: [],
   matches: [
     {
       id: "m-ff-01",
@@ -170,32 +130,9 @@ const memoryStore = {
       scheduledAt: new Date(Date.now() + 3600 * 1000).toISOString()
     }
   ],
-  registrations: [
-    {
-      id: "reg-1",
-      tournamentId: "esbd-ff-pro-s4",
-      userId: "player-demo-01",
-      teamId: "team-redx",
-      ign: "raiyan",
-      status: "checked_in",
-      registeredAt: new Date().toISOString()
-    }
-  ],
-  walletTransactions: {
-    "player-demo-01": [
-      { id: "tx-1", amountMinor: 50000, type: "top_up", method: "bkash", reference: "BKH9281729", status: "completed", createdAt: new Date(Date.now() - 3600000).toISOString() },
-      { id: "tx-2", amountMinor: 200000, type: "payout", method: "system", reference: "Prize: FF Pro S3", status: "completed", createdAt: new Date(Date.now() - 86400000).toISOString() }
-    ],
-    "admin-001": [
-      { id: "tx-admin-1", amountMinor: 5000000, type: "top_up", method: "system", reference: "Admin Operations Liquidity", status: "completed", createdAt: new Date().toISOString() }
-    ]
-  },
-  notifications: {
-    "player-demo-01": [
-      { id: "n-1", kind: "room_code", type: "room_code", title: "Room Code Delivered", message: "Custom Room for Match 1 is live! Room ID: ESBD-FF-492 | Password: esbd", readAt: null, createdAt: new Date().toISOString() },
-      { id: "n-2", kind: "tournament", type: "tournament", title: "Free Fire Pro League S4", message: "Your registration has been verified and confirmed.", readAt: new Date().toISOString(), createdAt: new Date(Date.now() - 7200000).toISOString() }
-    ]
-  },
+  registrations: [],
+  walletTransactions: {},
+  notifications: {},
   submissions: [
     { id: "sub-1", matchId: "m-ff-01", submittedBy: "RedX_Vampire", scoreReported: "1 - 0", proofUrl: "/img/gallery/arena-stage.jpg", status: "verified", createdAt: new Date().toISOString() }
   ],
@@ -346,23 +283,51 @@ function authenticateUser(req) {
   }
 }
 
+// Middleware: Require Authenticated User
+function requireAuth(req, res, next) {
+  const user = authenticateUser(req);
+  if (!user) {
+    return res.status(401).json({ error: "Unauthorized. Please sign in to access your profile." });
+  }
+  req.user = user;
+  next();
+}
+
+// Middleware: Require Administrator Privileges
+function requireAdmin(req, res, next) {
+  const user = authenticateUser(req);
+  if (!user || (user.role !== 'admin' && user.role !== 'organizer')) {
+    return res.status(403).json({ error: "Access denied. Administrator privileges required." });
+  }
+  req.user = user;
+  next();
+}
+
 // -----------------------------------------------------------------------------
 // 1. AUTHENTICATION
 // -----------------------------------------------------------------------------
-router.post('/auth/register', async (req, res) => {
+router.post('/auth/register', authLimiter, async (req, res) => {
   try {
     const { ign, email, password, phone, displayName, gameTags } = req.body;
     if (!ign || !password) {
       return res.status(400).json({ error: "IGN and Password are required." });
     }
+    if (password.length < 8) {
+      return res.status(400).json({ error: "Password must be at least 8 characters long." });
+    }
 
-    const cleanEmail = email ? email.trim().toLowerCase() : `${ign.toLowerCase().replace(/[^a-z0-9]/g, '')}@esportsbd.com`;
+    const cleanEmail = email ? email.trim().toLowerCase() : '';
     const cleanIgn = ign.trim();
 
-    const existing = memoryStore.users.find(u => u.ign.toLowerCase() === cleanIgn.toLowerCase() || (email && u.email?.toLowerCase() === cleanEmail));
+    const existing = memoryStore.users.find(u =>
+      u.ign.toLowerCase() === cleanIgn.toLowerCase() ||
+      (cleanEmail && u.email && u.email.toLowerCase() === cleanEmail)
+    );
     if (existing) {
       return res.status(400).json({ error: "A player with this IGN or Email already exists." });
     }
+
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_ROUNDS);
 
     const newUser = {
       id: `user-${Date.now()}`,
@@ -374,12 +339,12 @@ router.post('/auth/register', async (req, res) => {
       avatarUrl: '/img/esbd-logo.png',
       walletBalanceMinor: 0,
       gameTags: gameTags || {},
+      authMethod: 'password',
       createdAt: new Date().toISOString()
     };
 
     memoryStore.users.push(newUser);
-    memoryStore.passwords[cleanIgn] = password;
-    memoryStore.passwords[cleanEmail] = password;
+    memoryStore.passwords[newUser.id] = hashedPassword;
     memoryStore.walletTransactions[newUser.id] = [];
     memoryStore.notifications[newUser.id] = [
       {
@@ -414,7 +379,7 @@ router.post('/auth/register', async (req, res) => {
   }
 });
 
-router.post('/auth/login', async (req, res) => {
+router.post('/auth/login', authLimiter, async (req, res) => {
   try {
     const { identifier, password } = req.body;
     if (!identifier || !password) {
@@ -422,8 +387,8 @@ router.post('/auth/login', async (req, res) => {
     }
 
     const term = identifier.trim().toLowerCase();
-    const user = memoryStore.users.find(u => 
-      u.ign.toLowerCase() === term || 
+    const user = memoryStore.users.find(u =>
+      u.ign.toLowerCase() === term ||
       (u.email && u.email.toLowerCase() === term) ||
       (u.phone && u.phone === term)
     );
@@ -432,8 +397,13 @@ router.post('/auth/login', async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials. Player not found." });
     }
 
-    const expectedPass = memoryStore.passwords[user.ign] || memoryStore.passwords[user.email] || "esbd2026";
-    if (password !== expectedPass && password !== 'esbd2026' && password !== 'admin123' && password !== 'player123') {
+    const storedHash = memoryStore.passwords[user.id];
+    if (!storedHash) {
+      return res.status(401).json({ error: 'This account uses social or phone login. Please sign in with Google, Facebook, or phone.' });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, storedHash);
+    if (!passwordMatch) {
       return res.status(401).json({ error: "Incorrect password." });
     }
 
@@ -453,6 +423,343 @@ router.get('/auth/me', (req, res) => {
   if (!user) return res.status(401).json({ error: "Unauthorized" });
   return res.json(user);
 });
+
+// Send OTP for phone registration/login
+router.post('/auth/phone/send-otp', otpLimiter, async (req, res) => {
+  try {
+    const { phone } = req.body;
+    if (!phone || !/^\+?[0-9]{10,15}$/.test(phone.replace(/[\s\-()]/g, ''))) {
+      return res.status(400).json({ error: 'A valid phone number is required (e.g. +8801XXXXXXXXX).' });
+    }
+    const cleanPhone = phone.replace(/[\s\-()]/g, '');
+    const otp = generateOTP();
+    const hashedOtp = await bcrypt.hash(otp, 10);
+    otpStore.set(cleanPhone, {
+      hashedOtp,
+      expiresAt: Date.now() + 5 * 60 * 1000, // 5 min
+      attempts: 0
+    });
+    await sendSmsOtp(cleanPhone, otp);
+    return res.json({ success: true, message: 'OTP sent to your phone number. Valid for 5 minutes.', devHint: process.env.NODE_ENV !== 'production' ? `Testing code: ${otp}` : undefined });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// Verify OTP and login/register with phone
+router.post('/auth/phone/verify-otp', authLimiter, async (req, res) => {
+  try {
+    const { phone, otp, displayName, ign } = req.body;
+    if (!phone || !otp) {
+      return res.status(400).json({ error: 'Phone and OTP are required.' });
+    }
+    const cleanPhone = phone.replace(/[\s\-()]/g, '');
+    const record = otpStore.get(cleanPhone);
+    if (!record) {
+      return res.status(400).json({ error: 'No OTP found for this number. Please request a new one.' });
+    }
+    if (Date.now() > record.expiresAt) {
+      otpStore.delete(cleanPhone);
+      return res.status(400).json({ error: 'OTP has expired. Please request a new code.' });
+    }
+    record.attempts = (record.attempts || 0) + 1;
+    if (record.attempts > 5) {
+      otpStore.delete(cleanPhone);
+      return res.status(429).json({ error: 'Too many incorrect attempts. Please request a new OTP.' });
+    }
+    const valid = await bcrypt.compare(otp.trim(), record.hashedOtp);
+    if (!valid) {
+      return res.status(400).json({ error: `Incorrect OTP. ${5 - record.attempts} attempt(s) remaining.` });
+    }
+    otpStore.delete(cleanPhone);
+
+    // Find existing user or create one
+    let user = memoryStore.users.find(u => u.phone === cleanPhone);
+    if (!user) {
+      const cleanIgn = (ign || '').trim() || `Player${Date.now().toString().slice(-5)}`;
+      user = {
+        id: `user-${Date.now()}`,
+        ign: cleanIgn,
+        displayName: displayName || cleanIgn,
+        email: '',
+        phone: cleanPhone,
+        role: 'player',
+        avatarUrl: '/img/esbd-logo.png',
+        walletBalanceMinor: 0,
+        authMethod: 'phone',
+        createdAt: new Date().toISOString()
+      };
+      memoryStore.users.push(user);
+      memoryStore.walletTransactions[user.id] = [];
+      memoryStore.notifications[user.id] = [{
+        id: `notif-${Date.now()}`,
+        type: 'tournament',
+        title: 'Welcome to E-SPORTS BANGLADESH',
+        message: `Welcome, ${user.ign}! Your phone-verified profile is ready.`,
+        readAt: null,
+        createdAt: new Date().toISOString()
+      }];
+    }
+
+    const token = jwt.sign({ id: user.id, ign: user.ign, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    return res.json({ token, user });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// Google OAuth initiation (redirect)
+router.get('/auth/google', (req, res) => {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  if (!clientId) {
+    return res.status(503).json({ error: 'Google OAuth is not configured. Please add GOOGLE_CLIENT_ID to environment variables.' });
+  }
+  const redirectUri = encodeURIComponent(`${process.env.SITE_URL || 'http://localhost:3000'}/api/auth/google/callback`);
+  const scope = encodeURIComponent('openid email profile');
+  const state = crypto.randomBytes(16).toString('hex');
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}&access_type=offline&prompt=select_account`;
+  res.redirect(url);
+});
+
+// Google OAuth callback
+router.get('/auth/google/callback', async (req, res) => {
+  try {
+    const { code } = req.query;
+    if (!code) return res.status(400).json({ error: 'Authorization code missing.' });
+
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const redirectUri = `${process.env.SITE_URL || 'http://localhost:3000'}/api/auth/google/callback`;
+
+    // Exchange code for tokens
+    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ code, client_id: clientId, client_secret: clientSecret, redirect_uri: redirectUri, grant_type: 'authorization_code' })
+    });
+    const tokens = await tokenRes.json();
+    if (!tokens.id_token) return res.status(400).json({ error: 'Failed to get tokens from Google.' });
+
+    // Decode id_token (verify in production with Google's public keys)
+    const payload = JSON.parse(Buffer.from(tokens.id_token.split('.')[1], 'base64').toString());
+    const { sub: googleId, email, name, picture } = payload;
+
+    let user = memoryStore.users.find(u => u.googleId === googleId || (email && u.email === email));
+    if (!user) {
+      const cleanIgn = (name || email || '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 20) || `Gamer${Date.now().toString().slice(-4)}`;
+      user = {
+        id: `user-${Date.now()}`,
+        ign: cleanIgn,
+        displayName: name || cleanIgn,
+        email: email || '',
+        phone: '',
+        googleId,
+        role: 'player',
+        avatarUrl: picture || '/img/esbd-logo.png',
+        walletBalanceMinor: 0,
+        authMethod: 'google',
+        createdAt: new Date().toISOString()
+      };
+      memoryStore.users.push(user);
+      memoryStore.walletTransactions[user.id] = [];
+      memoryStore.notifications[user.id] = [{
+        id: `notif-${Date.now()}`,
+        type: 'tournament',
+        title: 'Welcome to E-SPORTS BANGLADESH',
+        message: `Welcome, ${user.displayName}! Signed in via Google.`,
+        readAt: null,
+        createdAt: new Date().toISOString()
+      }];
+    }
+
+    const token = jwt.sign({ id: user.id, ign: user.ign, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
+    res.redirect(`${siteUrl}/portal?token=${token}&user=${encodeURIComponent(JSON.stringify({ id: user.id, ign: user.ign, role: user.role, displayName: user.displayName, avatarUrl: user.avatarUrl }))}`);
+  } catch (err) {
+    console.error('Google OAuth error:', err);
+    res.redirect(`${process.env.SITE_URL || 'http://localhost:3000'}/login?error=google_auth_failed`);
+  }
+});
+
+// Facebook OAuth initiation (redirect)
+router.get('/auth/facebook', (req, res) => {
+  const appId = process.env.FACEBOOK_APP_ID;
+  if (!appId) {
+    return res.status(503).json({ error: 'Facebook OAuth is not configured. Please add FACEBOOK_APP_ID to environment variables.' });
+  }
+  const redirectUri = encodeURIComponent(`${process.env.SITE_URL || 'http://localhost:3000'}/api/auth/facebook/callback`);
+  const state = crypto.randomBytes(16).toString('hex');
+  const url = `https://www.facebook.com/v19.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirectUri}&state=${state}&scope=email,public_profile`;
+  res.redirect(url);
+});
+
+// Facebook OAuth callback
+router.get('/auth/facebook/callback', async (req, res) => {
+  try {
+    const { code } = req.query;
+    if (!code) return res.status(400).json({ error: 'Authorization code missing.' });
+
+    const appId = process.env.FACEBOOK_APP_ID;
+    const appSecret = process.env.FACEBOOK_APP_SECRET;
+    const redirectUri = `${process.env.SITE_URL || 'http://localhost:3000'}/api/auth/facebook/callback`;
+
+    // Exchange code for access token
+    const tokenRes = await fetch(`https://graph.facebook.com/v19.0/oauth/access_token?client_id=${appId}&redirect_uri=${encodeURIComponent(redirectUri)}&client_secret=${appSecret}&code=${code}`);
+    const tokenData = await tokenRes.json();
+    if (!tokenData.access_token) return res.status(400).json({ error: 'Failed to get access token from Facebook.' });
+
+    // Get user profile
+    const profileRes = await fetch(`https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token=${tokenData.access_token}`);
+    const profile = await profileRes.json();
+    const { id: facebookId, name, email, picture } = profile;
+
+    let user = memoryStore.users.find(u => u.facebookId === facebookId || (email && u.email === email));
+    if (!user) {
+      const cleanIgn = (name || email || '').replace(/[^a-zA-Z0-9_]/g, '').slice(0, 20) || `Gamer${Date.now().toString().slice(-4)}`;
+      user = {
+        id: `user-${Date.now()}`,
+        ign: cleanIgn,
+        displayName: name || cleanIgn,
+        email: email || '',
+        phone: '',
+        facebookId,
+        role: 'player',
+        avatarUrl: picture?.data?.url || '/img/esbd-logo.png',
+        walletBalanceMinor: 0,
+        authMethod: 'facebook',
+        createdAt: new Date().toISOString()
+      };
+      memoryStore.users.push(user);
+      memoryStore.walletTransactions[user.id] = [];
+      memoryStore.notifications[user.id] = [{
+        id: `notif-${Date.now()}`,
+        type: 'tournament',
+        title: 'Welcome to E-SPORTS BANGLADESH',
+        message: `Welcome, ${user.displayName}! Signed in via Facebook.`,
+        readAt: null,
+        createdAt: new Date().toISOString()
+      }];
+    }
+
+    const token = jwt.sign({ id: user.id, ign: user.ign, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
+    res.redirect(`${siteUrl}/portal?token=${token}&user=${encodeURIComponent(JSON.stringify({ id: user.id, ign: user.ign, role: user.role, displayName: user.displayName, avatarUrl: user.avatarUrl }))}`);
+  } catch (err) {
+    console.error('Facebook OAuth error:', err);
+    res.redirect(`${process.env.SITE_URL || 'http://localhost:3000'}/login?error=facebook_auth_failed`);
+  }
+});
+
+// ─── AUTH CONFIG & DIRECT SOCIAL INTEGRATION ───────────────────────────────
+router.get('/auth/providers', (req, res) => {
+  return res.json({
+    google: {
+      enabled: !!process.env.GOOGLE_CLIENT_ID,
+      clientId: process.env.GOOGLE_CLIENT_ID || null
+    },
+    facebook: {
+      enabled: !!process.env.FACEBOOK_APP_ID,
+      appId: process.env.FACEBOOK_APP_ID || null
+    },
+    phone: {
+      enabled: true,
+      hasSmsProvider: !!process.env.SMS_PROVIDER
+    }
+  });
+});
+
+// Direct Social Sign-In / Sign-Up (Google One-Tap or Client SDK)
+router.post('/auth/social/google', authLimiter, async (req, res) => {
+  try {
+    const { email, displayName, photoUrl, googleId } = req.body;
+    if (!email && !googleId) {
+      return res.status(400).json({ error: "Google account details are required." });
+    }
+
+    const cleanEmail = (email || '').trim().toLowerCase();
+    let user = memoryStore.users.find(u => (googleId && u.googleId === googleId) || (cleanEmail && u.email && u.email.toLowerCase() === cleanEmail));
+
+    if (!user) {
+      const baseName = (displayName || cleanEmail.split('@')[0] || 'Player').replace(/[^a-zA-Z0-9_]/g, '');
+      const cleanIgn = `${baseName.slice(0, 14)}_${Math.floor(100 + Math.random() * 900)}`;
+      user = {
+        id: `user-${Date.now()}`,
+        ign: cleanIgn,
+        displayName: displayName || cleanIgn,
+        email: cleanEmail,
+        phone: '',
+        googleId: googleId || `g_${Date.now()}`,
+        role: 'player',
+        avatarUrl: photoUrl || '/img/esbd-logo.png',
+        walletBalanceMinor: 0,
+        authMethod: 'google',
+        createdAt: new Date().toISOString()
+      };
+      memoryStore.users.push(user);
+      memoryStore.walletTransactions[user.id] = [];
+      memoryStore.notifications[user.id] = [{
+        id: `notif-${Date.now()}`,
+        type: 'tournament',
+        title: 'Welcome to E-SPORTS BANGLADESH',
+        message: `Welcome, ${user.displayName}! Successfully signed in via Google.`,
+        readAt: null,
+        createdAt: new Date().toISOString()
+      }];
+    }
+
+    const token = jwt.sign({ id: user.id, ign: user.ign, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    return res.json({ token, user });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+// Direct Social Sign-In / Sign-Up (Facebook SDK)
+router.post('/auth/social/facebook', authLimiter, async (req, res) => {
+  try {
+    const { email, displayName, photoUrl, facebookId } = req.body;
+    if (!facebookId && !email) {
+      return res.status(400).json({ error: "Facebook profile details are required." });
+    }
+
+    const cleanEmail = (email || '').trim().toLowerCase();
+    let user = memoryStore.users.find(u => (facebookId && u.facebookId === facebookId) || (cleanEmail && u.email && u.email.toLowerCase() === cleanEmail));
+
+    if (!user) {
+      const baseName = (displayName || 'Player').replace(/[^a-zA-Z0-9_]/g, '');
+      const cleanIgn = `${baseName.slice(0, 14)}_${Math.floor(100 + Math.random() * 900)}`;
+      user = {
+        id: `user-${Date.now()}`,
+        ign: cleanIgn,
+        displayName: displayName || cleanIgn,
+        email: cleanEmail,
+        phone: '',
+        facebookId: facebookId || `fb_${Date.now()}`,
+        role: 'player',
+        avatarUrl: photoUrl || '/img/esbd-logo.png',
+        walletBalanceMinor: 0,
+        authMethod: 'facebook',
+        createdAt: new Date().toISOString()
+      };
+      memoryStore.users.push(user);
+      memoryStore.walletTransactions[user.id] = [];
+      memoryStore.notifications[user.id] = [{
+        id: `notif-${Date.now()}`,
+        type: 'tournament',
+        title: 'Welcome to E-SPORTS BANGLADESH',
+        message: `Welcome, ${user.displayName}! Successfully signed in via Facebook.`,
+        readAt: null,
+        createdAt: new Date().toISOString()
+      }];
+    }
+
+    const token = jwt.sign({ id: user.id, ign: user.ign, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    return res.json({ token, user });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 
 // -----------------------------------------------------------------------------
 // 2. PUBLIC SHOWCASES & STATS (Live Supabase + Resilient Fallback)
@@ -795,11 +1102,14 @@ router.post('/products/order', (req, res) => {
 // -----------------------------------------------------------------------------
 function handleTournamentJoin(req, res) {
   const user = authenticateUser(req);
+  if (!user) {
+    return res.status(401).json({ error: "Please sign in or create an account to register for tournaments." });
+  }
   const tournament = memoryStore.tournaments.find(t => t.id === req.params.id);
   if (!tournament) return res.status(404).json({ error: "Tournament not found." });
 
-  const userId = user ? user.id : (req.body.userId || `player-${Date.now()}`);
-  const ign = user ? user.ign : (req.body.ign || req.body.captainIgn || `Gamer_${Math.floor(Math.random() * 9000 + 1000)}`);
+  const userId = user.id;
+  const ign = user.ign || req.body.ign || `Gamer_${Math.floor(Math.random() * 9000 + 1000)}`;
   const teamId = req.body.teamId || null;
   const teamName = req.body.teamName || (user ? `${user.ign}'s Squad` : `${ign}'s Squad`);
 
@@ -907,7 +1217,8 @@ router.post('/tournaments/:id/check-in', (req, res) => {
   const tournament = memoryStore.tournaments.find(t => t.id === req.params.id);
   if (!tournament) return res.status(404).json({ error: "Tournament not found." });
 
-  const ign = user ? user.ign : 'raiyan';
+  if (!user) return res.status(401).json({ error: 'Please sign in to check in.' });
+  const ign = user.ign;
   if (tournament.registeredTeams) {
     const team = tournament.registeredTeams.find(t => t.captainIgn === ign);
     if (team) team.checkedIn = true;
@@ -921,7 +1232,8 @@ router.post('/tournaments/:id/withdraw', (req, res) => {
   const tournament = memoryStore.tournaments.find(t => t.id === req.params.id);
   if (!tournament) return res.status(404).json({ error: "Tournament not found." });
 
-  const ign = user ? user.ign : 'raiyan';
+  if (!user) return res.status(401).json({ error: 'Please sign in to withdraw.' });
+  const ign = user.ign;
   if (tournament.registeredTeams) {
     tournament.registeredTeams = tournament.registeredTeams.filter(t => t.captainIgn !== ign);
     tournament.registeredCount = Math.max(0, tournament.registeredCount - 1);
@@ -934,7 +1246,8 @@ router.post('/tournaments/:id/withdraw', (req, res) => {
 // 4. PLAYER PORTAL (Wallet, Matches, Notifications, Teams)
 // -----------------------------------------------------------------------------
 router.get('/me/tournaments', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const registeredIds = memoryStore.registrations.filter(r => r.userId === user.id).map(r => r.tournamentId);
   const userTournaments = memoryStore.tournaments.filter(t => registeredIds.includes(t.id) || t.status === 'live');
   const list = userTournaments.length ? userTournaments : [memoryStore.tournaments[0]];
@@ -969,7 +1282,8 @@ router.get('/me/matches', (req, res) => {
 });
 
 router.get('/me/wallet', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const transactions = memoryStore.walletTransactions[user.id] || [];
   return res.json({
     balanceMinor: user.walletBalanceMinor || 250000,
@@ -979,7 +1293,8 @@ router.get('/me/wallet', (req, res) => {
 });
 
 router.post('/me/wallet/top-up', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const { amountMinor, method } = req.body;
   if (!amountMinor || amountMinor <= 0) {
     return res.status(400).json({ error: "Invalid top-up amount." });
@@ -1004,7 +1319,8 @@ router.post('/me/wallet/top-up', (req, res) => {
 });
 
 router.get('/me/notifications', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const list = memoryStore.notifications[user.id] || [
     {
       id: "n-demo",
@@ -1020,7 +1336,8 @@ router.get('/me/notifications', (req, res) => {
 });
 
 router.post('/me/notifications/read', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const { ids } = req.body || {};
   const list = memoryStore.notifications[user.id] || [];
   list.forEach(n => {
@@ -1036,13 +1353,15 @@ router.get('/teams', (req, res) => {
 });
 
 router.get('/teams/mine', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const userTeams = memoryStore.teams.filter(t => t.captainId === user.id || (t.members || []).some(m => m.userId === user.id));
   return res.json(userTeams.length ? userTeams : [memoryStore.teams[0]]);
 });
 
 router.post('/teams', (req, res) => {
-  const user = authenticateUser(req) || memoryStore.users[1];
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in." });
   const { name, tag, gameId } = req.body;
   if (!name || !tag) return res.status(400).json({ error: "Team name and tag are required." });
 
@@ -1119,7 +1438,7 @@ router.post('/matches/:id/result', (req, res) => {
 // -----------------------------------------------------------------------------
 // 5. ADMIN CONSOLE
 // -----------------------------------------------------------------------------
-router.get('/admin/overview', (req, res) => {
+router.get('/admin/overview', requireAdmin, (req, res) => {
   return res.json({
     totalTournaments: memoryStore.tournaments.length,
     activeTournaments: memoryStore.tournaments.filter(t => t.status === 'live' || t.status === 'registration_open').length,
@@ -1133,11 +1452,11 @@ router.get('/admin/overview', (req, res) => {
   });
 });
 
-router.get('/admin/tournaments', (req, res) => {
+router.get('/admin/tournaments', requireAdmin, (req, res) => {
   return res.json(memoryStore.tournaments);
 });
 
-router.post('/admin/tournaments/:id/status', (req, res) => {
+router.post('/admin/tournaments/:id/status', requireAdmin, (req, res) => {
   const { status } = req.body;
   const tournament = memoryStore.tournaments.find(t => t.id === req.params.id);
   if (!tournament) return res.status(404).json({ error: "Tournament not found." });
@@ -1145,7 +1464,7 @@ router.post('/admin/tournaments/:id/status', (req, res) => {
   return res.json({ success: true, tournament });
 });
 
-router.post('/admin/tournaments/:id/bracket', (req, res) => {
+router.post('/admin/tournaments/:id/bracket', requireAdmin, (req, res) => {
   const tournament = memoryStore.tournaments.find(t => t.id === req.params.id);
   if (!tournament) return res.status(404).json({ error: "Tournament not found." });
 
@@ -1178,7 +1497,7 @@ router.post('/admin/tournaments/:id/bracket', (req, res) => {
   return res.json({ success: true, matches: matches.length });
 });
 
-router.post('/admin/matches/:id/verify', (req, res) => {
+router.post('/admin/matches/:id/verify', requireAdmin, (req, res) => {
   const { scoreA, scoreB } = req.body;
   const match = memoryStore.matches.find(m => m.id === req.params.id);
   if (match) {
@@ -1190,15 +1509,15 @@ router.post('/admin/matches/:id/verify', (req, res) => {
   return res.json({ success: true });
 });
 
-router.get('/admin/submissions', (req, res) => {
+router.get('/admin/submissions', requireAdmin, (req, res) => {
   return res.json(memoryStore.submissions);
 });
 
-router.get('/admin/disputes', (req, res) => {
+router.get('/admin/disputes', requireAdmin, (req, res) => {
   return res.json(memoryStore.disputes);
 });
 
-router.post('/admin/disputes/:id/resolve', (req, res) => {
+router.post('/admin/disputes/:id/resolve', requireAdmin, (req, res) => {
   const { status, note } = req.body;
   const dispute = memoryStore.disputes.find(d => d.id === req.params.id);
   if (dispute) {
@@ -1209,11 +1528,11 @@ router.post('/admin/disputes/:id/resolve', (req, res) => {
   return res.json({ success: true });
 });
 
-router.get('/admin/messages', (req, res) => {
+router.get('/admin/messages', requireAdmin, (req, res) => {
   return res.json(memoryStore.contactMessages);
 });
 
-router.get('/admin/settings', (req, res) => {
+router.get('/admin/settings', requireAdmin, (req, res) => {
   return res.json({
     maintenanceMode: false,
     autoBracketAdvance: true,

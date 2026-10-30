@@ -101,3 +101,4 @@ Authentication:
 | `/shop` | `shop.html` (static, standalone) |
 | `/preview` | `preview.html` (design preview) |
 | `/api/*` | `api/index.js` |
+

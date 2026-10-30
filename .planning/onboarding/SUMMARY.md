@@ -53,3 +53,4 @@ See [CONCERNS.md](.planning/codebase/CONCERNS.md) for full list.
 3. **`/gsd-execute-phase`** — Execute the plan with atomic commits
 
 Or ask the agent: _"What should we fix first?"_
+

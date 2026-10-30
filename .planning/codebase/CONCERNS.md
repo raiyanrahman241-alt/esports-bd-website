@@ -129,3 +129,4 @@ The schema file is a manual SQL dump. There is no migration runner (Supabase CLI
 | 16 | 🟢 Low | Security | .env files — verify gitignored |
 | 17 | 🟢 Low | Cleanup | 6.7 MB ZIP in repo root |
 | 18 | 🟢 Low | Ops | No Supabase migration tooling |
+

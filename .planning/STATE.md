@@ -27,3 +27,4 @@ None — onboarding phase. Next step: define first milestone and phase plan.
 - Codebase map generated 2026-10-28
 - Subagent quota hit during mapping; ARCHITECTURE, STRUCTURE, CONCERNS written by orchestrator directly
 - CONVENTIONS and TESTING were produced by Tech Mapper before quota reset
+

@@ -83,3 +83,4 @@ e:\E-sports BD Website\
 - **`E-SPORTS BANGLADESH/`** folder is a ZIP-extracted backup of the deployed bundle — redundant with files in root.
 - **Assets are pre-compiled** — no build step defined; `npm run build` echoes a no-op message.
 - **`api/index.js` is a monolith** — all ~1393 lines of routes live in one file with no sub-router splitting.
+
