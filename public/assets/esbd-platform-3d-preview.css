@@ -67,8 +67,8 @@ div[class*="via-background"] {
   background-color: rgba(9, 14, 22, 0.65) !important;
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
-  border: 1px solid rgba(239, 68, 68, 0.22) !important;
-  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.75), inset 0 0 20px rgba(239, 68, 68, 0.05) !important;
+  border: 1px solid rgba(16, 185, 129, 0.22) !important;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.75), inset 0 0 20px rgba(16, 185, 129, 0.05) !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
@@ -78,8 +78,8 @@ div[class*="via-background"] {
 .esbd-creator-card-3d:hover,
 .esbd-brand-card-3d:hover {
   background-color: rgba(13, 20, 32, 0.78) !important;
-  border-color: rgba(239, 68, 68, 0.55) !important;
-  box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.35), inset 0 0 25px rgba(239, 68, 68, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.55) !important;
+  box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.35), inset 0 0 25px rgba(16, 185, 129, 0.12) !important;
 }
 
 /* Ensure Three.js 3D canvas stays fixed in the background across all scroll depths */
@@ -104,8 +104,8 @@ div[class*="via-background"] {
   pointer-events: none !important;
   z-index: 0 !important;
   background-image: 
-    linear-gradient(to right, rgba(239, 68, 68, 0.09) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(239, 68, 68, 0.09) 1px, transparent 1px) !important;
+    linear-gradient(to right, rgba(16, 185, 129, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(16, 185, 129, 0.09) 1px, transparent 1px) !important;
   background-size: 56px 56px !important;
   mask-image: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.70) 100%) !important;
   -webkit-mask-image: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.70) 100%) !important;
@@ -149,7 +149,7 @@ div[class*="via-background"] {
 .esbd-hero-light-beams .beam-emerald {
   width: 4px !important;
   right: 22% !important;
-  background: linear-gradient(180deg, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.08) 60%, transparent 100%) !important;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.5) 0%, rgba(16, 185, 129, 0.08) 60%, transparent 100%) !important;
   filter: blur(10px) !important;
 }
 
@@ -185,7 +185,7 @@ div[class*="via-background"] {
   height: 1050px !important;
   top: -12% !important;
   left: -8% !important;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.28) 0%, rgba(239, 68, 68, 0.10) 45%, transparent 70%) !important;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.28) 0%, rgba(16, 185, 129, 0.10) 45%, transparent 70%) !important;
 }
 
 .esbd-nebula-crimson-core {
@@ -229,30 +229,30 @@ div[class*="via-background"] {
   overflow: hidden !important;
 }
 
-.esbd-floating-particles .particle:nth-child(1)  { width: 4px; height: 4px; left: 6%;  background: #ef4444; animation-duration: 22s; animation-delay: 0s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(1)  { width: 4px; height: 4px; left: 6%;  background: #10b981; animation-duration: 22s; animation-delay: 0s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(2)  { width: 3px; height: 3px; left: 12%; background: #ef4444; animation-duration: 28s; animation-delay: -5s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(3)  { width: 5px; height: 5px; left: 18%; background: #38bdf8; animation-duration: 20s; animation-delay: -12s; opacity: 0.55; }
-.esbd-floating-particles .particle:nth-child(4)  { width: 3px; height: 3px; left: 24%; background: #ef4444; animation-duration: 25s; animation-delay: -7s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(4)  { width: 3px; height: 3px; left: 24%; background: #10b981; animation-duration: 25s; animation-delay: -7s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(5)  { width: 4px; height: 4px; left: 30%; background: #f59e0b; animation-duration: 23s; animation-delay: -15s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(6)  { width: 3px; height: 3px; left: 36%; background: #ef4444; animation-duration: 27s; animation-delay: -3s; opacity: 0.5; }
-.esbd-floating-particles .particle:nth-child(7)  { width: 4px; height: 4px; left: 42%; background: #ef4444; animation-duration: 21s; animation-delay: -9s; opacity: 0.55; }
+.esbd-floating-particles .particle:nth-child(7)  { width: 4px; height: 4px; left: 42%; background: #10b981; animation-duration: 21s; animation-delay: -9s; opacity: 0.55; }
 .esbd-floating-particles .particle:nth-child(8)  { width: 5px; height: 5px; left: 48%; background: #38bdf8; animation-duration: 26s; animation-delay: -18s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(9)  { width: 3px; height: 3px; left: 54%; background: #ef4444; animation-duration: 24s; animation-delay: -6s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(9)  { width: 3px; height: 3px; left: 54%; background: #10b981; animation-duration: 24s; animation-delay: -6s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(10) { width: 4px; height: 4px; left: 60%; background: #ef4444; animation-duration: 29s; animation-delay: -11s; opacity: 0.5; }
-.esbd-floating-particles .particle:nth-child(11) { width: 3px; height: 3px; left: 66%; background: #ef4444; animation-duration: 22s; animation-delay: -14s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(11) { width: 3px; height: 3px; left: 66%; background: #10b981; animation-duration: 22s; animation-delay: -14s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(12) { width: 5px; height: 5px; left: 72%; background: #f59e0b; animation-duration: 25s; animation-delay: -8s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(13) { width: 3px; height: 3px; left: 78%; background: #38bdf8; animation-duration: 23s; animation-delay: -2s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(14) { width: 4px; height: 4px; left: 84%; background: #ef4444; animation-duration: 27s; animation-delay: -16s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(14) { width: 4px; height: 4px; left: 84%; background: #10b981; animation-duration: 27s; animation-delay: -16s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(15) { width: 3px; height: 3px; left: 90%; background: #ef4444; animation-duration: 24s; animation-delay: -10s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(16) { width: 4px; height: 4px; left: 96%; background: #ef4444; animation-duration: 26s; animation-delay: -4s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(16) { width: 4px; height: 4px; left: 96%; background: #10b981; animation-duration: 26s; animation-delay: -4s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(17) { width: 3px; height: 3px; left: 9%;  background: #38bdf8; animation-duration: 21s; animation-delay: -13s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(18) { width: 4px; height: 4px; left: 21%; background: #ef4444; animation-duration: 24s; animation-delay: -8s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(18) { width: 4px; height: 4px; left: 21%; background: #10b981; animation-duration: 24s; animation-delay: -8s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(19) { width: 3px; height: 3px; left: 33%; background: #ef4444; animation-duration: 26s; animation-delay: -17s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(20) { width: 5px; height: 5px; left: 45%; background: #f59e0b; animation-duration: 22s; animation-delay: -5s; opacity: 0.5; }
-.esbd-floating-particles .particle:nth-child(21) { width: 3px; height: 3px; left: 57%; background: #ef4444; animation-duration: 25s; animation-delay: -11s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(21) { width: 3px; height: 3px; left: 57%; background: #10b981; animation-duration: 25s; animation-delay: -11s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(22) { width: 4px; height: 4px; left: 69%; background: #38bdf8; animation-duration: 23s; animation-delay: -19s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(23) { width: 3px; height: 3px; left: 81%; background: #ef4444; animation-duration: 28s; animation-delay: -2s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(24) { width: 5px; height: 5px; left: 93%; background: #ef4444; animation-duration: 20s; animation-delay: -14s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(24) { width: 5px; height: 5px; left: 93%; background: #10b981; animation-duration: 20s; animation-delay: -14s; opacity: 0.5; }
 
 /* -----------------------------------------------------------------------------
    1. FORWARD / BACKWARD SCROLL VELOCITY DYNAMICS & 3D PERSPECTIVE
@@ -297,12 +297,12 @@ div[class*="via-background"] {
   max-width: 520px;
   padding: 22px;
   background: linear-gradient(135deg, rgba(8, 14, 22, 0.90) 0%, rgba(12, 20, 32, 0.95) 100%);
-  border: 1.5px solid rgba(239, 68, 68, 0.45);
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
   border-radius: 16px;
   box-shadow: 
     0 16px 40px rgba(0, 0, 0, 0.8),
-    0 0 35px rgba(239, 68, 68, 0.2),
-    inset 0 0 25px rgba(239, 68, 68, 0.12);
+    0 0 35px rgba(16, 185, 129, 0.2),
+    inset 0 0 25px rgba(16, 185, 129, 0.12);
   overflow: hidden;
   backdrop-filter: blur(12px);
   transform-style: preserve-3d;
@@ -310,7 +310,7 @@ div[class*="via-background"] {
 }
 
 @keyframes esbdRadarBoxBreathe {
-  0%   { border-color: rgba(239, 68, 68, 0.4); box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 30px rgba(239,68,68,0.18); }
+  0%   { border-color: rgba(16, 185, 129, 0.4); box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 30px rgba(16,185,129,0.18); }
   100% { border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 45px rgba(56,189,248,0.25); }
 }
 
@@ -332,17 +332,17 @@ div[class*="via-background"] {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #ef4444;
+  color: #10b981;
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
 }
 
 .esbd-radar-badge-live .pulse-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: #ef4444;
-  box-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444;
+  background-color: #10b981;
+  box-shadow: 0 0 10px #10b981, 0 0 20px #10b981;
   animation: esbdPulseDot 1.5s ease-in-out infinite;
 }
 
@@ -358,7 +358,7 @@ div[class*="via-background"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, rgba(7, 10, 15, 0.7) 70%, transparent 100%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(7, 10, 15, 0.7) 70%, transparent 100%);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -367,10 +367,10 @@ div[class*="via-background"] {
 .esbd-radar-circle {
   position: absolute;
   border-radius: 50%;
-  border: 1px dashed rgba(239, 68, 68, 0.3);
+  border: 1px dashed rgba(16, 185, 129, 0.3);
   pointer-events: none;
 }
-.esbd-radar-circle.c1 { width: 55px; height: 55px; border-style: solid; border-color: rgba(239, 68, 68, 0.5); }
+.esbd-radar-circle.c1 { width: 55px; height: 55px; border-style: solid; border-color: rgba(16, 185, 129, 0.5); }
 .esbd-radar-circle.c2 { width: 110px; height: 110px; }
 .esbd-radar-circle.c3 { width: 165px; height: 165px; border-color: rgba(56, 189, 248, 0.35); }
 
@@ -380,7 +380,7 @@ div[class*="via-background"] {
   width: 190px;
   height: 190px;
   border-radius: 50%;
-  background: conic-gradient(from 0deg, rgba(239, 68, 68, 0.4) 0deg, rgba(239, 68, 68, 0.08) 45deg, transparent 60deg, transparent 360deg);
+  background: conic-gradient(from 0deg, rgba(16, 185, 129, 0.4) 0deg, rgba(16, 185, 129, 0.08) 45deg, transparent 60deg, transparent 360deg);
   animation: esbdRadarSpin 4s linear infinite;
   pointer-events: none;
 }
@@ -395,13 +395,13 @@ div[class*="via-background"] {
   position: absolute;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.35) 20%, rgba(239, 68, 68, 0.35) 80%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.35) 20%, rgba(16, 185, 129, 0.35) 80%, transparent);
 }
 .esbd-radar-crosshair-y {
   position: absolute;
   height: 100%;
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(239, 68, 68, 0.35) 20%, rgba(239, 68, 68, 0.35) 80%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.35) 20%, rgba(16, 185, 129, 0.35) 80%, transparent);
 }
 
 /* Hub Division Nodes */
@@ -446,7 +446,7 @@ div[class*="via-background"] {
 }
 
 /* Specific node placements */
-.node-dhaka      { top: 44%; left: 48%; color: #ef4444; }
+.node-dhaka      { top: 44%; left: 48%; color: #10b981; }
 .node-chattogram { top: 62%; left: 72%; color: #38bdf8; }
 .node-sylhet     { top: 26%; left: 68%; color: #ef4444; }
 .node-rajshahi   { top: 38%; left: 24%; color: #f59e0b; }
@@ -463,7 +463,7 @@ div[class*="via-background"] {
 }
 
 .esbd-reach-radar-footer strong {
-  color: #ef4444;
+  color: #10b981;
 }
 
 /* Enhanced Community Row Highlights (Right Side of Reach Section) */
@@ -482,15 +482,15 @@ div[class*="via-background"] {
   left: 0;
   width: 3.5px;
   height: 100%;
-  background: #ef4444;
-  box-shadow: 0 0 10px #ef4444;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
   transition: width 0.25s ease;
 }
 
 .esbd-community-row-highlight:hover {
   transform: translateX(6px) scale(1.008);
-  border-color: rgba(239, 68, 68, 0.45) !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.45) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(16, 185, 129, 0.2) !important;
 }
 
 .esbd-community-row-highlight:hover::before {
@@ -509,12 +509,12 @@ div[class*="via-background"] {
   max-width: 480px;
   height: 180px;
   border-radius: 16px;
-  background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.12) 0%, rgba(8, 14, 22, 0.9) 65%, transparent 100%);
-  border: 1.5px solid rgba(239, 68, 68, 0.4);
+  background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.12) 0%, rgba(8, 14, 22, 0.9) 65%, transparent 100%);
+  border: 1.5px solid rgba(16, 185, 129, 0.4);
   box-shadow: 
     0 16px 36px rgba(0, 0, 0, 0.7),
-    0 0 30px rgba(239, 68, 68, 0.18),
-    inset 0 0 25px rgba(239, 68, 68, 0.1);
+    0 0 30px rgba(16, 185, 129, 0.18),
+    inset 0 0 25px rgba(16, 185, 129, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -536,9 +536,9 @@ div[class*="via-background"] {
 .esbd-prism-core {
   width: 42px;
   height: 56px;
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(56, 189, 248, 0.85) 100%);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(56, 189, 248, 0.85) 100%);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  box-shadow: 0 0 25px rgba(239, 68, 68, 0.8), 0 0 50px rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.8), 0 0 50px rgba(56, 189, 248, 0.5);
   animation: esbdPrismSpin 6s linear infinite alternate;
 }
 
@@ -552,7 +552,7 @@ div[class*="via-background"] {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 1.5px dashed rgba(239, 68, 68, 0.65);
+  border: 1.5px dashed rgba(16, 185, 129, 0.65);
   animation: esbdRingRotate 4s linear infinite;
 }
 
@@ -570,10 +570,10 @@ div[class*="via-background"] {
 }
 
 .esbd-trophy-telemetry .title {
-  color: #ef4444;
+  color: #10b981;
   font-weight: 700;
   letter-spacing: 0.12em;
-  text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
 }
 
 .esbd-trophy-telemetry .metric-row {
@@ -609,7 +609,7 @@ div[class*="via-background"] {
   left: 5%;
   width: 90%;
   height: 2px;
-  background: linear-gradient(90deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.6) 50%, rgba(56, 189, 248, 0.6) 100%);
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.6) 50%, rgba(56, 189, 248, 0.6) 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -621,7 +621,7 @@ div[class*="via-background"] {
   height: 8px;
   border-radius: 4px;
   background: #ffffff;
-  box-shadow: 0 0 15px #ef4444, 0 0 30px #38bdf8;
+  box-shadow: 0 0 15px #10b981, 0 0 30px #38bdf8;
   animation: esbdPacketRun 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -639,8 +639,8 @@ div[class*="via-background"] {
   font-family: 'Geist Mono', monospace;
   font-size: 28px;
   font-weight: 800;
-  color: #ef4444;
-  text-shadow: 0 0 15px rgba(239, 68, 68, 0.8), 0 0 30px rgba(239, 68, 68, 0.4);
+  color: #10b981;
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
   margin-bottom: 8px;
 }
 
@@ -663,7 +663,7 @@ div[class*="via-background"] {
   border-radius: 16px !important;
   box-shadow: 
     0 16px 36px rgba(0, 0, 0, 0.7),
-    0 0 20px rgba(239, 68, 68, 0.08) !important;
+    0 0 20px rgba(16, 185, 129, 0.08) !important;
   transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
   overflow: hidden;
   transform-style: preserve-3d;
@@ -671,10 +671,10 @@ div[class*="via-background"] {
 
 .esbd-excel-podium-card:hover {
   transform: translateY(-8px) rotateX(3deg) scale(1.02) !important;
-  border-color: rgba(239, 68, 68, 0.6) !important;
+  border-color: rgba(16, 185, 129, 0.6) !important;
   box-shadow: 
     0 24px 48px rgba(0, 0, 0, 0.8),
-    0 0 35px rgba(239, 68, 68, 0.25) !important;
+    0 0 35px rgba(16, 185, 129, 0.25) !important;
 }
 
 /* Neon Base Rail under card */
@@ -685,8 +685,8 @@ div[class*="via-background"] {
   left: 10%;
   width: 80%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #ef4444 30%, #38bdf8 70%, transparent);
-  box-shadow: 0 0 10px #ef4444, 0 0 20px #38bdf8;
+  background: linear-gradient(90deg, transparent, #10b981 30%, #38bdf8 70%, transparent);
+  box-shadow: 0 0 10px #10b981, 0 0 20px #38bdf8;
 }
 
 /* -----------------------------------------------------------------------------
@@ -708,8 +708,8 @@ div[class*="via-background"] {
   height: 520px;
   transform: translate(-50%, -50%);
   background-image: 
-    radial-gradient(circle at center, rgba(239, 68, 68, 0.09) 0%, transparent 70%),
-    repeating-linear-gradient(60deg, rgba(239, 68, 68, 0.04) 0, rgba(239, 68, 68, 0.04) 1px, transparent 0, transparent 32px),
+    radial-gradient(circle at center, rgba(16, 185, 129, 0.09) 0%, transparent 70%),
+    repeating-linear-gradient(60deg, rgba(16, 185, 129, 0.04) 0, rgba(16, 185, 129, 0.04) 1px, transparent 0, transparent 32px),
     repeating-linear-gradient(120deg, rgba(56, 189, 248, 0.04) 0, rgba(56, 189, 248, 0.04) 1px, transparent 0, transparent 32px);
   filter: blur(0.5px);
   animation: esbdShieldDrift 14s ease-in-out infinite alternate;
@@ -738,14 +738,14 @@ div[class*="via-background"] {
   align-items: center;
   gap: 8px;
   background: rgba(10, 16, 24, 0.85);
-  border: 1px solid rgba(239, 68, 68, 0.35);
+  border: 1px solid rgba(16, 185, 129, 0.35);
   border-radius: 20px;
   padding: 6px 16px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .esbd-beacon-item strong {
-  color: #ef4444;
+  color: #10b981;
 }
 
 /* -----------------------------------------------------------------------------
@@ -870,10 +870,10 @@ div[class*="via-background"] {
 }
 
 .esbd-teaser-prize-val {
-  color: #ef4444;
+  color: #10b981;
   font-size: 14px;
   font-weight: 800;
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
 }
 
 .esbd-teaser-btn {
@@ -883,7 +883,7 @@ div[class*="via-background"] {
   margin-top: 14px;
   width: 100%;
   padding: 9px 18px;
-  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   font-weight: 700;
   font-size: 12px;
@@ -891,12 +891,12 @@ div[class*="via-background"] {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
   transition: all 0.25s ease;
 }
 
 .esbd-teaser-btn:hover {
-  background: linear-gradient(90deg, #dc2626 0%, #38bdf8 100%);
+  background: linear-gradient(90deg, #059669 0%, #38bdf8 100%);
   box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
   transform: translateY(-2px);
 }
@@ -910,17 +910,17 @@ div[class*="via-background"] {
   margin-top: 28px;
   padding: 14px 20px;
   background: linear-gradient(90deg, rgba(8, 14, 22, 0.85) 0%, rgba(12, 20, 32, 0.95) 50%, rgba(8, 14, 22, 0.85) 100%);
-  border: 1px solid rgba(239, 68, 68, 0.35);
+  border: 1px solid rgba(16, 185, 129, 0.35);
   border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(239, 68, 68, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(16, 185, 129, 0.08);
 }
 
 .esbd-timeline-spine {
   position: relative;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, rgba(239, 68, 68, 0.3) 0%, #ef4444 50%, rgba(56, 189, 248, 0.5) 100%);
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.3) 0%, #10b981 50%, rgba(56, 189, 248, 0.5) 100%);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -933,8 +933,8 @@ div[class*="via-background"] {
   height: 12px;
   border-radius: 50%;
   background: #07090c;
-  border: 2px solid #ef4444;
-  box-shadow: 0 0 12px #ef4444;
+  border: 2px solid #10b981;
+  box-shadow: 0 0 12px #10b981;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -954,7 +954,7 @@ div[class*="via-background"] {
   font-family: 'Geist Mono', monospace;
   font-size: 10px;
   font-weight: 700;
-  color: #ef4444;
+  color: #10b981;
   letter-spacing: 0.1em;
 }
 
@@ -975,7 +975,7 @@ div[class*="via-background"] {
   height: 9px;
   border-radius: 4.5px;
   background: #ffffff;
-  box-shadow: 0 0 15px #ef4444, 0 0 25px #ffffff;
+  box-shadow: 0 0 15px #10b981, 0 0 25px #ffffff;
   animation: esbdPhotonSlide 5s ease-in-out infinite;
 }
 
@@ -994,8 +994,8 @@ div[class*="via-background"] {
 
 .esbd-track-card-3d:hover {
   transform: translateY(-8px) scale(1.03) rotateY(3deg) !important;
-  border-color: rgba(239, 68, 68, 0.6) !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75), 0 0 30px rgba(239, 68, 68, 0.3) !important;
+  border-color: rgba(16, 185, 129, 0.6) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75), 0 0 30px rgba(16, 185, 129, 0.3) !important;
 }
 
 /* -----------------------------------------------------------------------------
@@ -1057,15 +1057,15 @@ div[class*="via-background"] {
   position: relative;
   background: linear-gradient(135deg, rgba(16, 24, 34, 0.85) 0%, rgba(9, 14, 22, 0.95) 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(239, 68, 68, 0.05) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(16, 185, 129, 0.05) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
   transform-style: preserve-3d;
 }
 
 .esbd-brand-podium-3d:hover {
   transform: translateY(-6px) scale(1.04) rotateX(4deg) !important;
-  border-color: rgba(239, 68, 68, 0.5) !important;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.7), 0 0 25px rgba(239, 68, 68, 0.25) !important;
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.7), 0 0 25px rgba(16, 185, 129, 0.25) !important;
 }
 
 /* -----------------------------------------------------------------------------
@@ -1089,11 +1089,11 @@ div[class*="via-background"] {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 1.5px dashed rgba(239, 68, 68, 0.35);
+  border: 1.5px dashed rgba(16, 185, 129, 0.35);
   animation: esbdPortalWarpSpin 12s linear infinite;
 }
 
-.esbd-portal-warp-ring.r1 { width: 340px; height: 340px; border-color: rgba(239, 68, 68, 0.45); }
+.esbd-portal-warp-ring.r1 { width: 340px; height: 340px; border-color: rgba(16, 185, 129, 0.45); }
 .esbd-portal-warp-ring.r2 { width: 560px; height: 560px; border-color: rgba(56, 189, 248, 0.3); animation-direction: reverse; animation-duration: 18s; }
 .esbd-portal-warp-ring.r3 { width: 780px; height: 780px; border-color: rgba(239, 68, 68, 0.2); animation-duration: 24s; }
 
@@ -1106,10 +1106,10 @@ div[class*="via-background"] {
   font-family: 'Geist Mono', monospace;
   font-size: 11px;
   letter-spacing: 0.22em;
-  color: #ef4444;
+  color: #10b981;
   text-transform: uppercase;
   margin-bottom: 12px;
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
 }
 
 /* -----------------------------------------------------------------------------
@@ -1122,7 +1122,7 @@ div[class*="via-background"] {
   margin-bottom: 24px;
   padding: 10px 18px;
   background: linear-gradient(90deg, rgba(8, 14, 20, 0.8) 0%, rgba(14, 22, 32, 0.9) 50%, rgba(8, 14, 20, 0.8) 100%);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.25);
   border-radius: 10px;
   font-family: 'Geist Mono', monospace;
   font-size: 10.5px;
@@ -1132,5 +1132,5 @@ div[class*="via-background"] {
 }
 
 .esbd-footer-status-bar strong {
-  color: #ef4444;
+  color: #10b981;
 }

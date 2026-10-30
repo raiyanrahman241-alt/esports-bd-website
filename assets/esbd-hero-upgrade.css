@@ -31,7 +31,7 @@
   height: 900px;
   top: -15%;
   left: -12%;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.18) 0%, rgba(239, 68, 68, 0.06) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(16, 185, 129, 0.06) 40%, transparent 70%);
   animation: nebulaBreathePrimary 20s ease-in-out infinite alternate;
 }
 
@@ -126,9 +126,9 @@
   height: auto;
   object-fit: contain;
   filter: 
-    drop-shadow(0 0 25px rgba(239, 68, 68, 0.6))
+    drop-shadow(0 0 25px rgba(16, 185, 129, 0.6))
     drop-shadow(0 0 50px rgba(239, 68, 68, 0.3))
-    drop-shadow(0 0 80px rgba(239, 68, 68, 0.2));
+    drop-shadow(0 0 80px rgba(16, 185, 129, 0.2));
   animation: globeLogoFloat 6s ease-in-out infinite, globeLogoPulse 4s ease-in-out infinite alternate;
   transform-style: preserve-3d;
 }
@@ -141,9 +141,9 @@
 }
 
 @keyframes globeLogoPulse {
-  0%   { filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.5)) drop-shadow(0 0 40px rgba(239, 68, 68, 0.25)); }
-  50%  { filter: drop-shadow(0 0 35px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 60px rgba(239, 68, 68, 0.45)) brightness(1.1); }
-  100% { filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.6)) drop-shadow(0 0 50px rgba(56, 189, 248, 0.3)); }
+  0%   { filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.5)) drop-shadow(0 0 40px rgba(239, 68, 68, 0.25)); }
+  50%  { filter: drop-shadow(0 0 35px rgba(16, 185, 129, 0.8)) drop-shadow(0 0 60px rgba(239, 68, 68, 0.45)) brightness(1.1); }
+  100% { filter: drop-shadow(0 0 25px rgba(16, 185, 129, 0.6)) drop-shadow(0 0 50px rgba(56, 189, 248, 0.3)); }
 }
 
 @media (max-width: 768px) {
@@ -180,7 +180,7 @@ main section {
 
 .esbd-platform-frame:hover {
   background: rgba(7, 9, 12, 0.5) !important;
-  box-shadow: 0 0 60px -20px rgba(239, 68, 68, 0.08);
+  box-shadow: 0 0 60px -20px rgba(16, 185, 129, 0.08);
 }
 
 
@@ -232,11 +232,11 @@ main section {
   inset: 0;
   background: linear-gradient(90deg, 
     transparent 0%, 
-    rgba(239, 68, 68, 0.5) 15%, 
-    rgba(239, 68, 68, 0.8) 30%,
+    rgba(16, 185, 129, 0.5) 15%, 
+    rgba(16, 185, 129, 0.8) 30%,
     rgba(239, 68, 68, 0.6) 50%,
     rgba(56, 189, 248, 0.5) 70%,
-    rgba(239, 68, 68, 0.5) 85%,
+    rgba(16, 185, 129, 0.5) 85%,
     transparent 100%
   );
   border-radius: 2px;
@@ -252,9 +252,9 @@ main section {
   height: 24px;
   background: linear-gradient(90deg, 
     transparent, 
-    rgba(239, 68, 68, 0.15) 30%, 
+    rgba(16, 185, 129, 0.15) 30%, 
     rgba(239, 68, 68, 0.10) 50%,
-    rgba(239, 68, 68, 0.15) 70%, 
+    rgba(16, 185, 129, 0.15) 70%, 
     transparent
   );
   filter: blur(12px);
@@ -267,7 +267,7 @@ main section {
   top: -3px;
   width: 80px;
   height: 9px;
-  background: radial-gradient(ellipse, rgba(239, 68, 68, 0.9), transparent);
+  background: radial-gradient(ellipse, rgba(16, 185, 129, 0.9), transparent);
   border-radius: 50%;
   animation: dividerRunnerSlide 4s ease-in-out infinite;
   filter: blur(2px);
@@ -287,12 +287,12 @@ main section {
 
 /* Make stat numbers glow with emerald energy */
 .esbd-stat-highlight {
-  text-shadow: 0 0 20px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.2);
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.2);
   transition: text-shadow 0.3s ease;
 }
 
 .esbd-stat-highlight:hover {
-  text-shadow: 0 0 30px rgba(239, 68, 68, 0.8), 0 0 60px rgba(239, 68, 68, 0.4), 0 0 80px rgba(239, 68, 68, 0.2);
+  text-shadow: 0 0 30px rgba(16, 185, 129, 0.8), 0 0 60px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2);
 }
 
 
@@ -330,7 +330,7 @@ main section {
 .esbd-hero-light-beams .beam {
   position: absolute;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
   animation: beamSweep 12s ease-in-out infinite;
 }
 
@@ -382,10 +382,10 @@ main section {
 
 .bg-card:hover,
 [data-testid="tournament-card"]:hover {
-  border-color: rgba(239, 68, 68, 0.35) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
   box-shadow: 
     0 12px 30px -8px rgba(0, 0, 0, 0.7),
-    0 0 20px rgba(239, 68, 68, 0.12),
+    0 0 20px rgba(16, 185, 129, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
   transform: translateY(-3px) !important;
 }
@@ -413,8 +413,8 @@ main section {
 }
 
 .esbd-floating-particles .particle:nth-child(odd) {
-  background: rgba(239, 68, 68, 0.6);
-  box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+  background: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
 }
 
 .esbd-floating-particles .particle:nth-child(even) {

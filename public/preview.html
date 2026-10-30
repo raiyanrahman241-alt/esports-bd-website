@@ -84,8 +84,8 @@
         transition: all 0.28s ease !important;
       }
       .bg-card:hover {
-        border-color: rgba(239, 68, 68, 0.45) !important;
-        box-shadow: 0 10px 25px -10px rgba(239, 68, 68, 0.3) !important;
+        border-color: rgba(16, 185, 129, 0.45) !important;
+        box-shadow: 0 10px 25px -10px rgba(16, 185, 129, 0.3) !important;
         transform: translateY(-2px);
       }
 
@@ -111,7 +111,7 @@
         pointer-events: none;
         z-index: 1;
         transform: translate(-50%, -50%);
-        background: radial-gradient(circle, rgba(239, 68, 68, 0.09) 0%, rgba(239, 68, 68, 0.05) 40%, transparent 70%);
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.09) 0%, rgba(239, 68, 68, 0.05) 40%, transparent 70%);
         transition: opacity 0.3s ease;
       }
 
@@ -149,7 +149,7 @@
         transform-style: preserve-3d; will-change: transform, filter;
         animation: esbdLogo3DFloat 6s ease-in-out infinite, esbdCyberPulse 4s ease-in-out infinite alternate;
         transition: transform 0.28s cubic-bezier(0.2, 0, 0.2, 1), filter 0.28s ease;
-        filter: drop-shadow(0 4px 14px rgba(239, 68, 68, 0.5)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.35));
+        filter: drop-shadow(0 4px 14px rgba(16, 185, 129, 0.5)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.35));
       }
       @media (min-width: 768px) {
         [data-testid="logo-esbd"] img, .esbd-nav .logo-group img, .logo-group img { height: 46px; max-width: 290px; }
@@ -161,14 +161,14 @@
         75% { transform: perspective(800px) rotateY(5deg) rotateX(2.5deg) translateY(-2.5px) scale(1.02); }
       }
       @keyframes esbdCyberPulse {
-        0% { filter: drop-shadow(0 3px 12px rgba(239, 68, 68, 0.45)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
-        50% { filter: drop-shadow(0 5px 22px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 32px rgba(239, 68, 68, 0.55)) brightness(1.15); }
-        100% { filter: drop-shadow(0 4px 16px rgba(239, 68, 68, 0.55)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.35)); }
+        0% { filter: drop-shadow(0 3px 12px rgba(16, 185, 129, 0.45)) drop-shadow(0 0 16px rgba(239, 68, 68, 0.3)); }
+        50% { filter: drop-shadow(0 5px 22px rgba(16, 185, 129, 0.8)) drop-shadow(0 0 32px rgba(239, 68, 68, 0.55)) brightness(1.15); }
+        100% { filter: drop-shadow(0 4px 16px rgba(16, 185, 129, 0.55)) drop-shadow(0 0 24px rgba(56, 189, 248, 0.35)); }
       }
       [data-testid="logo-esbd"]:hover img, .esbd-nav .logo-group:hover img, .logo-group:hover img {
         animation-play-state: paused;
         transform: perspective(600px) scale3d(1.08, 1.08, 1.08) translateZ(16px) !important;
-        filter: drop-shadow(0 8px 28px rgba(239, 68, 68, 0.9)) drop-shadow(0 0 45px rgba(239, 68, 68, 0.7)) brightness(1.25) !important;
+        filter: drop-shadow(0 8px 28px rgba(16, 185, 129, 0.9)) drop-shadow(0 0 45px rgba(239, 68, 68, 0.7)) brightness(1.25) !important;
       }
 
       /* Navigation header clarity */
@@ -221,8 +221,8 @@
       .cyber-bracket::before {
         top: -1px;
         left: -1px;
-        border-top: 2px solid #ef4444;
-        border-left: 2px solid #ef4444;
+        border-top: 2px solid #10b981;
+        border-left: 2px solid #10b981;
       }
       .cyber-bracket::after {
         bottom: -1px;
@@ -242,21 +242,21 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95));
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95));
         color: #fff;
-        border: 1px solid rgba(239, 68, 68, 0.6);
+        border: 1px solid rgba(16, 185, 129, 0.6);
         padding: 10px 18px;
         border-radius: 9999px;
         font-family: 'Oxanium', sans-serif;
         font-weight: 700;
         font-size: 0.88rem;
-        box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4), 0 0 15px rgba(239, 68, 68, 0.2);
+        box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4), 0 0 15px rgba(16, 185, 129, 0.2);
         cursor: pointer;
         transition: all 0.25s cubic-bezier(0.2, 0, 0.2, 1);
       }
       .esbd-chat-toggle-btn:hover {
         transform: translateY(-2px) scale(1.03);
-        box-shadow: 0 12px 35px rgba(239, 68, 68, 0.55);
+        box-shadow: 0 12px 35px rgba(16, 185, 129, 0.55);
       }
       .esbd-chat-panel {
         position: fixed;
@@ -268,12 +268,12 @@
         max-height: calc(100vh - 120px);
         background: rgba(13, 17, 23, 0.96);
         backdrop-filter: blur(24px) saturate(1.4);
-        border: 1px solid rgba(239, 68, 68, 0.4);
+        border: 1px solid rgba(16, 185, 129, 0.4);
         border-radius: 16px;
         z-index: 10001;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(239, 68, 68, 0.2);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.2);
         overflow: hidden;
         transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
         transform-origin: bottom right;
@@ -285,7 +285,7 @@
       }
       .esbd-chat-header {
         padding: 12px 16px;
-        background: rgba(239, 68, 68, 0.08);
+        background: rgba(16, 185, 129, 0.08);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         display: flex;
         align-items: center;
@@ -312,9 +312,9 @@
         transition: all 0.2s;
       }
       .esbd-channel-tab.active {
-        color: #ef4444;
-        background: rgba(239, 68, 68, 0.12);
-        border-color: rgba(239, 68, 68, 0.3);
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.12);
+        border-color: rgba(16, 185, 129, 0.3);
         font-weight: 700;
       }
       .esbd-chat-messages {
@@ -353,7 +353,7 @@
         text-transform: uppercase;
       }
       .role-admin { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
-      .role-pro { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+      .role-pro { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
       .role-mod { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
       .role-caster { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
       .role-user { background: rgba(255, 255, 255, 0.08); color: #8b949e; }
@@ -376,10 +376,10 @@
         outline: none;
       }
       .esbd-chat-input:focus {
-        border-color: #ef4444;
+        border-color: #10b981;
       }
       .esbd-chat-send {
-        background: #ef4444;
+        background: #10b981;
         color: #07090c;
         font-weight: 700;
         border: none;
@@ -413,7 +413,7 @@
       }
       .esbd-modal-box {
         background: #0d1117;
-        border: 1px solid rgba(239, 68, 68, 0.35);
+        border: 1px solid rgba(16, 185, 129, 0.35);
         border-radius: 18px;
         width: 100%;
         max-width: 1100px;
@@ -421,7 +421,7 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 40px rgba(239, 68, 68, 0.15);
+        box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 40px rgba(16, 185, 129, 0.15);
         transform: scale(0.96);
         transition: transform 0.25s ease;
       }
@@ -430,7 +430,7 @@
       }
       .esbd-modal-header {
         padding: 16px 22px;
-        background: rgba(239, 68, 68, 0.08);
+        background: rgba(16, 185, 129, 0.08);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         display: flex;
         align-items: center;
@@ -493,8 +493,8 @@
         width: 100%; max-width: 1200px; margin: 20px auto 10px; padding: 0 16px;
       }
       .esbd-ad-leaderboard-inner {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.07) 0%, rgba(13, 17, 23, 0.95) 100%);
-        border: 1px solid rgba(239, 68, 68, 0.25);
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.07) 0%, rgba(13, 17, 23, 0.95) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.25);
         border-radius: 14px; padding: 14px 20px;
         display: flex; align-items: center; justify-content: space-between; gap: 16px;
       }
@@ -509,7 +509,7 @@
       }
       .esbd-laser-divider {
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.6) 30%, rgba(239, 68, 68, 0.5) 70%, transparent);
+        background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.6) 30%, rgba(239, 68, 68, 0.5) 70%, transparent);
         margin: 40px auto;
         max-width: 1200px;
       }
@@ -519,172 +519,101 @@
       }
     
       /* =====================================================================
-         HIGH-CONTRAST & ELECTRIC CRIMSON RED ESPORTS TYPOGRAPHY UPGRADE
+         HIGH-CONTRAST READABILITY & ESBD RED-AND-GREEN LOGO THEME
+         (Preserves exact emerald cyber 3D background atmosphere & globe)
          ===================================================================== */
       :root {
-        --primary: 0 84% 60% !important;
-        --primary-foreground: 0 0% 100% !important;
         --muted-foreground: 215 25% 84% !important;
         --foreground: 210 20% 98% !important;
-        --ring: 0 84% 60% !important;
-        --chart-1: 0 84% 60% !important;
-        --esbd-crimson: #ef4444 !important;
-        --esbd-red-glow: rgba(239, 68, 68, 0.5) !important;
+        --esbd-green: #10b981;
+        --esbd-green-glow: rgba(16, 185, 129, 0.5);
+        --esbd-crimson: #ef4444;
+        --esbd-crimson-glow: rgba(239, 68, 68, 0.5);
       }
 
-      /* 1. TYPOGRAPHY VISIBILITY & CONTRAST OVERHAUL */
+      /* High-contrast crisp typography - clearly visible across all pages */
       h1, h2, h3, h4, h5, h6, .font-display {
         color: #ffffff !important;
-        text-shadow: 0 0 20px rgba(239, 68, 68, 0.22) !important;
+        text-shadow: 0 0 16px rgba(16, 185, 129, 0.3), 0 0 28px rgba(239, 68, 68, 0.2) !important;
         letter-spacing: -0.01em;
       }
 
-      /* Boost ALL descriptions, subheadings, metadata, formats and dates */
+      /* Boost ALL descriptions, subheadings, metadata, formats and dates to crisp readable light slate */
       .text-muted-foreground,
       p.text-muted-foreground,
       span.text-muted-foreground,
       div.text-muted-foreground,
       .text-muted-foreground * {
-        color: #cbd5e1 !important; /* High contrast, crisp readable slate */
+        color: #cbd5e1 !important;
+        font-weight: 450;
       }
 
-      /* Highlighted headings and bold text inside cards */
       .font-semibold.text-foreground,
       .font-bold.text-foreground,
       .text-foreground {
         color: #f8fafc !important;
       }
 
-      /* 2. STATS, NUMBERS & HIGHLIGHTED INFORMATIONAL CALLOUTS (VIVID RED) */
-      .font-mono-num,
-      [class*="font-mono-num"],
-      .text-primary,
-      a.text-primary,
-      span.text-primary,
-      button.text-primary,
-      .cyber-stat-val {
-        color: #ff3b3b !important;
-        font-weight: 700 !important;
-        text-shadow: 0 0 12px rgba(255, 59, 59, 0.45) !important;
-      }
-
-      /* High-impact prize pool and numerical values */
+      /* ESBD Red & Green Accents: Live/Prize highlights in Crimson Red, Active/Verified in Emerald Green */
       .prize-highlight,
       [data-testid*="prize"],
-      [data-testid*="stat"],
-      [data-testid*="count"] {
+      .text-crimson-live {
         color: #ff3b3b !important;
-        text-shadow: 0 0 14px rgba(239, 68, 68, 0.5) !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 12px rgba(239, 68, 68, 0.5) !important;
       }
 
-      /* 3. PRIMARY BUTTONS & CALL-TO-ACTION (CRIMSON ESPORTS THEME) */
+      .stat-highlight-green,
+      .text-verified-green {
+        color: #10b981 !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 12px rgba(16, 185, 129, 0.5) !important;
+      }
+
+      /* Primary CTAs with emerald green base and subtle red neon shadow (matching logo synergy) */
       .bg-primary,
       button.bg-primary,
       .sheen,
       [data-testid="button-submit-login"],
       [data-testid="button-submit-register"],
       .esbd-chat-send {
-        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
         color: #ffffff !important;
-        border-color: rgba(255, 255, 255, 0.2) !important;
-        box-shadow: 0 4px 18px rgba(239, 68, 68, 0.45), 0 0 12px rgba(239, 68, 68, 0.3) !important;
+        border: 1px solid rgba(16, 185, 129, 0.6) !important;
+        box-shadow: 0 4px 18px rgba(16, 185, 129, 0.45), 0 0 12px rgba(239, 68, 68, 0.25) !important;
         transition: all 0.22s ease !important;
       }
       .bg-primary:hover,
       button.bg-primary:hover,
       .sheen:hover {
-        background: linear-gradient(135deg, #f87171 0%, #ef4444 100%) !important;
-        box-shadow: 0 6px 26px rgba(239, 68, 68, 0.65), 0 0 20px rgba(239, 68, 68, 0.4) !important;
+        background: linear-gradient(135deg, #059669 0%, #ef4444 100%) !important;
+        border-color: rgba(239, 68, 68, 0.7) !important;
+        box-shadow: 0 6px 26px rgba(239, 68, 68, 0.5), 0 0 20px rgba(16, 185, 129, 0.4) !important;
         transform: translateY(-1px) !important;
       }
 
-      /* 4. CARDS & SECTIONS (DEEP CARBON WITH CRIMSON NEON HOVER) */
+      /* Card styles: preserve deep cyber card with high-contrast text and Red-Green hover accents */
       .bg-card {
         background-color: rgba(13, 17, 24, 0.88) !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65) !important;
       }
       .bg-card:hover {
-        border-color: rgba(239, 68, 68, 0.6) !important;
-        box-shadow: 0 12px 32px -6px rgba(239, 68, 68, 0.4), inset 0 0 20px rgba(239, 68, 68, 0.06) !important;
+        border-color: rgba(16, 185, 129, 0.65) !important;
+        box-shadow: 0 12px 32px -6px rgba(16, 185, 129, 0.35), 0 0 18px rgba(239, 68, 68, 0.2) !important;
         transform: translateY(-2px) !important;
       }
 
-      /* 5. BADGES, TAGS & LIVE PILLS */
-      .border-primary,
-      .border-primary\/50,
-      .border-primary\/40,
-      .border-primary\/70 {
-        border-color: rgba(239, 68, 68, 0.55) !important;
-      }
-      .bg-primary\/10,
-      .bg-primary\/15,
-      .bg-primary\/20 {
-        background-color: rgba(239, 68, 68, 0.15) !important;
-      }
-
-      /* Live Red Beacon & Tournament Badges */
-      .cyber-nav-badge-live,
-      .badge-live,
-      [class*="badge-live"] {
-        background: rgba(239, 68, 68, 0.2) !important;
-        border: 1px solid rgba(239, 68, 68, 0.7) !important;
-        color: #ff4d4d !important;
-        box-shadow: 0 0 10px rgba(239, 68, 68, 0.4) !important;
-      }
-      .cyber-nav-dot-pulse {
-        background: #ff2a2a !important;
-        box-shadow: 0 0 10px #ff2a2a, 0 0 20px #ff2a2a !important;
-      }
-
-      /* Cyber bracket corners: Electric Crimson */
+      /* Bangladesh Logo Dual Cyber Brackets (Top-Left Green, Bottom-Right Red) */
       .cyber-bracket::before {
-        border-top: 2px solid #ef4444 !important;
-        border-left: 2px solid #ef4444 !important;
+        border-top: 2px solid #10b981 !important;
+        border-left: 2px solid #10b981 !important;
+        filter: drop-shadow(0 0 4px #10b981);
       }
       .cyber-bracket::after {
         border-bottom: 2px solid #ef4444 !important;
         border-right: 2px solid #ef4444 !important;
-      }
-
-      /* 6. FLOATING CHAT BUTTON & MODALS */
-      .esbd-chat-toggle-btn {
-        background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%) !important;
-        border: 1px solid rgba(239, 68, 68, 0.6) !important;
-        box-shadow: 0 8px 30px rgba(239, 68, 68, 0.45), 0 0 18px rgba(239, 68, 68, 0.3) !important;
-      }
-      .esbd-channel-tab.active {
-        color: #ff4d4d !important;
-        background: rgba(239, 68, 68, 0.16) !important;
-        border-color: rgba(239, 68, 68, 0.45) !important;
-      }
-      .role-pro {
-        background: rgba(239, 68, 68, 0.2) !important;
-        color: #ff4d4d !important;
-        border: 1px solid rgba(239, 68, 68, 0.45) !important;
-      }
-      .esbd-chat-input:focus {
-        border-color: #ef4444 !important;
-        box-shadow: 0 0 10px rgba(239, 68, 68, 0.35) !important;
-      }
-      .esbd-modal-box {
-        border: 1px solid rgba(239, 68, 68, 0.4) !important;
-        box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 45px rgba(239, 68, 68, 0.22) !important;
-      }
-      .esbd-modal-header {
-        background: rgba(239, 68, 68, 0.12) !important;
-      }
-
-      /* 7. LASER DIVIDER & BANNER ACCENTS */
-      .esbd-laser-divider {
-        height: 1.5px !important;
-        background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.8) 35%, rgba(255, 59, 59, 1) 50%, rgba(239, 68, 68, 0.8) 65%, transparent) !important;
-        box-shadow: 0 0 14px rgba(239, 68, 68, 0.7) !important;
-      }
-      .esbd-ad-leaderboard-inner {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(13, 17, 24, 0.96) 100%) !important;
-        border: 1px solid rgba(239, 68, 68, 0.35) !important;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 20px rgba(239, 68, 68, 0.15) !important;
+        filter: drop-shadow(0 0 4px #ef4444);
       }
 
       /* Form inputs high visibility */
@@ -694,10 +623,9 @@
         border-color: rgba(255, 255, 255, 0.18) !important;
       }
       input:focus, select:focus, textarea:focus {
-        border-color: #ef4444 !important;
-        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+        border-color: #10b981 !important;
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3), 0 0 12px rgba(239, 68, 68, 0.25) !important;
       }
-
     </style>
     <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
   </head>
@@ -764,7 +692,7 @@
                   <p style="color:#8b949e; font-size:0.8rem; margin-top:3px;">Casters: Kabbo & Mr. Triple R | 1080p60 Full HD | Anti-Cheat Server Protected</p>
                 </div>
                 <div style="display:flex; gap:10px; align-items:center;">
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); padding:4px 10px; border-radius:8px;">🔴 14,820 Viewers</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 10px; border-radius:8px;">🔴 14,820 Viewers</span>
                   <button onclick="openSubmitPovModal()" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 14px; border-radius:8px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer;">+ Stream Your POV</button>
                 </div>
               </div>
@@ -840,7 +768,7 @@
                 <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Screenshot Proof Image URL</label>
                 <input type="text" id="res-form-proof" class="esbd-chat-input" value="/img/gallery/lan-01.jpg" />
               </div>
-              <button type="submit" style="background:#ef4444; color:#07090c; padding:12px; border-radius:10px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; border:none; margin-top:8px;">Submit Score for Referee Verification</button>
+              <button type="submit" style="background:#10b981; color:#07090c; padding:12px; border-radius:10px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; border:none; margin-top:8px;">Submit Score for Referee Verification</button>
             </form>
           </div>
         </div>
@@ -859,9 +787,9 @@
         </div>
         <div class="esbd-modal-body">
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:24px;">
-            <div style="background:#131920; border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:16px;">
+            <div style="background:#131920; border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:16px;">
               <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Active Tournaments</div>
-              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#ef4444;">5 EVENTS</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#10b981;">5 EVENTS</div>
             </div>
             <div style="background:#131920; border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:16px;">
               <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Live Match Rooms</div>
@@ -930,7 +858,7 @@
 
           const PARTICLE_COUNT = 45;
           const particles = [];
-          const colors = ['rgba(239, 68, 68, ', 'rgba(239, 68, 68, ', 'rgba(56, 189, 248, '];
+          const colors = ['rgba(16, 185, 129, ', 'rgba(239, 68, 68, ', 'rgba(56, 189, 248, '];
 
           for (let i = 0; i < PARTICLE_COUNT; i++) {
             particles.push({
@@ -1073,7 +1001,7 @@
           adDiv.innerHTML = `
             <div class="esbd-ad-leaderboard-inner">
               <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
-                <span class="cyber-badge" style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#ef4444; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;"><span class="cyber-nav-dot-pulse"></span> PARTNER SPOTLIGHT</span>
+                <span class="cyber-badge" style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#10b981; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:700;"><span class="cyber-nav-dot-pulse"></span> PARTNER SPOTLIGHT</span>
                 <div>
                   <div style="font-family:'Oxanium',sans-serif; font-size:0.92rem; font-weight:700; color:#f0f6fc;">
                     OFFICIAL PARTNER // RESERVED PROMO SLOT
@@ -1083,7 +1011,7 @@
                   </div>
                 </div>
               </div>
-              <a href="/#/contact" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.5); color:#ef4444; padding:8px 18px; border-radius:10px; text-decoration:none; font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700;">
+              <a href="/#/contact" style="background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#10b981; padding:8px 18px; border-radius:10px; text-decoration:none; font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700;">
                 ⚡ PARTNER WITH US →
               </a>
             </div>
@@ -1121,7 +1049,7 @@
                 </p>
               </div>
               <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                <a href="/#/contact" style="background:#ef4444; color:#07090c; padding:12px 24px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.88rem; text-decoration:none;">
+                <a href="/#/contact" style="background:#10b981; color:#07090c; padding:12px 24px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.88rem; text-decoration:none;">
                   Book Sponsor Slot →
                 </a>
                 <a href="/#/about" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:12px 20px; border-radius:12px; font-family:'Oxanium',sans-serif; font-weight:600; font-size:0.88rem; text-decoration:none;">
@@ -1147,7 +1075,7 @@
           section.innerHTML = `
             <div style="max-width:1200px; margin:0 auto; padding:80px 2rem 40px;">
               <div style="text-align:center; margin-bottom:40px;">
-                <span style="font-family:'Oxanium',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:#ef4444; display:block; margin-bottom:8px;">📰 LATEST NEWS</span>
+                <span style="font-family:'Oxanium',sans-serif; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:#10b981; display:block; margin-bottom:8px;">📰 LATEST NEWS</span>
                 <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.6rem,3.5vw,2.5rem); font-weight:800; color:#f0f6fc; margin-bottom:10px;">ESBD Newsroom</h2>
                 <p style="color:#8b949e; max-width:500px; margin:0 auto; font-size:0.95rem;">Tournament updates, patch notes, and the latest from Bangladesh's gaming scene.</p>
               </div>
@@ -1155,7 +1083,7 @@
                 <div style="grid-column:1/-1; text-align:center; padding:30px; color:#6e7681;">Loading news...</div>
               </div>
               <div style="text-align:center;">
-                <a href="/newsroom.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; padding:12px 28px; border-radius:12px; text-decoration:none; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.95rem; box-shadow:0 4px 16px rgba(239,68,68,0.25);">
+                <a href="/newsroom.html" style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#10b981,#059669); color:#fff; padding:12px 28px; border-radius:12px; text-decoration:none; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.95rem; box-shadow:0 4px 16px rgba(16,185,129,0.25);">
                   View All News →
                 </a>
               </div>
@@ -1170,9 +1098,9 @@
               const c = document.getElementById('newsroom-cards');
               if (!c) return;
               c.innerHTML = articles.slice(0, 4).map(a => `
-                <a href="/newsroom.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px; text-decoration:none; display:block; transition:all 0.3s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                <a href="/newsroom.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px; text-decoration:none; display:block; transition:all 0.3s;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
                   <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="color:#ef4444; font-size:0.7rem; font-weight:700; text-transform:uppercase;">${a.gameTitle || 'ESPORTS'}</span>
+                    <span style="color:#10b981; font-size:0.7rem; font-weight:700; text-transform:uppercase;">${a.gameTitle || 'ESPORTS'}</span>
                     <span style="color:#6e7681; font-size:0.7rem;">${a.publishedAt ? new Date(a.publishedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</span>
                   </div>
                   <h3 style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#f0f6fc; margin-bottom:6px; line-height:1.35;">${a.title}</h3>
@@ -1218,7 +1146,7 @@
                 <a href="/shop.html" style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:16px; text-decoration:none; width:160px; text-align:center;">
                   <div style="font-size:0.65rem; color:#a78bfa; font-weight:600; text-transform:uppercase;">${p.brand}</div>
                   <div style="font-family:'Oxanium',sans-serif; font-size:0.82rem; font-weight:700; color:#f0f6fc; margin:4px 0;">${p.name}</div>
-                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:800; color:#ef4444;">৳ ${(p.priceBDT||0).toLocaleString('en-BD')}</div>
+                  <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:800; color:#10b981;">৳ ${(p.priceBDT||0).toLocaleString('en-BD')}</div>
                 </a>
               `).join('');
             })
@@ -1236,7 +1164,7 @@
           section.innerHTML = `
             <div style="max-width:1200px; margin:0 auto; padding:70px 20px 20px;">
               <div style="text-align:center; margin-bottom:36px;">
-                <span style="background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); color:#ef4444; padding:3px 10px; border-radius:100px; font-size:0.72rem; font-weight:700; text-transform:uppercase;">● ECOSYSTEM PARTNERS</span>
+                <span style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); color:#10b981; padding:3px 10px; border-radius:100px; font-size:0.72rem; font-weight:700; text-transform:uppercase;">● ECOSYSTEM PARTNERS</span>
                 <h2 style="font-family:'Oxanium',sans-serif; font-size:clamp(1.6rem,3.2vw,2.4rem); font-weight:800; color:#f0f6fc; margin:10px 0;">Official Partners & Sponsors</h2>
                 <p style="color:#8b949e; max-width:540px; margin:0 auto; font-size:0.92rem;">Powering national championships, pro-grade broadcasts, and athlete development across Bangladesh.</p>
               </div>
@@ -1244,17 +1172,17 @@
                 <div style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center;">
                   <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">OFFICIAL HARDWARE</span>
                   <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc; margin:6px 0;">ASUS ROG BANGLADESH</div>
-                  <span style="color:#ef4444; font-size:0.75rem;">● VERIFIED TITLE PARTNER</span>
+                  <span style="color:#10b981; font-size:0.75rem;">● VERIFIED TITLE PARTNER</span>
                 </div>
                 <div style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center;">
                   <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">OFFICIAL FINTECH</span>
                   <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc; margin:6px 0;">bKash LIMITED</div>
-                  <span style="color:#ef4444; font-size:0.75rem;">● PRIZE DISBURSEMENT PARTNER</span>
+                  <span style="color:#10b981; font-size:0.75rem;">● PRIZE DISBURSEMENT PARTNER</span>
                 </div>
                 <div style="background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center;">
                   <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">STREAMING PARTNER</span>
                   <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc; margin:6px 0;">YOUTUBE GAMING BD</div>
-                  <span style="color:#ef4444; font-size:0.75rem;">● OFFICIAL LIVESTREAM FEED</span>
+                  <span style="color:#10b981; font-size:0.75rem;">● OFFICIAL LIVESTREAM FEED</span>
                 </div>
                 <a href="/#/contact" style="background:rgba(245,158,11,0.04); border:1px dashed rgba(245,158,11,0.45); border-radius:14px; padding:20px; text-align:center; text-decoration:none;">
                   <span style="font-size:0.7rem; color:#f59e0b; font-weight:700;">★ SPONSORSHIP OPEN</span>
@@ -1281,13 +1209,13 @@
           hub.id = 'esbd-portal-command-hub';
           hub.style.cssText = 'max-width:1200px; margin:20px auto 30px; padding:0 20px;';
           hub.innerHTML = `
-            <div style="background:linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(13,17,23,0.95) 100%); border:1px solid rgba(239,68,68,0.3); border-radius:16px; padding:24px;">
+            <div style="background:linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(13,17,23,0.95) 100%); border:1px solid rgba(16,185,129,0.3); border-radius:16px; padding:24px;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
                 <div style="display:flex; align-items:center; gap:10px;">
-                  <span style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.5); color:#ef4444; padding:3px 10px; border-radius:8px; font-size:0.75rem; font-weight:800;">⚡ PLAYER HUB</span>
+                  <span style="background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#10b981; padding:3px 10px; border-radius:8px; font-size:0.75rem; font-weight:800;">⚡ PLAYER HUB</span>
                   <span style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#f0f6fc;">Pro Competitor Command Deck</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:6px; font-size:0.75rem; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); padding:4px 10px; border-radius:8px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:0.75rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 10px; border-radius:8px;">
                   <span>🛡️ Anti-Cheat Engine: Active & Server-Authoritative</span>
                 </div>
               </div>
@@ -1297,8 +1225,8 @@
                   <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; margin:4px 0;">Tournament Broadcast & POVs</div>
                   <div style="font-size:0.75rem; color:#8b949e;">Watch Grand Finals live</div>
                 </button>
-                <button onclick="openResultsModal()" style="background:#0d1117; border:1px solid rgba(239,68,68,0.35); border-radius:12px; padding:14px; text-align:left; cursor:pointer; color:#f0f6fc;">
-                  <div style="font-size:0.7rem; color:#ef4444; font-weight:700;">🏆 MATCH RESULTS</div>
+                <button onclick="openResultsModal()" style="background:#0d1117; border:1px solid rgba(16,185,129,0.35); border-radius:12px; padding:14px; text-align:left; cursor:pointer; color:#f0f6fc;">
+                  <div style="font-size:0.7rem; color:#10b981; font-weight:700;">🏆 MATCH RESULTS</div>
                   <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; margin:4px 0;">Report Match Score</div>
                   <div style="font-size:0.75rem; color:#8b949e;">Submit proof screenshot</div>
                 </button>
@@ -1471,7 +1399,7 @@
               const listElem = document.getElementById('esbd-stream-list');
               if (!listElem) return;
               listElem.innerHTML = streams.map(s => `
-                <div onclick="switchActiveStream('${s.streamUrl}', '${s.title}')" style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+                <div onclick="switchActiveStream('${s.streamUrl}', '${s.title}')" style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#10b981'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
                   <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                     <span style="font-size:0.68rem; font-weight:700; color:${s.type==='official'?'#ef4444':'#a78bfa'};">${s.type==='official'?'🔴 OFFICIAL CAST':'⚡ PLAYER POV'}</span>
                     <span style="font-size:0.68rem; color:#6e7681;">${s.viewerCount} Viewers</span>
@@ -1558,17 +1486,17 @@
               c.innerHTML = results.map(r => `
                 <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:18px;">
                   <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <span style="font-size:0.72rem; color:#ef4444; font-weight:700;">${r.tournamentTitle}</span>
+                    <span style="font-size:0.72rem; color:#10b981; font-weight:700;">${r.tournamentTitle}</span>
                     <span style="font-size:0.7rem; color:#6e7681;">${r.roundName}</span>
                   </div>
                   <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0; background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:10px;">
-                    <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:800; color:#ef4444;">${r.winnerTeam} (${r.scoreA})</div>
+                    <div style="font-family:'Oxanium',sans-serif; font-size:1.05rem; font-weight:800; color:#10b981;">${r.winnerTeam} (${r.scoreA})</div>
                     <div style="font-size:0.8rem; color:#6e7681; font-weight:700;">VS</div>
                     <div style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#8b949e;">${r.loserTeam} (${r.scoreB})</div>
                   </div>
                   <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8b949e;">
                     <span>⭐ MVP: <strong style="color:#f0f6fc;">${r.mvp}</strong> (${r.mvpKills} Kills)</span>
-                    <span style="color:#ef4444;">✔ ${r.status}</span>
+                    <span style="color:#10b981;">✔ ${r.status}</span>
                   </div>
                   <div style="margin-top:8px; font-size:0.7rem; color:#6e7681;">
                     Verified By: ${r.verifiedBy || 'Official Referee'}
@@ -1637,11 +1565,11 @@
                 <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                   <div>
                     <div style="font-family:'Oxanium',sans-serif; font-size:0.9rem; font-weight:700; color:#f0f6fc;">Match ID: ${s.matchId} — Submitted by ${s.submittedBy}</div>
-                    <div style="font-size:0.75rem; color:#8b949e; margin-top:2px;">Score Reported: ${s.scoreReported} | Status: <span style="color:#ef4444;">${s.status}</span></div>
+                    <div style="font-size:0.75rem; color:#8b949e; margin-top:2px;">Score Reported: ${s.scoreReported} | Status: <span style="color:#10b981;">${s.status}</span></div>
                   </div>
                   <div style="display:flex; gap:8px;">
                     <a href="${s.proofUrl}" target="_blank" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 12px; border-radius:6px; font-size:0.75rem; text-decoration:none;">View Screenshot</a>
-                    <button onclick="alert('Score approved & verified in official bracket!')" style="background:#ef4444; color:#07090c; border:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer;">Approve Score</button>
+                    <button onclick="alert('Score approved & verified in official bracket!')" style="background:#10b981; color:#07090c; border:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer;">Approve Score</button>
                   </div>
                 </div>
               `).join('');

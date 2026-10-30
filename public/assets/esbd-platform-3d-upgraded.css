@@ -69,7 +69,7 @@ html, body {
   height: 900px;
   top: -15%;
   left: -10%;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.22) 0%, rgba(239, 68, 68, 0.08) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(16, 185, 129, 0.08) 45%, transparent 70%);
   animation: esbdNebulaBreatheEmerald 20s ease-in-out infinite alternate;
 }
 
@@ -163,22 +163,22 @@ html, body {
   animation: esbdParticleFloatUp linear infinite;
 }
 
-.esbd-floating-particles .particle:nth-child(1)  { width: 4px; height: 4px; left: 12%; background: #ef4444; animation-duration: 22s; animation-delay: 0s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(1)  { width: 4px; height: 4px; left: 12%; background: #10b981; animation-duration: 22s; animation-delay: 0s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(2)  { width: 3px; height: 3px; left: 24%; background: #ef4444; animation-duration: 28s; animation-delay: -5s; opacity: 0.4; }
 .esbd-floating-particles .particle:nth-child(3)  { width: 5px; height: 5px; left: 38%; background: #38bdf8; animation-duration: 20s; animation-delay: -12s; opacity: 0.5; }
-.esbd-floating-particles .particle:nth-child(4)  { width: 3px; height: 3px; left: 52%; background: #ef4444; animation-duration: 25s; animation-delay: -7s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(4)  { width: 3px; height: 3px; left: 52%; background: #10b981; animation-duration: 25s; animation-delay: -7s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(5)  { width: 4px; height: 4px; left: 68%; background: #f59e0b; animation-duration: 23s; animation-delay: -15s; opacity: 0.4; }
 .esbd-floating-particles .particle:nth-child(6)  { width: 3px; height: 3px; left: 82%; background: #ef4444; animation-duration: 27s; animation-delay: -3s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(7)  { width: 4px; height: 4px; left: 91%; background: #ef4444; animation-duration: 21s; animation-delay: -9s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(7)  { width: 4px; height: 4px; left: 91%; background: #10b981; animation-duration: 21s; animation-delay: -9s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(8)  { width: 5px; height: 5px; left: 18%; background: #38bdf8; animation-duration: 26s; animation-delay: -18s; opacity: 0.4; }
-.esbd-floating-particles .particle:nth-child(9)  { width: 3px; height: 3px; left: 33%; background: #ef4444; animation-duration: 24s; animation-delay: -6s; opacity: 0.5; }
+.esbd-floating-particles .particle:nth-child(9)  { width: 3px; height: 3px; left: 33%; background: #10b981; animation-duration: 24s; animation-delay: -6s; opacity: 0.5; }
 .esbd-floating-particles .particle:nth-child(10) { width: 4px; height: 4px; left: 61%; background: #ef4444; animation-duration: 29s; animation-delay: -11s; opacity: 0.45; }
-.esbd-floating-particles .particle:nth-child(11) { width: 3px; height: 3px; left: 75%; background: #ef4444; animation-duration: 22s; animation-delay: -14s; opacity: 0.4; }
+.esbd-floating-particles .particle:nth-child(11) { width: 3px; height: 3px; left: 75%; background: #10b981; animation-duration: 22s; animation-delay: -14s; opacity: 0.4; }
 .esbd-floating-particles .particle:nth-child(12) { width: 5px; height: 5px; left: 88%; background: #f59e0b; animation-duration: 25s; animation-delay: -8s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(13) { width: 3px; height: 3px; left: 6%;  background: #38bdf8; animation-duration: 23s; animation-delay: -2s; opacity: 0.4; }
-.esbd-floating-particles .particle:nth-child(14) { width: 4px; height: 4px; left: 45%; background: #ef4444; animation-duration: 27s; animation-delay: -16s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(14) { width: 4px; height: 4px; left: 45%; background: #10b981; animation-duration: 27s; animation-delay: -16s; opacity: 0.45; }
 .esbd-floating-particles .particle:nth-child(15) { width: 3px; height: 3px; left: 70%; background: #ef4444; animation-duration: 24s; animation-delay: -10s; opacity: 0.4; }
-.esbd-floating-particles .particle:nth-child(16) { width: 4px; height: 4px; left: 84%; background: #ef4444; animation-duration: 26s; animation-delay: -4s; opacity: 0.45; }
+.esbd-floating-particles .particle:nth-child(16) { width: 4px; height: 4px; left: 84%; background: #10b981; animation-duration: 26s; animation-delay: -4s; opacity: 0.45; }
 
 @keyframes esbdParticleFloatUp {
   0% {
@@ -221,7 +221,7 @@ html, body {
 }
 
 .esbd-hero-light-beams .beam-emerald {
-  background: linear-gradient(180deg, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0) 75%);
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.5) 0%, rgba(16, 185, 129, 0) 75%);
   right: 18%;
   filter: blur(8px);
 }
@@ -250,7 +250,7 @@ html, body {
   margin: 44px auto;
   height: 52px;
   background: linear-gradient(90deg, rgba(8, 14, 20, 0.96) 0%, rgba(16, 24, 34, 0.98) 50%, rgba(8, 14, 20, 0.96) 100%);
-  border: 1.5px solid rgba(239, 68, 68, 0.75);
+  border: 1.5px solid rgba(16, 185, 129, 0.75);
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -258,11 +258,11 @@ html, body {
   padding: 0 28px;
   box-shadow: 
     0 14px 45px rgba(0, 0, 0, 0.85),
-    0 0 35px rgba(239, 68, 68, 0.55),
-    0 0 75px rgba(239, 68, 68, 0.3),
-    0 0 120px rgba(239, 68, 68, 0.18),
-    inset 0 0 25px rgba(239, 68, 68, 0.22),
-    inset 0 1px 2px rgba(239, 68, 68, 0.9);
+    0 0 35px rgba(16, 185, 129, 0.55),
+    0 0 75px rgba(16, 185, 129, 0.3),
+    0 0 120px rgba(16, 185, 129, 0.18),
+    inset 0 0 25px rgba(16, 185, 129, 0.22),
+    inset 0 1px 2px rgba(16, 185, 129, 0.9);
   overflow: hidden;
   z-index: 10;
   font-family: 'Geist Mono', 'Fira Code', monospace;
@@ -274,34 +274,34 @@ html, body {
 
 @keyframes esbdBarGlowPulse {
   0% {
-    border-color: rgba(239, 68, 68, 0.65);
+    border-color: rgba(16, 185, 129, 0.65);
     box-shadow: 
       0 14px 45px rgba(0, 0, 0, 0.85),
-      0 0 30px rgba(239, 68, 68, 0.45),
-      0 0 65px rgba(239, 68, 68, 0.25),
-      0 0 110px rgba(239, 68, 68, 0.15),
-      inset 0 0 20px rgba(239, 68, 68, 0.18),
-      inset 0 1px 2px rgba(239, 68, 68, 0.8);
+      0 0 30px rgba(16, 185, 129, 0.45),
+      0 0 65px rgba(16, 185, 129, 0.25),
+      0 0 110px rgba(16, 185, 129, 0.15),
+      inset 0 0 20px rgba(16, 185, 129, 0.18),
+      inset 0 1px 2px rgba(16, 185, 129, 0.8);
   }
   50% {
     border-color: rgba(56, 189, 248, 0.85);
     box-shadow: 
       0 14px 45px rgba(0, 0, 0, 0.85),
       0 0 45px rgba(56, 189, 248, 0.6),
-      0 0 90px rgba(239, 68, 68, 0.35),
+      0 0 90px rgba(16, 185, 129, 0.35),
       0 0 140px rgba(56, 189, 248, 0.25),
       inset 0 0 30px rgba(56, 189, 248, 0.25),
       inset 0 1px 2px rgba(56, 189, 248, 0.9);
   }
   100% {
-    border-color: rgba(239, 68, 68, 0.9);
+    border-color: rgba(16, 185, 129, 0.9);
     box-shadow: 
       0 14px 45px rgba(0, 0, 0, 0.85),
-      0 0 40px rgba(239, 68, 68, 0.65),
-      0 0 85px rgba(239, 68, 68, 0.35),
-      0 0 130px rgba(239, 68, 68, 0.2),
-      inset 0 0 25px rgba(239, 68, 68, 0.25),
-      inset 0 1px 2px rgba(239, 68, 68, 0.95);
+      0 0 40px rgba(16, 185, 129, 0.65),
+      0 0 85px rgba(16, 185, 129, 0.35),
+      0 0 130px rgba(16, 185, 129, 0.2),
+      inset 0 0 25px rgba(16, 185, 129, 0.25),
+      inset 0 1px 2px rgba(16, 185, 129, 0.95);
   }
 }
 
@@ -312,8 +312,8 @@ html, body {
   left: -60%;
   width: 60%;
   height: 2.5px;
-  background: linear-gradient(90deg, transparent, #ef4444 30%, #38bdf8 70%, transparent);
-  filter: drop-shadow(0 0 8px #ef4444) drop-shadow(0 0 16px #38bdf8);
+  background: linear-gradient(90deg, transparent, #10b981 30%, #38bdf8 70%, transparent);
+  filter: drop-shadow(0 0 8px #10b981) drop-shadow(0 0 16px #38bdf8);
   animation: esbdLaserRunTop 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -352,8 +352,8 @@ html, body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #ef4444;
-  box-shadow: 0 0 12px #ef4444, 0 0 24px rgba(239, 68, 68, 0.8);
+  background-color: #10b981;
+  box-shadow: 0 0 12px #10b981, 0 0 24px rgba(16, 185, 129, 0.8);
   animation: esbdDotPulse 2s ease-in-out infinite;
 }
 
@@ -374,7 +374,7 @@ html, body {
   color: #f0f6fc;
   font-weight: 700;
   letter-spacing: 0.22em;
-  text-shadow: 0 0 15px rgba(239, 68, 68, 0.8), 0 0 30px rgba(239, 68, 68, 0.4);
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
 }
 
 .esbd-eq-visualizer {
@@ -386,9 +386,9 @@ html, body {
 
 .esbd-eq-bar {
   width: 3px;
-  background-color: #ef4444;
+  background-color: #10b981;
   border-radius: 1.5px;
-  box-shadow: 0 0 8px #ef4444;
+  box-shadow: 0 0 8px #10b981;
   animation: esbdEqPulse 1.2s ease-in-out infinite alternate;
 }
 
@@ -425,16 +425,16 @@ html, body {
   background-size: 100% 100%;
   opacity: 0.98;
   filter: 
-    drop-shadow(0 0 14px rgba(239, 68, 68, 0.8)) 
+    drop-shadow(0 0 14px rgba(16, 185, 129, 0.8)) 
     drop-shadow(0 0 28px rgba(239, 68, 68, 0.5))
-    drop-shadow(0 0 45px rgba(239, 68, 68, 0.3));
+    drop-shadow(0 0 45px rgba(16, 185, 129, 0.3));
 }
 
 .esbd-sleek-laser-glow {
   position: absolute;
   width: 75%;
   height: 3px;
-  background: linear-gradient(90deg, transparent 0%, rgba(239, 68, 68, 0.95) 25%, rgba(239, 68, 68, 1) 50%, rgba(239, 68, 68, 0.95) 75%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.95) 25%, rgba(239, 68, 68, 1) 50%, rgba(16, 185, 129, 0.95) 75%, transparent 100%);
   filter: blur(2px);
   animation: esbdLaserGlowPulse 2.8s ease-in-out infinite alternate;
 }
@@ -445,7 +445,7 @@ html, body {
   height: 4px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 0 15px #ef4444, 0 0 30px #ffffff;
+  box-shadow: 0 0 15px #10b981, 0 0 30px #ffffff;
   animation: esbdSparklerRun 5s ease-in-out infinite;
 }
 
@@ -500,7 +500,7 @@ html, body {
   width: 90%;
   height: 90%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.08) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 75%);
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.08) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 75%);
   pointer-events: none;
   z-index: -1;
   filter: blur(80px);
@@ -517,12 +517,12 @@ html, body {
   position: absolute;
   width: 20px;
   height: 20px;
-  border-color: rgba(239, 68, 68, 0.85);
+  border-color: rgba(16, 185, 129, 0.85);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.6s ease, transform 0.6s ease;
   z-index: 10;
-  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8));
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8));
 }
 
 .esbd-section-in-focus .esbd-hud-corner {
@@ -586,16 +586,16 @@ html, body {
 .esbd-section-in-focus .bg-card,
 .esbd-section-in-focus [data-testid="tournament-card"],
 .esbd-section-in-focus [data-testid="stat-card"] {
-  border-color: rgba(239, 68, 68, 0.35) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
   box-shadow: 
     0 16px 36px rgba(0, 0, 0, 0.65),
-    0 0 20px rgba(239, 68, 68, 0.15) !important;
+    0 0 20px rgba(16, 185, 129, 0.15) !important;
 }
 
 /* Section Header Shimmer Highlight */
 .esbd-section-in-focus h2,
 .esbd-section-in-focus .esbd-section-title {
-  text-shadow: 0 0 20px rgba(239, 68, 68, 0.4), 0 0 40px rgba(239, 68, 68, 0.15);
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.15);
 }
 
 /* -----------------------------------------------------------------------------
@@ -607,22 +607,22 @@ html, body {
 }
 
 .bg-card:hover, [data-testid="tournament-card"]:hover {
-  border-color: rgba(239, 68, 68, 0.55) !important;
+  border-color: rgba(16, 185, 129, 0.55) !important;
   box-shadow: 
     0 20px 42px rgba(0, 0, 0, 0.75),
-    0 0 30px rgba(239, 68, 68, 0.28) !important;
+    0 0 30px rgba(16, 185, 129, 0.28) !important;
 }
 
 /* 3D Extrusion on Key Stat Numbers */
 .esbd-stat-highlight {
   position: relative;
-  color: #ef4444 !important;
+  color: #10b981 !important;
   text-shadow: 
-    0 1px 0 #dc2626,
+    0 1px 0 #059669,
     0 2px 0 #047857,
     0 3px 0 #065f46,
-    0 0 20px rgba(239, 68, 68, 0.8),
-    0 0 45px rgba(239, 68, 68, 0.4) !important;
+    0 0 20px rgba(16, 185, 129, 0.8),
+    0 0 45px rgba(16, 185, 129, 0.4) !important;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
