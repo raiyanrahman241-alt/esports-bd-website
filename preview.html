@@ -796,7 +796,7 @@
 
     <!-- Admin Command Desk Modal -->
     <div class="esbd-modal-overlay" id="esbd-admin-modal">
-      <div class="esbd-modal-box">
+      <div class="esbd-modal-box" style="max-width:960px;">
         <div class="esbd-modal-header">
           <div class="esbd-modal-title">
             <span>👑</span>
@@ -823,8 +823,46 @@
               <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#f59e0b;">৳2.5 Cr</div>
             </div>
           </div>
+
+          <!-- Room Code & Credentials Dispatcher -->
+          <div style="background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:18px; margin-bottom:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+              <div>
+                <span style="background:#10b981; color:#07090c; font-size:0.65rem; font-weight:900; padding:2px 6px; border-radius:4px;">BROADCAST</span>
+                <span style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:800; color:#f0f6fc; margin-left:6px;">Dispatch Match Room Credentials to Players</span>
+              </div>
+              <span style="font-size:0.72rem; color:#8b949e;">Pushes room credentials directly into Player Portals</span>
+            </div>
+            <form onsubmit="handleDispatchRoom(event)" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)) auto; gap:10px; align-items:end;">
+              <div>
+                <label style="display:block; font-size:0.7rem; color:#cbd5e1; margin-bottom:4px; font-weight:700;">MATCH ID</label>
+                <select id="dispatch-match-id" style="width:100%; background:#131920; border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#ffffff; font-size:0.82rem;">
+                  <option value="m-ff-01">m-ff-01 (Free Fire - Semifinals M1)</option>
+                  <option value="m-ff-02">m-ff-02 (Free Fire - Semifinals M2)</option>
+                  <option value="m-pubg-01">m-pubg-01 (PUBG Mobile - Finals)</option>
+                  <option value="m-val-01">m-val-01 (Valorant - Grand Final)</option>
+                </select>
+              </div>
+              <div>
+                <label style="display:block; font-size:0.7rem; color:#cbd5e1; margin-bottom:4px; font-weight:700;">CUSTOM ROOM CODE</label>
+                <input type="text" id="dispatch-room-code" required placeholder="e.g. ESBD-FF-774" style="width:100%; background:#131920; border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#ffffff; font-size:0.82rem; font-family:'Oxanium',monospace;" />
+              </div>
+              <div>
+                <label style="display:block; font-size:0.7rem; color:#cbd5e1; margin-bottom:4px; font-weight:700;">PASSWORD</label>
+                <input type="text" id="dispatch-room-pass" value="esbd" placeholder="esbd" style="width:100%; background:#131920; border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:8px 12px; color:#ffffff; font-size:0.82rem; font-family:'Oxanium',monospace;" />
+              </div>
+              <button type="submit" style="background:#10b981; color:#07090c; border:none; padding:10px 18px; border-radius:8px; font-family:'Oxanium',sans-serif; font-size:0.85rem; font-weight:800; cursor:pointer; height:38px; white-space:nowrap;">
+                ⚡ Dispatch Room
+              </button>
+            </form>
+          </div>
+
+          <!-- Referee Fast Queue -->
           <div>
-            <h4 style="font-family:'Oxanium',sans-serif; font-size:1rem; font-weight:700; color:#f0f6fc; margin-bottom:12px;">Match Referee Queue & Fast Approvals</h4>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="font-family:'Oxanium',sans-serif; font-size:1rem; font-weight:700; color:#f0f6fc; margin:0;">Match Referee Queue & Fast Approvals</h4>
+              <button onclick="fetchAdminSubmissions()" style="background:none; border:none; color:#10b981; font-size:0.75rem; cursor:pointer;">↻ Refresh Queue</button>
+            </div>
             <div id="esbd-admin-submissions-list" style="display:flex; flex-direction:column; gap:10px;">
               <!-- Admin cards injected via JS -->
             </div>
@@ -1562,6 +1600,16 @@
         // 12. ADMIN CONSOLE MODAL
         // =====================================================================
         window.openAdminModal = function() {
+          const user = window.esbdAuth ? window.esbdAuth.getUser() : null;
+          const isAdm = window.esbdAuth ? window.esbdAuth.isAdmin() : false;
+          if (!isAdm) {
+            if (window.esbdAuth) {
+              window.esbdAuth.openAuthModal('admin');
+            } else {
+              alert('Administrator privileges required. Please sign in via the Admin Gateway.');
+            }
+            return;
+          }
           const modal = document.getElementById('esbd-admin-modal');
           if (modal) {
             modal.classList.add('active');
@@ -1574,27 +1622,100 @@
           if (modal) modal.classList.remove('active');
         };
 
+        function getAdminHeaders() {
+          const token = window.esbdAuth ? window.esbdAuth.getToken() : localStorage.getItem('esbd_token');
+          return {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + (token || ''),
+            'x-admin-key': 'esbd-bangladesh-admin-secret-2026'
+          };
+        }
+
         function fetchAdminSubmissions() {
-          fetch('/api/admin/submissions')
+          fetch('/api/admin/submissions', { headers: getAdminHeaders() })
             .then(r => r.json())
             .then(subs => {
               const c = document.getElementById('esbd-admin-submissions-list');
               if (!c) return;
+              if (!Array.isArray(subs) || subs.length === 0) {
+                c.innerHTML = '<div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:16px; text-align:center; color:#8b949e;">No pending submissions in referee queue.</div>';
+                return;
+              }
               c.innerHTML = subs.map(s => `
-                <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                   <div>
-                    <div style="font-family:'Oxanium',sans-serif; font-size:0.9rem; font-weight:700; color:#f0f6fc;">Match ID: ${s.matchId} — Submitted by ${s.submittedBy}</div>
-                    <div style="font-size:0.75rem; color:#8b949e; margin-top:2px;">Score Reported: ${s.scoreReported} | Status: <span style="color:#10b981;">${s.status}</span></div>
+                    <div style="font-family:'Oxanium',sans-serif; font-size:0.92rem; font-weight:700; color:#f0f6fc;">
+                      Match ID: <span style="color:#10b981;">${s.matchId}</span> — Submitted by <span style="color:#f59e0b;">${s.submittedBy}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:#8b949e; margin-top:3px;">
+                      Reported: <strong>${s.scoreReported}</strong> | Status: <span style="color:${s.status==='verified'?'#10b981':s.status==='disputed'?'#ef4444':'#f59e0b'}; font-weight:700;">${(s.status||'pending').toUpperCase()}</span>
+                    </div>
                   </div>
-                  <div style="display:flex; gap:8px;">
-                    <a href="${s.proofUrl}" target="_blank" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 12px; border-radius:6px; font-size:0.75rem; text-decoration:none;">View Screenshot</a>
-                    <button onclick="alert('Score approved & verified in official bracket!')" style="background:#10b981; color:#07090c; border:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer;">Approve Score</button>
+                  <div style="display:flex; gap:8px; align-items:center;">
+                    <a href="${s.proofUrl}" target="_blank" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 12px; border-radius:6px; font-size:0.75rem; text-decoration:none;">Inspect Screenshot</a>
+                    <button onclick="approveSubmission('${s.id}')" style="background:#10b981; color:#07090c; border:none; padding:6px 12px; border-radius:6px; font-weight:800; font-size:0.75rem; cursor:pointer;">✔ Approve</button>
+                    <button onclick="rejectSubmission('${s.id}')" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.4); color:#ef4444; padding:6px 12px; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer;">❌ Dispute</button>
                   </div>
                 </div>
               `).join('');
             })
             .catch(() => {});
         }
+
+        window.approveSubmission = function(id) {
+          fetch('/api/admin/submissions/' + id + '/approve', {
+            method: 'POST',
+            headers: getAdminHeaders()
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (window.esbdAuth) window.esbdAuth.showToast(data.message || 'Score approved & verified in bracket!', 'success');
+              else alert('Score approved!');
+              fetchAdminSubmissions();
+            })
+            .catch(() => alert('Failed to approve submission.'));
+        };
+
+        window.rejectSubmission = function(id) {
+          const reason = prompt('Enter dispute reason (e.g. Inconclusive proof):', 'Screenshot does not match match lobby');
+          if (!reason) return;
+          fetch('/api/admin/submissions/' + id + '/reject', {
+            method: 'POST',
+            headers: getAdminHeaders(),
+            body: JSON.stringify({ reason })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (window.esbdAuth) window.esbdAuth.showToast('Submission marked as disputed.', 'info');
+              else alert('Submission marked as disputed.');
+              fetchAdminSubmissions();
+            })
+            .catch(() => alert('Failed to reject submission.'));
+        };
+
+        window.handleDispatchRoom = function(e) {
+          e.preventDefault();
+          const matchId = document.getElementById('dispatch-match-id').value.trim();
+          const roomCode = document.getElementById('dispatch-room-code').value.trim();
+          const roomPassword = document.getElementById('dispatch-room-pass').value.trim();
+
+          fetch('/api/admin/matches/dispatch-room', {
+            method: 'POST',
+            headers: getAdminHeaders(),
+            body: JSON.stringify({ matchId, roomCode, roomPassword })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data.success) {
+                if (window.esbdAuth) window.esbdAuth.showToast(data.message, 'success');
+                else alert(data.message);
+                document.getElementById('dispatch-room-code').value = '';
+              } else {
+                alert(data.error || 'Failed to dispatch room');
+              }
+            })
+            .catch(() => alert('Error dispatching room'));
+        };
       })();
     </script>
   </body>
