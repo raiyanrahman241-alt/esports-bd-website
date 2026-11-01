@@ -38,6 +38,14 @@
       "destination": "/shop.html"
     },
     {
+      "source": "/preview",
+      "destination": "/preview.html"
+    },
+    {
+      "source": "/preview.html",
+      "destination": "/preview.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

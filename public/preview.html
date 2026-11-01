@@ -47,12 +47,13 @@
     </script>
     <link rel="stylesheet" crossorigin href="/assets/index-Bdt_ggT_.css">
     <link rel="stylesheet" href="/assets/esbd-platform-3d.css">
-    <link rel="stylesheet" href="/assets/esbd-platform-3d-upgraded.css">
-    <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
+    <link rel="stylesheet" href="/assets/esbd-platform-3d.css">
+    <link rel="stylesheet" href="/assets/esbd-tactical-ui.css">
     <script src="/assets/three.min.js"></script>
     <script type="module" crossorigin src="/assets/index-DxaXhSva.js"></script>
-    <script src="/assets/esbd-platform-3d-upgraded.js" defer></script>
-    <script src="/assets/esbd-platform-3d-preview.js" defer></script>
+    <script src="/assets/esbd-tactical-globe.js" defer></script>
+    <script src="/assets/esbd-tactical-ui.js" defer></script>
+    <script src="/assets/esbd-auth-social.js" defer></script>
 
     <!-- 3D Cyber Atmosphere & Platform Enhancements Styles -->
     <style>
@@ -646,11 +647,35 @@
       }
     
     </style>
-    <link rel="stylesheet" href="/assets/esbd-platform-3d-preview.css">
   </head>
   <body>
-    <!-- Background 3D Particles & Visual Depth Canvas -->
-    <canvas id="esbd-cyber-bg"></canvas>
+    <!-- Top Tactical Command Center Preview Banner -->
+    <div id="esbd-tactical-preview-banner">
+      <div class="preview-badge-status">
+        <span class="preview-dot-pulse"></span>
+        <span>TACTICAL COMMAND CENTER 3D PREVIEW (PDF DESIGN UPGRADE)</span>
+      </div>
+      <div class="preview-actions">
+        <button class="preview-btn" onclick="window.esbdFocusBangladesh && window.esbdFocusBangladesh()">🎯 Focus Bangladesh</button>
+        <button class="preview-btn cyan" id="btn-toggle-layout" onclick="window.esbdToggleLayoutMode && window.esbdToggleLayoutMode()">🌐 Full Screen Mode</button>
+        <button class="preview-btn" id="btn-toggle-rotate" onclick="window.esbdToggleAutoRotate && window.esbdToggleAutoRotate()">⏸ Pause Rotate</button>
+        <button class="preview-btn cyan" id="btn-toggle-arcs" onclick="window.esbdToggleArcs && window.esbdToggleArcs()">⚡ Match Arcs</button>
+        <a href="/" class="preview-btn" style="border-color:rgba(255,255,255,0.2); color:#94a3b8;">Main Site ↗</a>
+      </div>
+    </div>
+
+    <!-- Floating LIVE Broadcast Tag anchored to Dhaka -->
+    <div id="esbd-live-dhaka-tag">
+      <div class="live-dhaka-badge">
+        <span class="red-dot"></span>
+        <span>🔴 LIVE BROADCAST</span>
+        <span class="viewer-count">• 14.8K VIEWERS</span>
+      </div>
+    </div>
+
+    <!-- Glassmorphism Tactical Marker Tooltip -->
+    <div id="tactical-marker-tooltip"></div>
+
     <div class="cyber-spotlight" id="esbd-spotlight"></div>
     <div class="cyber-scanlines"></div>
 
