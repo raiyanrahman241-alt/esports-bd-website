@@ -399,7 +399,7 @@
                 <div style="font-family:'Oxanium',sans-serif; font-size:1.15rem; font-weight:800; color:#10b981;" id="portal-user-balance">৳ 2,500</div>
               </div>
               <button onclick="window.esbdAuth.handleTopUpPrompt()" style="background:#10b981; color:#07090c; border:none; padding:10px 16px; border-radius:10px; font-weight:800; font-size:0.8rem; cursor:pointer; font-family:'Oxanium',sans-serif;">
-                + Deposit (bKash)
+                + Deposit (bKash/Nagad/Rocket)
               </button>
             </div>
           </div>
@@ -1186,18 +1186,33 @@
       if (!amount || isNaN(amount) || Number(amount) <= 0) return;
       const bdtAmount = Number(amount);
 
+      const methodChoice = prompt(
+        'Choose payment method:\n1 = bKash\n2 = Nagad\n3 = Rocket (DBBL)\n\nEnter 1, 2, or 3:',
+        '1'
+      );
+      const methodMap = { '1': 'bkash', '2': 'nagad', '3': 'rocket' };
+      const methodLabel = { '1': 'bKash', '2': 'Nagad', '3': 'Rocket (DBBL)' };
+      const selectedMethod = methodMap[methodChoice] || 'bkash';
+      const selectedLabel = methodLabel[methodChoice] || 'bKash';
+
+      const trxId = prompt(`Enter your ${selectedLabel} Transaction ID (TrxID):`, '');
+      if (!trxId || trxId.trim().length < 4) {
+        alert('Invalid Transaction ID. Please enter the TrxID from your payment receipt.');
+        return;
+      }
+
       fetch('/api/me/wallet/top-up', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ amountMinor: bdtAmount * 100, method: 'bkash' })
+        body: JSON.stringify({ amountMinor: bdtAmount * 100, method: selectedMethod, reference: trxId.trim() })
       })
         .then(r => r.json())
         .then(data => {
           if (data.success) {
-            showToast(`Deposit of ৳${bdtAmount} completed via bKash!`, 'success');
+            showToast(`Deposit of ৳${bdtAmount} submitted via ${selectedLabel}! Under review.`, 'success');
             const user = getUser();
             if (user) {
               user.walletBalanceMinor = data.balanceMinor;
@@ -1214,9 +1229,23 @@
     handleWithdrawPrompt() {
       const amount = prompt('Enter withdrawal amount in BDT (e.g. 500):', '500');
       if (!amount || isNaN(amount) || Number(amount) <= 0) return;
-      const accountNo = prompt('Enter your bKash or Nagad Personal Number (e.g. 017XXXXXXXX):', '01712345678');
-      if (!accountNo) return;
       const bdtAmount = Number(amount);
+
+      const methodChoice = prompt(
+        'Choose withdrawal method:\n1 = bKash\n2 = Nagad\n3 = Rocket (DBBL)\n\nEnter 1, 2, or 3:',
+        '1'
+      );
+      const methodMap = { '1': 'bkash', '2': 'nagad', '3': 'rocket' };
+      const methodLabel = { '1': 'bKash', '2': 'Nagad', '3': 'Rocket (DBBL)' };
+      const selectedMethod = methodMap[methodChoice] || 'bkash';
+      const selectedLabel = methodLabel[methodChoice] || 'bKash';
+
+      const accountNo = prompt(`Enter your ${selectedLabel} Personal Number (e.g. 017XXXXXXXX):`, '01712345678');
+      if (!accountNo) return;
+      if (!/^01[0-9]{9}$/.test(accountNo.trim())) {
+        alert('Invalid mobile number. Must be 11 digits starting with 01 (e.g. 01712345678).');
+        return;
+      }
 
       fetch('/api/me/wallet/withdraw', {
         method: 'POST',
@@ -1224,12 +1253,12 @@
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${getToken()}`
         },
-        body: JSON.stringify({ amountMinor: bdtAmount * 100, method: 'bkash', accountNo })
+        body: JSON.stringify({ amountMinor: bdtAmount * 100, method: selectedMethod, accountNo: accountNo.trim() })
       })
         .then(r => r.json())
         .then(data => {
           if (data.success) {
-            showToast(data.message || 'Withdrawal submitted!', 'success');
+            showToast(data.message || `Withdrawal of ৳${bdtAmount} to ${selectedLabel} submitted!`, 'success');
             const user = getUser();
             if (user) {
               user.walletBalanceMinor = data.balanceMinor;

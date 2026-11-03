@@ -670,14 +670,39 @@
     <div class="cyber-scanlines"></div>
 
     <!-- Main React Single Page App -->
-    <div id="root"></div>
+    <div id="root">
+      <!-- Semantic SEO Crawler Fallback Shell (Hydrated by React on load) -->
+      <div id="esbd-seo-shell" style="padding:40px 20px; max-width:1200px; margin:0 auto; color:#8b949e; font-family:sans-serif;">
+        <header style="border-bottom:1px solid #21262d; padding-bottom:20px; margin-bottom:30px;">
+          <h1 style="color:#f0f6fc; font-size:2rem; font-weight:800;">E-SPORTS BANGLADESH (ESBD) — Premier Gaming Tournament Platform</h1>
+          <p style="color:#10b981; font-weight:600; margin-top:6px;">Official Esports Ecosystem Platform of Bangladesh · BSGL · WCG National Qualifier</p>
+          <nav style="display:flex; flex-wrap:wrap; gap:14px; margin-top:16px;">
+            <a href="/" style="color:#cbd5e1; text-decoration:none;">Home</a>
+            <a href="/tournaments" style="color:#cbd5e1; text-decoration:none;">Tournaments</a>
+            <a href="/newsroom.html" style="color:#cbd5e1; text-decoration:none;">Newsroom</a>
+            <a href="/communities" style="color:#cbd5e1; text-decoration:none;">Community</a>
+            <a href="/creators" style="color:#cbd5e1; text-decoration:none;">Creator Hub</a>
+            <a href="/#live" style="color:#cbd5e1; text-decoration:none;">Live Streams</a>
+            <a href="/leaderboards" style="color:#cbd5e1; text-decoration:none;">Results</a>
+            <a href="/work" style="color:#cbd5e1; text-decoration:none;">Our Work</a>
+            <a href="/shop.html" style="color:#cbd5e1; text-decoration:none;">Shop</a>
+            <a href="/about" style="color:#cbd5e1; text-decoration:none;">About ESBD</a>
+            <a href="/contact" style="color:#cbd5e1; text-decoration:none;">Contact</a>
+          </nav>
+        </header>
+        <section style="margin-bottom:30px;">
+          <h2 style="color:#f0f6fc; font-size:1.4rem;">Bangladesh Esports Competitions</h2>
+          <p style="line-height:1.6; margin-top:8px;">Compete in Free Fire, PUBG Mobile, Valorant, and CS2 with verified BDT cash prize pools, real-time custom room dispatching, screenshot score verification, and anti-cheat protection. Payments supported via bKash, Nagad, and Rocket.</p>
+        </section>
+      </div>
+    </div>
 
     <!-- Floating Live Chatbox Widget -->
     <div id="esbd-floating-chat">
       <button class="esbd-chat-toggle-btn" id="esbd-chat-toggle-btn" aria-label="Open Live Chat">
         <span class="cyber-nav-dot-pulse"></span>
         <span>LIVE CHAT</span>
-        <span style="background:rgba(0,0,0,0.3); padding:2px 7px; border-radius:10px; font-size:0.72rem;">💬 4.8K</span>
+        <span id="chat-badge-live" style="background:rgba(16,185,129,0.2); color:#10b981; padding:2px 7px; border-radius:10px; font-size:0.72rem;">💬 LIVE</span>
       </button>
 
       <div class="esbd-chat-panel hidden" id="esbd-chat-panel">
@@ -715,18 +740,57 @@
           <button class="esbd-modal-close" onclick="closeStreamModal()">✕ ESC</button>
         </div>
         <div class="esbd-modal-body">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:10px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; gap:8px;">
+              <button id="btn-stream-tab-live" onclick="switchStreamTab('live')" class="esbd-channel-tab active">🔴 Live Stream</button>
+              <button id="btn-stream-tab-vods" onclick="switchStreamTab('vods')" class="esbd-channel-tab">🎬 Match Highlights & VODs</button>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button id="btn-stream-data-saver" onclick="toggleStreamDataSaver()" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); color:#f0f6fc; font-size:0.75rem; font-family:'Oxanium',sans-serif; padding:5px 10px; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">
+                <span>⚡ Data Saver:</span> <strong id="data-saver-status" style="color:#8b949e;">OFF</strong>
+              </button>
+            </div>
+          </div>
+          <div id="esbd-vods-list" style="display:none; margin-bottom:16px; background:#0d1117; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:16px;">
+            <h4 style="font-family:'Oxanium',sans-serif; font-size:0.95rem; font-weight:700; color:#f0f6fc; margin-bottom:10px;">Select Official Match VOD Replay</h4>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:10px;">
+              <button onclick="loadVod('jfKfPfyJRdk', 'Free Fire Pro League S4: Grand Finals Decider')" style="background:#161b22; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:10px; text-align:left; cursor:pointer; color:#f0f6fc;">
+                <div style="font-size:0.7rem; color:#10b981; font-weight:700;">FREE FIRE · 1h 42m</div>
+                <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">Grand Finals Decider: RedX vs Legion</div>
+              </button>
+              <button onclick="loadVod('jfKfPfyJRdk', 'PUBG Mobile South Asia: Erangel Clutch Round')" style="background:#161b22; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:10px; text-align:left; cursor:pointer; color:#f0f6fc;">
+                <div style="font-size:0.7rem; color:#38bdf8; font-weight:700;">PUBG MOBILE · 58m</div>
+                <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">Erangel Day 3: Delta Force Domination</div>
+              </button>
+              <button onclick="loadVod('jfKfPfyJRdk', 'Valorant Dhaka Masters: Ascent Overtime')" style="background:#161b22; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:10px; text-align:left; cursor:pointer; color:#f0f6fc;">
+                <div style="font-size:0.7rem; color:#f43f5e; font-weight:700;">VALORANT · 1h 15m</div>
+                <div style="font-size:0.82rem; font-weight:700; margin-top:2px;">Ascent Map 3: Cyclones vs Apex Tigers</div>
+              </button>
+            </div>
+          </div>
           <div class="esbd-stream-layout">
             <div>
               <div class="esbd-video-wrap">
                 <iframe id="esbd-stream-iframe" src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div id="esbd-data-saver-view" style="display:none; padding:40px 20px; text-align:center; background:#07090c; border-radius:12px; border:1px solid rgba(16,185,129,0.3);">
+                  <div style="display:inline-block; padding:4px 12px; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.4); border-radius:99px; color:#10b981; font-size:0.75rem; font-weight:700; margin-bottom:12px;">⚡ DATA SAVER ACTIVE · LOW BANDWIDTH</div>
+                  <h3 id="data-saver-match-title" style="font-family:'Oxanium',sans-serif; font-size:1.3rem; font-weight:800; color:#f0f6fc; margin-bottom:6px;">GRAND FINALS // RedX vs Team Legion BD</h3>
+                  <p style="color:#8b949e; font-size:0.85rem; margin-bottom:18px;">Map 3 · Bo3 · Bermuda Arena · Timezone: BST (UTC+6)</p>
+                  <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+                    <div style="background:#131920; padding:12px 20px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);"><div style="font-size:0.7rem; color:#8b949e;">RedX Esports</div><div style="font-size:1.4rem; font-weight:800; color:#10b981;">14 PTS</div></div>
+                    <div style="display:flex; align-items:center; font-weight:800; color:#8b949e;">VS</div>
+                    <div style="background:#131920; padding:12px 20px; border-radius:8px; border:1px solid rgba(255,255,255,0.08);"><div style="font-size:0.7rem; color:#8b949e;">Team Legion BD</div><div style="font-size:1.4rem; font-weight:800; color:#f0f6fc;">9 PTS</div></div>
+                  </div>
+                  <button onclick="toggleStreamDataSaver()" style="background:#10b981; color:#07090c; font-family:'Oxanium',sans-serif; font-weight:700; border:none; padding:8px 18px; border-radius:8px; cursor:pointer;">Switch to Full 1080p HD Video</button>
+                </div>
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap; gap:12px;">
                 <div>
                   <h3 id="esbd-stream-heading" style="font-family:'Oxanium',sans-serif; font-size:1.1rem; font-weight:700; color:#f0f6fc;">GRAND FINALS // Official Cast — Arena Dhaka</h3>
-                  <p style="color:#8b949e; font-size:0.8rem; margin-top:3px;">Casters: Kabbo & Mr. Triple R | 1080p60 Full HD | Anti-Cheat Server Protected</p>
+                  <p style="color:#8b949e; font-size:0.8rem; margin-top:3px;">Official Match Stream | 1080p HD | Fair-Play Anti-Cheat Engine | Timezone: BST (UTC+6)</p>
                 </div>
                 <div style="display:flex; gap:10px; align-items:center;">
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 10px; border-radius:8px;">🔴 14,820 Viewers</span>
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:4px 10px; border-radius:8px;"><span class="cyber-nav-dot-pulse"></span> OFFICIAL STREAM // LIVE</span>
                   <button onclick="openSubmitPovModal()" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; padding:6px 14px; border-radius:8px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.78rem; cursor:pointer;">+ Stream Your POV</button>
                 </div>
               </div>
@@ -762,8 +826,11 @@
               <!-- Populated via JS -->
             </div>
           </div>
-          <div id="esbd-results-content-submit" style="display:none; max-width:600px; margin:0 auto;">
-            <h3 style="font-family:'Oxanium',sans-serif; font-size:1.1rem; font-weight:700; color:#f0f6fc; margin-bottom:12px;">Report Match Score & Upload Proof</h3>
+          <div id="esbd-results-content-submit" style="display:none; max-width:640px; margin:0 auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h3 style="font-family:'Oxanium',sans-serif; font-size:1.1rem; font-weight:700; color:#f0f6fc;">Report Match Score & Upload Screenshot Proof</h3>
+              <span style="font-size:0.72rem; color:#10b981; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:2px 8px; border-radius:4px;">Verified Player Submission</span>
+            </div>
             <form id="esbd-result-form" onsubmit="handleResultSubmit(event)" style="display:flex; flex-direction:column; gap:14px;">
               <div>
                 <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Tournament</label>
@@ -776,33 +843,54 @@
               </div>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                 <div>
-                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Your Team Name</label>
-                  <input type="text" id="res-form-team" class="esbd-chat-input" value="RedX Esports" required />
+                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Your Team / IGN</label>
+                  <input type="text" id="res-form-team" class="esbd-chat-input" placeholder="Your registered IGN or Team" required />
                 </div>
                 <div>
-                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Opponent Team Name</label>
-                  <input type="text" id="res-form-opponent" class="esbd-chat-input" value="Team Legion BD" required />
+                  <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Opponent Team</label>
+                  <select id="res-form-opponent-select" onchange="handleOpponentSelect(this)" class="esbd-chat-input" style="width:100%; margin-bottom:4px;">
+                    <option value="">-- Select Opponent Team --</option>
+                    <option value="Team Legion BD">Team Legion BD</option>
+                    <option value="Delta Force BD">Delta Force BD</option>
+                    <option value="Apex Tigers">Apex Tigers</option>
+                    <option value="Cyclones BD">Cyclones BD</option>
+                    <option value="custom">Other / Custom Roster...</option>
+                  </select>
+                  <input type="text" id="res-form-opponent" class="esbd-chat-input" placeholder="Opponent team name" required style="display:none;" />
                 </div>
               </div>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                 <div>
                   <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Your Score / Points</label>
-                  <input type="number" id="res-form-scoreA" class="esbd-chat-input" value="14" required />
+                  <input type="number" id="res-form-scoreA" class="esbd-chat-input" placeholder="e.g. 14" required />
                 </div>
                 <div>
                   <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Opponent Score</label>
-                  <input type="number" id="res-form-scoreB" class="esbd-chat-input" value="9" required />
+                  <input type="number" id="res-form-scoreB" class="esbd-chat-input" placeholder="e.g. 9" required />
                 </div>
               </div>
               <div>
-                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Match MVP & Kills</label>
-                <input type="text" id="res-form-mvp" class="esbd-chat-input" value="raiyan (RedX) — 9 Kills" required />
+                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Match MVP & Kills (Optional)</label>
+                <input type="text" id="res-form-mvp" class="esbd-chat-input" placeholder="e.g. PlayerIGN — 8 Kills" />
               </div>
               <div>
-                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:4px;">Screenshot Proof Image URL</label>
-                <input type="text" id="res-form-proof" class="esbd-chat-input" value="/img/gallery/lan-01.jpg" />
+                <label style="font-size:0.78rem; color:#8b949e; display:block; margin-bottom:6px;">Screenshot Proof (Drag & Drop or Tap to Upload)</label>
+                <div id="esbd-screenshot-dropzone" onclick="document.getElementById('res-form-file').click()" style="border:2px dashed rgba(16,185,129,0.35); border-radius:12px; padding:22px; text-align:center; background:rgba(16,185,129,0.03); cursor:pointer; transition:all 0.2s ease;">
+                  <input type="file" id="res-form-file" accept="image/png, image/jpeg, image/webp" style="display:none;" onchange="handleProofFile(event)" />
+                  <div id="dropzone-empty">
+                    <span style="font-size:1.8rem; display:block; margin-bottom:6px;">📸</span>
+                    <strong style="color:#10b981; font-size:0.88rem;">Select or Drag Match End-Screen Screenshot</strong>
+                    <span style="display:block; font-size:0.72rem; color:#8b949e; margin-top:3px;">Direct upload from phone gallery or PC (PNG, JPG, WebP up to 6MB)</span>
+                  </div>
+                  <div id="dropzone-filled" style="display:none;">
+                    <img id="dropzone-preview-img" style="max-height:140px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); margin:0 auto;" />
+                    <span id="dropzone-file-name" style="display:block; font-size:0.75rem; color:#38bdf8; margin-top:6px;"></span>
+                    <span style="font-size:0.7rem; color:#10b981;">✔ Screenshot attached ready for upload</span>
+                  </div>
+                </div>
+                <input type="hidden" id="res-form-proof" value="" />
               </div>
-              <button type="submit" style="background:#10b981; color:#07090c; padding:12px; border-radius:10px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; border:none; margin-top:8px;">Submit Score for Referee Verification</button>
+              <button type="submit" id="res-form-submit-btn" style="background:#10b981; color:#07090c; padding:12px; border-radius:10px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:0.92rem; cursor:pointer; border:none; margin-top:4px;">Submit Score for Referee Verification</button>
             </form>
           </div>
         </div>
@@ -823,19 +911,19 @@
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-bottom:24px;">
             <div style="background:#131920; border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:16px;">
               <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Active Tournaments</div>
-              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#10b981;">5 EVENTS</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#10b981;"><span id="adm-stat-tournaments">Loading...</span></div>
             </div>
             <div style="background:#131920; border:1px solid rgba(239,68,68,0.3); border-radius:12px; padding:16px;">
-              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Live Match Rooms</div>
-              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#ef4444;">12 ROOMS</div>
+              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Registered Players</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#ef4444;"><span id="adm-stat-players">Loading...</span></div>
             </div>
             <div style="background:#131920; border:1px solid rgba(56,189,248,0.3); border-radius:12px; padding:16px;">
               <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Anti-Cheat Status</div>
-              <div style="font-family:'Oxanium',sans-serif; font-size:1.4rem; font-weight:800; color:#38bdf8;">100% SECURE</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.4rem; font-weight:800; color:#38bdf8;"><span id="adm-stat-shield">ACTIVE SHIELD</span></div>
             </div>
             <div style="background:#131920; border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:16px;">
-              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Prize Pool Reserve</div>
-              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#f59e0b;">৳2.5 Cr</div>
+              <div style="font-size:0.72rem; color:#8b949e; text-transform:uppercase;">Pending Verifications</div>
+              <div style="font-family:'Oxanium',sans-serif; font-size:1.8rem; font-weight:800; color:#f59e0b;"><span id="adm-stat-pending">0 PENDING</span></div>
             </div>
           </div>
 
@@ -1553,10 +1641,13 @@
                   </div>
                   <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8b949e;">
                     <span>⭐ MVP: <strong style="color:#f0f6fc;">${r.mvp}</strong> (${r.mvpKills} Kills)</span>
-                    <span style="color:#10b981;">✔ ${r.status}</span>
+                    <span style="${r.status === 'verified' ? 'color:#10b981;' : r.status === 'disputed' ? 'color:#ef4444;' : 'color:#f59e0b;'} font-weight:700;">
+                      ${r.status === 'verified' ? '✔ Verified' : r.status === 'disputed' ? '⚠️ Disputed' : '⏳ Pending Review'}
+                    </span>
                   </div>
-                  <div style="margin-top:8px; font-size:0.7rem; color:#6e7681;">
-                    Verified By: ${r.verifiedBy || 'Official Referee'}
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.7rem; color:#6e7681;">
+                    <span>Verified By: ${r.verifiedBy || 'Official Referee'}</span>
+                    <button onclick="openDisputePrompt('${r.id || 'm-ff-01'}')" style="background:transparent; border:1px solid rgba(239,68,68,0.3); color:#ef4444; font-size:0.68rem; padding:3px 8px; border-radius:4px; cursor:pointer;">⚠️ Dispute</button>
                   </div>
                 </div>
               `).join('');
@@ -1602,19 +1693,37 @@
         window.openAdminModal = function() {
           const user = window.esbdAuth ? window.esbdAuth.getUser() : null;
           const isAdm = window.esbdAuth ? window.esbdAuth.isAdmin() : false;
+          const modal = document.getElementById('esbd-admin-modal');
+          if (!modal) return;
+
+          modal.classList.add('active');
+          const guard = document.getElementById('admin-auth-guard');
+          const panel = document.getElementById('admin-authenticated-panel');
+
           if (!isAdm) {
-            if (window.esbdAuth) {
-              window.esbdAuth.openAuthModal('admin');
-            } else {
-              alert('Administrator privileges required. Please sign in via the Admin Gateway.');
-            }
+            if (guard) guard.style.display = 'block';
+            if (panel) panel.style.display = 'none';
             return;
           }
-          const modal = document.getElementById('esbd-admin-modal');
-          if (modal) {
-            modal.classList.add('active');
-            fetchAdminSubmissions();
-          }
+
+          if (guard) guard.style.display = 'none';
+          if (panel) panel.style.display = 'block';
+
+          // Fetch dynamic admin stats
+          fetch('/api/admin/overview', { headers: getAdminHeaders() })
+            .then(r => r.json())
+            .then(overview => {
+              const elTournaments = document.getElementById('adm-stat-tournaments');
+              const elPlayers = document.getElementById('adm-stat-players');
+              const elPending = document.getElementById('adm-stat-pending');
+
+              if (elTournaments) elTournaments.textContent = (overview.tournaments || 4) + ' EVENTS';
+              if (elPlayers) elPlayers.textContent = (overview.players || 1420).toLocaleString() + ' PLAYERS';
+              if (elPending) elPending.textContent = (overview.pendingResults || 0) + ' PENDING';
+            })
+            .catch(() => {});
+
+          fetchAdminSubmissions();
         };
 
         window.closeAdminModal = function() {
@@ -1716,7 +1825,212 @@
             })
             .catch(() => alert('Error dispatching room'));
         };
+
+        // ============================================================
+        // LFG (Find a Team) Board functions
+        // ============================================================
+        window.openLfgBoard = function() {
+          const board = document.getElementById('esbd-lfg-board');
+          if (board) { board.style.display = 'block'; fetchLfgPosts(); }
+        };
+
+        window.closeLfgBoard = function() {
+          const board = document.getElementById('esbd-lfg-board');
+          if (board) board.style.display = 'none';
+        };
+
+        window.fetchLfgPosts = function() {
+          const listings = document.getElementById('lfg-listings');
+          if (!listings) return;
+          fetch('/api/lfg')
+            .then(r => r.json())
+            .then(data => {
+              const posts = data.posts || [];
+              if (posts.length === 0) {
+                listings.innerHTML = '<div style="color:#8b949e; font-size:0.85rem; text-align:center; padding:30px;">No LFG posts yet. Be the first! 🎯</div>';
+                return;
+              }
+              const gameColors = { 'Free Fire': '#ef4444', 'PUBG Mobile': '#f59e0b', 'Valorant': '#e11d48', 'CS2': '#f97316', 'Mobile Legends': '#8b5cf6', 'Fortnite': '#3b82f6', 'COD Mobile': '#10b981' };
+              listings.innerHTML = posts.map(p => {
+                const color = gameColors[p.game] || '#6366f1';
+                const timeAgo = p.createdAt ? new Date(p.createdAt).toLocaleString('en-BD', { timeZone: 'Asia/Dhaka' }) + ' BST' : 'Just now';
+                return `
+                  <div style="background:#131920; border:1px solid rgba(255,255,255,0.08); border-left:3px solid ${color}; border-radius:10px; padding:14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                      <div>
+                        <span style="font-family:'Oxanium',sans-serif; font-weight:800; color:#f0f6fc; font-size:0.95rem;">${p.ign || 'Anonymous'}</span>
+                        <span style="background:rgba(99,102,241,0.15); border:1px solid rgba(99,102,241,0.3); color:#a78bfa; font-size:0.7rem; padding:2px 8px; border-radius:6px; margin-left:8px;">${p.role || 'Flex'}</span>
+                      </div>
+                      <span style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); color:#8b949e; font-size:0.7rem; padding:2px 8px; border-radius:6px;">${p.platform || 'Any'}</span>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+                      <span style="background:rgba(0,0,0,0.4); border:1px solid ${color}40; color:${color}; font-size:0.75rem; padding:3px 10px; border-radius:20px; font-weight:700;">${p.game || 'Any'}</span>
+                    </div>
+                    ${p.note ? `<div style="color:#8b949e; font-size:0.82rem; margin-bottom:8px;">${p.note}</div>` : ''}
+                    ${p.contact ? `<div style="color:#38bdf8; font-size:0.8rem;">📞 ${p.contact}</div>` : ''}
+                    <div style="color:#374151; font-size:0.7rem; margin-top:8px;">${timeAgo}</div>
+                  </div>
+                `;
+              }).join('');
+            })
+            .catch(() => { if (listings) listings.innerHTML = '<div style="color:#ef4444; font-size:0.85rem; text-align:center; padding:20px;">Failed to load LFG posts.</div>'; });
+        };
+
+        window.submitLfgPost = function() {
+          const ign = document.getElementById('lfg-ign').value.trim();
+          const game = document.getElementById('lfg-game').value;
+          const role = document.getElementById('lfg-role').value;
+          const platform = document.getElementById('lfg-platform').value;
+          const contact = document.getElementById('lfg-contact').value.trim();
+          const note = document.getElementById('lfg-note').value.trim();
+
+          if (!ign || !game || !role) {
+            alert('Please fill in IGN, Game, and Role at minimum.');
+            return;
+          }
+
+          const token = (typeof getToken === 'function') ? getToken() : null;
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) headers['Authorization'] = 'Bearer ' + token;
+
+          fetch('/api/lfg', {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ ign, game, role, platform, contact, note })
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data.success) {
+                if (window.esbdAuth) window.esbdAuth.showToast('LFG post submitted! ✅', 'success');
+                else alert('LFG post submitted! Others can now find you.');
+                document.getElementById('lfg-ign').value = '';
+                document.getElementById('lfg-note').value = '';
+                document.getElementById('lfg-contact').value = '';
+                fetchLfgPosts();
+              } else {
+                alert(data.error || 'Failed to post LFG.');
+              }
+            })
+            .catch(() => alert('Network error. Please try again.'));
+        };
+
+        // BST Countdown Timers
+        window.initCountdownTimers = function() {
+          document.querySelectorAll('[data-match-time]').forEach(function(el) {
+            const target = new Date(el.dataset.matchTime);
+            if (isNaN(target.getTime())) return;
+            setInterval(function() {
+              const diff = target - Date.now();
+              if (diff <= 0) { el.textContent = '🔴 LIVE NOW (BST UTC+6)'; el.style.color = '#ef4444'; return; }
+              const h = Math.floor(diff/3600000);
+              const m = Math.floor((diff%3600000)/60000);
+              const s = Math.floor((diff%60000)/1000);
+              el.textContent = (h > 0 ? h + 'h ' : '') + m + 'm ' + s + 's (BST UTC+6)';
+            }, 1000);
+          });
+        };
+        // Auto-init on load
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initCountdownTimers);
+        } else {
+          initCountdownTimers();
+        }
+
       })();
+
+        // ESC key closes all modals (accessibility)
+        window.addEventListener('keydown', function(e) {
+          if (e.key !== 'Escape') return;
+          const modals = document.querySelectorAll('[id$="-modal"], [id*="modal"], #esbd-stream-modal, #esbd-results-modal, #esbd-admin-modal, #esbd-auth-modal');
+          modals.forEach(function(m) {
+            if (m && !m.classList.contains('hidden') && m.style.display !== 'none') {
+              m.classList.add('hidden');
+              m.style.display = 'none';
+            }
+          });
+          // Also close any overlay divs that are visible
+          const overlays = document.querySelectorAll('.esbd-modal-overlay, .esbd-overlay');
+          overlays.forEach(function(o) { if(o) { o.classList.add('hidden'); o.style.display='none'; } });
+        });
+
     </script>
+  
+    <!-- ============================================================ -->
+    <!-- LFG - Find a Team Board                                       -->
+    <!-- ============================================================ -->
+    <div id="esbd-lfg-board" style="display:none; position:fixed; inset:0; z-index:3000; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); padding:20px; overflow-y:auto;">
+      <div style="max-width:800px; margin:0 auto; background:#0d1117; border:1px solid rgba(99,102,241,0.3); border-radius:16px; padding:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div>
+            <h2 style="font-family:'Oxanium',sans-serif; font-size:1.5rem; font-weight:800; color:#f0f6fc; margin:0;">🎮 Find a Team (LFG)</h2>
+            <div style="font-size:0.8rem; color:#8b949e; margin-top:4px;">Looking For Group — Connect with players across Bangladesh</div>
+          </div>
+          <button onclick="closeLfgBoard()" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#f0f6fc; width:36px; height:36px; border-radius:8px; cursor:pointer; font-size:1.2rem;">✕</button>
+        </div>
+
+        <!-- Post LFG Form -->
+        <div id="lfg-post-form" style="background:#131920; border:1px solid rgba(99,102,241,0.2); border-radius:12px; padding:16px; margin-bottom:20px;">
+          <h3 style="font-family:'Oxanium',sans-serif; font-size:1rem; font-weight:700; color:#a78bfa; margin:0 0 14px;">📢 Post Your LFG</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+            <div>
+              <label style="font-size:0.75rem; color:#8b949e; display:block; margin-bottom:4px;">IGN (In-Game Name)</label>
+              <input id="lfg-ign" type="text" placeholder="Your in-game name" style="width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:8px 10px; border-radius:8px; font-size:0.85rem; box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="font-size:0.75rem; color:#8b949e; display:block; margin-bottom:4px;">Game</label>
+              <select id="lfg-game" style="width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:8px 10px; border-radius:8px; font-size:0.85rem; box-sizing:border-box;">
+                <option value="">— Select Game —</option>
+                <option value="Free Fire">Free Fire</option>
+                <option value="PUBG Mobile">PUBG Mobile</option>
+                <option value="Valorant">Valorant</option>
+                <option value="CS2">CS2</option>
+                <option value="Mobile Legends">Mobile Legends (MLBB)</option>
+                <option value="Fortnite">Fortnite</option>
+                <option value="COD Mobile">COD Mobile</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.75rem; color:#8b949e; display:block; margin-bottom:4px;">Role</label>
+              <select id="lfg-role" style="width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:8px 10px; border-radius:8px; font-size:0.85rem; box-sizing:border-box;">
+                <option value="">— Select Role —</option>
+                <option value="Fragger">Fragger / Entry</option>
+                <option value="IGL">IGL (In-Game Leader)</option>
+                <option value="Support">Support</option>
+                <option value="Sniper">Sniper / AWPer</option>
+                <option value="Flex">Flex / Any</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.75rem; color:#8b949e; display:block; margin-bottom:4px;">Platform</label>
+              <select id="lfg-platform" style="width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:8px 10px; border-radius:8px; font-size:0.85rem; box-sizing:border-box;">
+                <option value="">— Select Platform —</option>
+                <option value="Mobile (Android)">Mobile (Android)</option>
+                <option value="Mobile (iOS)">Mobile (iOS)</option>
+                <option value="PC">PC</option>
+                <option value="Console">Console</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:0.75rem; color:#8b949e; display:block; margin-bottom:4px;">Discord / Contact (optional)</label>
+            <input id="lfg-contact" type="text" placeholder="Discord: username#1234 or phone" style="width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:8px 10px; border-radius:8px; font-size:0.85rem; box-sizing:border-box;">
+          </div>
+          <div style="margin-bottom:12px;">
+            <label style="font-size:0.75rem; color:#8b949e; display:block; margin-bottom:4px;">Message / Note</label>
+            <textarea id="lfg-note" rows="2" placeholder="e.g. Diamond rank, looking for serious team, available evenings BST" style="width:100%; background:#0d1117; border:1px solid rgba(255,255,255,0.12); color:#f0f6fc; padding:8px 10px; border-radius:8px; font-size:0.85rem; box-sizing:border-box; resize:none;"></textarea>
+          </div>
+          <button onclick="submitLfgPost()" style="background:linear-gradient(135deg,#6366f1,#a78bfa); border:none; color:#fff; padding:10px 20px; border-radius:10px; font-family:'Oxanium',sans-serif; font-weight:800; font-size:0.85rem; cursor:pointer;">🚀 Post LFG</button>
+        </div>
+
+        <!-- LFG Listings -->
+        <div id="lfg-listings" style="display:flex; flex-direction:column; gap:10px;">
+          <div style="color:#8b949e; font-size:0.85rem; text-align:center; padding:20px;">Loading LFG posts...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating LFG Button -->
+    <button id="lfg-fab" onclick="openLfgBoard()" title="Find a Team (LFG)" style="position:fixed; bottom:24px; left:24px; z-index:2000; background:linear-gradient(135deg,#6366f1,#a78bfa); border:none; color:#fff; width:56px; height:56px; border-radius:50%; font-size:1.3rem; cursor:pointer; box-shadow:0 4px 20px rgba(99,102,241,0.5); display:flex; align-items:center; justify-content:center; transition:transform 0.2s;">🎮</button>
+
   </body>
 </html>

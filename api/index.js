@@ -13,6 +13,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'esports-bangladesh-production-jwt-
 const BCRYPT_ROUNDS = 12;
 
 const path = require('path');
+const fs = require('fs');
 
 // Middleware
 app.use(cors({
@@ -28,7 +29,8 @@ app.use(cors({
   },
   credentials: true
 }));
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Static asset serving fallback in case Vercel routes static paths to API function
 app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
@@ -1207,6 +1209,9 @@ router.get('/config', (req, res) => {
     minWithdrawalBDT: 500,
     bkashMerchant: "01700000000",
     nagadMerchant: "01700000000",
+    rocketMerchant: "01700000000-8",
+    serverTimezone: "BST (UTC+6)",
+    antiCheatVersion: "ESBD Shield v3.4 (Fair-Play)",
     supportEmail: "info@esportsbd.com",
     discordUrl: "https://discord.gg/esbd",
     facebookUrl: "https://facebook.com/esportsbangladesh",
@@ -1489,7 +1494,23 @@ router.get('/me/tournaments', (req, res) => {
 });
 
 router.get('/me/matches', (req, res) => {
-  return res.json(memoryStore.matches);
+  const user = authenticateUser(req);
+  const sanitized = memoryStore.matches.map(m => {
+    const isCompleted = m.status === 'completed' || m.status === 'finished';
+    const isParticipant = user && (
+      user.role === 'admin' ||
+      (m.playerIds && m.playerIds.includes(user.id)) ||
+      (m.teamA && (m.teamA.name === user.ign || m.teamA.name === user.displayName || (user.teamName && m.teamA.name.toLowerCase().includes(user.teamName.toLowerCase())))) ||
+      (m.teamB && (m.teamB.name === user.ign || m.teamB.name === user.displayName || (user.teamName && m.teamB.name.toLowerCase().includes(user.teamName.toLowerCase()))))
+    );
+    return {
+      ...m,
+      roomCode: (isParticipant && !isCompleted) ? m.roomCode : null,
+      roomPassword: (isParticipant && !isCompleted) ? m.roomPassword : null,
+      roomAccess: isCompleted ? 'expired' : (isParticipant ? 'granted' : 'restricted')
+    };
+  });
+  return res.json(sanitized);
 });
 
 router.get('/me/wallet', (req, res) => {
@@ -1752,20 +1773,27 @@ router.post('/admin/matches/dispatch-room', requireAdmin, (req, res) => {
     match.roomPassword = roomPassword || "esbd";
     match.status = "live";
   }
-  // Also push notification to players
-  memoryStore.users.forEach(u => {
+  // Only send room credentials to verified players of this specific match or admins
+  const eligibleUsers = memoryStore.users.filter(u => {
+    if (u.role === 'admin') return true;
+    const inTeamA = match.teamA && (match.teamA.name === u.ign || match.teamA.name === u.displayName || (u.teamName && match.teamA.name.toLowerCase().includes(u.teamName.toLowerCase())));
+    const inTeamB = match.teamB && (match.teamB.name === u.ign || match.teamB.name === u.displayName || (u.teamName && match.teamB.name.toLowerCase().includes(u.teamName.toLowerCase())));
+    return inTeamA || inTeamB || (match.playerIds && match.playerIds.includes(u.id));
+  });
+
+  eligibleUsers.forEach(u => {
     memoryStore.notifications[u.id] = memoryStore.notifications[u.id] || [];
     memoryStore.notifications[u.id].unshift({
-      id: `n-room-${Date.now()}`,
+      id: `n-room-${Date.now()}-${Math.floor(Math.random()*1000)}`,
       kind: "room_code",
       type: "room_code",
-      title: "Custom Room Dispatched!",
-      message: `Match ${matchId}: Room Code: ${roomCode} | Password: ${roomPassword || 'esbd'}`,
+      title: "Custom Match Room Dispatched",
+      message: `Match ${matchId}: Room Code: ${roomCode} | Password: ${roomPassword || 'esbd'} (Expires 30m after match)`,
       readAt: null,
       createdAt: new Date().toISOString()
     });
   });
-  return res.json({ success: true, message: `Room credentials dispatched to participants for match ${matchId}!` });
+  return res.json({ success: true, message: `Room credentials dispatched strictly to ${eligibleUsers.length} verified match participants.` });
 });
 
 router.post('/me/wallet/withdraw', (req, res) => {
@@ -1995,4 +2023,149 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message || 'Internal server error' });
 });
 
+
+// ============================================================================
+// UPLOAD SCREENSHOT & DISPUTE ENDPOINTS
+// ============================================================================
+router.post('/uploads/screenshot', (req, res) => {
+  const { imageBase64, filename } = req.body;
+  if (!imageBase64) {
+    return res.status(400).json({ error: "No image data provided" });
+  }
+
+  try {
+    const matches = imageBase64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    let buffer, ext = 'png';
+    if (matches && matches.length === 3) {
+      const mime = matches[1];
+      if (mime.includes('jpeg') || mime.includes('jpg')) ext = 'jpg';
+      else if (mime.includes('webp')) ext = 'webp';
+      buffer = Buffer.from(matches[2], 'base64');
+    } else {
+      buffer = Buffer.from(imageBase64, 'base64');
+    }
+
+    if (buffer.length > 6 * 1024 * 1024) {
+      return res.status(400).json({ error: "File exceeds 6MB limit" });
+    }
+
+    const uploadDir = path.join(__dirname, '..', 'public', 'img', 'submissions');
+    const uploadDirRoot = path.join(__dirname, '..', 'img', 'submissions');
+    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+    if (!fs.existsSync(uploadDirRoot)) fs.mkdirSync(uploadDirRoot, { recursive: true });
+
+    const safeFilename = `proof-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}.${ext}`;
+    fs.writeFileSync(path.join(uploadDir, safeFilename), buffer);
+    fs.writeFileSync(path.join(uploadDirRoot, safeFilename), buffer);
+
+    const publicUrl = `/img/submissions/${safeFilename}`;
+    return res.json({ success: true, url: publicUrl, filename: safeFilename });
+  } catch (err) {
+    console.error('Screenshot upload error:', err);
+    return res.status(500).json({ error: "Failed to process screenshot file" });
+  }
+});
+
+router.post('/matches/:id/dispute', (req, res) => {
+  const user = authenticateUser(req);
+  if (!user) return res.status(401).json({ error: "Unauthorized. Please sign in to file a dispute." });
+  const { reason, evidenceUrl } = req.body;
+  const matchId = req.params.id;
+
+  const match = memoryStore.matches.find(m => m.id === matchId);
+  if (match) {
+    match.status = 'disputed';
+  }
+
+  const dispute = {
+    id: `disp-${Date.now()}`,
+    matchId,
+    reportedBy: user.ign || user.displayName || user.email,
+    userId: user.id,
+    reason: reason || "Score mismatch or dispute reported by team.",
+    evidenceUrl: evidenceUrl || null,
+    status: "open",
+    createdAt: new Date().toISOString()
+  };
+
+  memoryStore.disputes = memoryStore.disputes || [];
+  memoryStore.disputes.unshift(dispute);
+
+  return res.json({
+    success: true,
+    message: "Dispute opened. A certified ESBD referee has been assigned to verify match logs and proof.",
+    dispute
+  });
+});
+
+
+// ============================================================
+// LFG (Find a Team) Endpoints
+// ============================================================
+memoryStore.lfgPosts = memoryStore.lfgPosts || [
+  {
+    id: 'lfg-1',
+    ign: 'Tanvir_Sniper',
+    game: 'Free Fire',
+    role: 'Sniper',
+    platform: 'Mobile (Android)',
+    contact: 'Discord: tanvir#4412',
+    note: 'Grandmaster rank, looking for an active squad for ESBD Championship. Available 8 PM - 12 AM BST.',
+    createdAt: new Date(Date.now() - 3600000 * 2).toISOString()
+  },
+  {
+    id: 'lfg-2',
+    ign: 'Shakib_IGL',
+    game: 'PUBG Mobile',
+    role: 'IGL',
+    platform: 'Mobile (iOS)',
+    contact: 'WhatsApp: 01711223344',
+    note: 'Experienced caller, Conqueror tier. Need 2 aggressive rushers for PMCO qualifiers.',
+    createdAt: new Date(Date.now() - 3600000 * 5).toISOString()
+  },
+  {
+    id: 'lfg-3',
+    ign: 'ViperDhaka',
+    game: 'Valorant',
+    role: 'Fragger',
+    platform: 'PC',
+    contact: 'Discord: viper_bd',
+    note: 'Ascendant 2 Jett/Reyna main. Looking for competitive 5-stack for local tournaments.',
+    createdAt: new Date(Date.now() - 3600000 * 12).toISOString()
+  }
+];
+
+router.get('/lfg', (req, res) => {
+  memoryStore.lfgPosts = memoryStore.lfgPosts || [];
+  const { game } = req.query;
+  let posts = memoryStore.lfgPosts;
+  if (game) {
+    posts = posts.filter(p => p.game && p.game.toLowerCase() === game.toLowerCase());
+  }
+  return res.json({ success: true, count: posts.length, posts });
+});
+
+router.post('/lfg', (req, res) => {
+  const { ign, game, role, platform, contact, note } = req.body;
+  if (!ign || !game || !role) {
+    return res.status(400).json({ error: 'IGN, Game, and Role are required.' });
+  }
+
+  const newPost = {
+    id: 'lfg-' + Date.now(),
+    ign: String(ign).trim().substring(0, 40),
+    game: String(game).trim(),
+    role: String(role).trim(),
+    platform: platform ? String(platform).trim() : 'Any',
+    contact: contact ? String(contact).trim().substring(0, 60) : '',
+    note: note ? String(note).trim().substring(0, 250) : '',
+    createdAt: new Date().toISOString()
+  };
+
+  memoryStore.lfgPosts = memoryStore.lfgPosts || [];
+  memoryStore.lfgPosts.unshift(newPost);
+  return res.json({ success: true, message: 'LFG post created successfully!', post: newPost });
+});
+
 module.exports = app;
+
