@@ -334,6 +334,28 @@
       background-clip: text !important;
     }
   
+  
+    .cyber-nav-dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: cyberDotPulse 1.2s ease-in-out infinite alternate;
+      display: inline-block;
+    }
+    @keyframes cyberDotPulse {
+      0% { transform: scale(0.85); opacity: 0.6; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+    .nav-links {
+      gap: 1.15rem !important;
+    }
+    .nav-links a {
+      white-space: nowrap;
+      font-size: 0.86rem !important;
+    }
+
   </style>
   <link rel="stylesheet" href="/assets/esbd-platform-3d.css" />
   <script src="/assets/esbd-platform-3d.js" defer></script>
@@ -349,10 +371,13 @@
       <a href="/#/">Home</a>
       <a href="/#/tournaments">Tournaments</a>
       <a href="/newsroom.html">Newsroom</a>
+      <a href="/#/communities">Community</a>
+      <a href="/#/creators">Creator Hub</a>
+      <a href="/#/" onclick="sessionStorage.setItem('openStream','1')" style="display:inline-flex; align-items:center; gap:5px;"><span class="cyber-nav-dot-pulse"></span> Live</a>
+      <a href="/#/leaderboards">Results</a>
+      <a href="/#/work">Our Work</a>
       <a href="/shop.html" class="active">Shop</a>
-      <a href="/#/leaderboards">Leaderboards</a>
-      <a href="/#/communities">Communities</a>
-      <a href="/#/about">About</a>
+      <a href="/#/about">About ESBD</a>
       <a href="/#/contact">Contact</a>
     </div>
   </nav>

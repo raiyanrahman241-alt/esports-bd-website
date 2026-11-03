@@ -91,6 +91,19 @@
         transform: translateY(-2px);
       }
 
+      
+      /* Tactical serial navbar styling */
+      @media (min-width: 1024px) and (max-width: 1280px) {
+        header nav a {
+          padding-left: 0.45rem !important;
+          padding-right: 0.45rem !important;
+          font-size: 12px !important;
+        }
+      }
+      header nav a {
+        white-space: nowrap;
+      }
+      
       /* Ambient 3D Particle Canvas */
       #esbd-cyber-bg {
         position: fixed;
@@ -987,45 +1000,30 @@
           const navContainer = document.querySelector('header nav, nav.hidden');
           if (!navContainer) return;
 
-          // Check if custom links already exist
-          if (!document.getElementById('esbd-nav-streams')) {
-            const streamBtn = document.createElement('a');
-            streamBtn.id = 'esbd-nav-streams';
-            streamBtn.href = 'javascript:void(0)';
-            streamBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-semibold text-foreground transition-colors flex items-center gap-1.5';
-            streamBtn.innerHTML = '<span class="cyber-nav-dot-pulse"></span> <span style="color:#ef4444;">Live Streams</span>';
-            streamBtn.onclick = function(e) { e.preventDefault(); openStreamModal(); };
-            navContainer.appendChild(streamBtn);
-          }
+          // Enhance Live link (both desktop and mobile) with glowing pulse & modal trigger
+          const liveLinks = document.querySelectorAll('a[data-testid="link-nav-live"], a[data-testid="link-mobile-live"], a[href="/#live"]');
+          liveLinks.forEach(function(liveLink) {
+            if (!liveLink.dataset.liveEnhanced) {
+              liveLink.dataset.liveEnhanced = 'true';
+              if (!liveLink.querySelector('.cyber-nav-dot-pulse')) {
+                const pulse = document.createElement('span');
+                pulse.className = 'cyber-nav-dot-pulse';
+                pulse.style.display = 'inline-block';
+                pulse.style.marginRight = '6px';
+                pulse.style.verticalAlign = 'middle';
+                liveLink.insertBefore(pulse, liveLink.firstChild);
+              }
+              liveLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                openStreamModal();
+              });
+            }
+          });
 
-          if (!document.getElementById('esbd-nav-results')) {
-            const resultsBtn = document.createElement('a');
-            resultsBtn.id = 'esbd-nav-results';
-            resultsBtn.href = 'javascript:void(0)';
-            resultsBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors';
-            resultsBtn.innerHTML = '<span>🏆 Results</span>';
-            resultsBtn.onclick = function(e) { e.preventDefault(); openResultsModal(); };
-            navContainer.appendChild(resultsBtn);
-          }
-
-          if (!document.getElementById('esbd-nav-newsroom')) {
-            const newsBtn = document.createElement('a');
-            newsBtn.id = 'esbd-nav-newsroom';
-            newsBtn.href = '/newsroom.html';
-            newsBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors';
-            newsBtn.textContent = 'Newsroom';
-            newsBtn.onclick = function(e) { e.preventDefault(); window.location.href = '/newsroom.html'; };
-            navContainer.appendChild(newsBtn);
-          }
-
-          if (!document.getElementById('esbd-nav-shop')) {
-            const shopBtn = document.createElement('a');
-            shopBtn.id = 'esbd-nav-shop';
-            shopBtn.href = '/shop.html';
-            shopBtn.className = 'relative rounded-md px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors';
-            shopBtn.textContent = 'Shop';
-            shopBtn.onclick = function(e) { e.preventDefault(); window.location.href = '/shop.html'; };
-            navContainer.appendChild(shopBtn);
+          // Check if navigated from another page requesting Live Stream
+          if (sessionStorage.getItem('openStream') === '1') {
+            sessionStorage.removeItem('openStream');
+            setTimeout(function() { openStreamModal(); }, 350);
           }
 
           // Header actions: Admin console quick access button
