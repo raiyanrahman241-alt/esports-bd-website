@@ -21,6 +21,11 @@ app.get(['/preview', '/preview.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'preview.html'));
 });
 
+// Promotional Preview Video for Partners & Clients
+app.get(['/promo', '/promo-preview', '/promo-preview.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'promo-preview.html'));
+});
+
 
 // Serve static assets with no-cache headers for assets
 app.use('/assets', express.static(path.join(__dirname, 'assets'), {

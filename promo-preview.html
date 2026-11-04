@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-SPORTS BANGLADESH — Official Platform Preview</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Inter:wght@300;400;500;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #07090c;
+  --bg-card: #0d1117;
+  --bg-surface: #131920;
+  --text-primary: #f0f6fc;
+  --text-secondary: #8b949e;
+  --accent-red: #ef4444;
+  --accent-green: #10b981;
+  --accent-blue: #38bdf8;
+  --accent-amber: #f59e0b;
+  --accent-violet: #a78bfa;
+  --accent-rose: #f43f5e;
+  --neon-green: #10b981;
+  --neon-blue: #38bdf8;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+/* ===== CANVAS FOR PARTICLES ===== */
+#particle-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
+
+/* ===== SCENE CONTAINER ===== */
+#promo-scene {
+  position: fixed; inset: 0;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+/* ===== SLIDES ===== */
+.promo-slide {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateZ(-200px) scale(0.8);
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.promo-slide.active {
+  opacity: 1;
+  transform: translateZ(0) scale(1);
+  pointer-events: auto;
+}
+.promo-slide.exit-left {
+  opacity: 0;
+  transform: translateX(-120%) rotateY(25deg) scale(0.7);
+}
+.promo-slide.exit-right {
+  opacity: 0;
+  transform: translateX(120%) rotateY(-25deg) scale(0.7);
+}
+.promo-slide.exit-up {
+  opacity: 0;
+  transform: translateY(-100%) rotateX(-15deg) scale(0.6);
+}
+.promo-slide.exit-zoom {
+  opacity: 0;
+  transform: translateZ(600px) scale(2.5);
+}
+
+/* ===== GRID OVERLAY ===== */
+.grid-overlay {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== SCAN LINE ===== */
+.scan-line {
+  position: fixed; left: 0; width: 100%; height: 3px; z-index: 5;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-green), transparent);
+  box-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-green);
+  animation: scanDown 6s linear infinite;
+  pointer-events: none;
+  opacity: 0.4;
+}
+@keyframes scanDown {
+  0% { top: -10px; }
+  100% { top: 100%; }
+}
+
+/* ===== SLIDE 0: BOOT SEQUENCE ===== */
+.boot-text {
+  font-family: 'Oxanium', monospace;
+  font-size: 0.85rem;
+  color: var(--neon-green);
+  text-align: left;
+  line-height: 2;
+  max-width: 600px;
+  text-shadow: 0 0 10px rgba(16,185,129,0.5);
+}
+.boot-text .line {
+  opacity: 0;
+  animation: bootLine 0.3s ease forwards;
+}
+@keyframes bootLine {
+  to { opacity: 1; }
+}
+
+/* ===== SLIDE 1: LOGO REVEAL ===== */
+.logo-container {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+.logo-3d {
+  width: 280px; height: 280px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: logoSpin 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+@keyframes logoSpin {
+  0% { transform: rotateY(-180deg) rotateX(20deg) scale(0.3); opacity: 0; }
+  60% { transform: rotateY(15deg) rotateX(-5deg) scale(1.1); opacity: 1; }
+  100% { transform: rotateY(0) rotateX(0) scale(1); opacity: 1; }
+}
+.logo-3d img {
+  width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(16,185,129,0.4)) drop-shadow(0 0 80px rgba(56,189,248,0.2));
+}
+.logo-glow-ring {
+  position: absolute; inset: -20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: conic-gradient(from 0deg, transparent, var(--neon-green), var(--neon-blue), transparent) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ringRotate 3s linear infinite;
+}
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+.brand-title {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-top: 30px;
+  background: linear-gradient(135deg, #f0f6fc, #38bdf8, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  animation: titleReveal 1s ease forwards;
+  animation-delay: 1s;
+  opacity: 0;
+}
+@keyframes titleReveal {
+  0% { opacity: 0; letter-spacing: 30px; filter: blur(10px); }
+  100% { opacity: 1; letter-spacing: 6px; filter: blur(0); }
+}
+.brand-subtitle {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-amber);
+  margin-top: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  animation: subtitleReveal 0.8s ease forwards;
+  animation-delay: 1.8s;
+  opacity: 0;
+}
+@keyframes subtitleReveal {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SLIDE 2: STATS COUNTER ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  padding: 40px;
+}
+.stat-card {
+  background: rgba(13,17,23,0.9);
+  border: 1px solid rgba(56,189,248,0.15);
+  border-radius: 16px;
+  padding: 30px 24px;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  animation: statCardIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+.stat-card:nth-child(1) { animation-delay: 0.2s; }
+.stat-card:nth-child(2) { animation-delay: 0.4s; }
+.stat-card:nth-child(3) { animation-delay: 0.6s; }
+.stat-card:nth-child(4) { animation-delay: 0.8s; }
+@keyframes statCardIn {
+  0% { opacity: 0; transform: translateY(80px) rotateX(-20deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+.stat-card:hover { transform: translateZ(30px) rotateY(5deg); }
+.stat-number {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ===== SLIDE 3: FEATURE SHOWCASE ===== */
+.feature-showcase {
+  display: flex;
+  gap: 24px;
+  padding: 40px;
+  max-width: 1200px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.feature-card {
+  background: linear-gradient(145deg, rgba(13,17,23,0.95), rgba(19,25,32,0.95));
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 16px;
+  padding: 28px;
+  width: 220px;
+  text-align: center;
+  transform-style: preserve-3d;
+  animation: featureIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent-violet), var(--accent-blue));
+}
+.feature-card:nth-child(1) { animation-delay: 0.15s; }
+.feature-card:nth-child(2) { animation-delay: 0.3s; }
+.feature-card:nth-child(3) { animation-delay: 0.45s; }
+.feature-card:nth-child(4) { animation-delay: 0.6s; }
+.feature-card:nth-child(5) { animation-delay: 0.75s; }
+@keyframes featureIn {
+  0% { opacity: 0; transform: translateZ(-100px) rotateY(30deg); }
+  100% { opacity: 1; transform: translateZ(0) rotateY(0); }
+}
+.feature-icon { font-size: 2.5rem; margin-bottom: 14px; }
+.feature-title {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.feature-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ===== SLIDE 4: GAMES CAROUSEL ===== */
+.games-orbit {
+  width: 500px; height: 500px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: orbitSpin 20s linear infinite;
+}
+@keyframes orbitSpin {
+  to { transform: rotateY(360deg); }
+}
+.game-planet {
+  position: absolute;
+  width: 100px; height: 100px;
+  top: 50%; left: 50%;
+  transform-style: preserve-3d;
+  animation: planetFloat 3s ease-in-out infinite;
+}
+.game-planet img {
+  width: 100%; height: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 0 30px rgba(56,189,248,0.3);
+  border: 2px solid rgba(56,189,248,0.3);
+}
+@keyframes planetFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.games-center-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+.games-center-text h2 {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.games-center-text p {
+  font-size: 0.85rem;
+  color: var(--accent-amber);
+  margin-top: 4px;
+}
+
+/* ===== SLIDE 5: PLATFORM PILLARS ===== */
+.pillars-row {
+  display: flex;
+  gap: 16px;
+  padding: 40px;
+  perspective: 1000px;
+}
+.pillar {
+  width: 170px;
+  background: linear-gradient(180deg, rgba(13,17,23,0.95), rgba(7,9,12,0.98));
+  border: 1px solid rgba(239,68,68,0.15);
+  border-radius: 14px;
+  padding: 24px 18px;
+  text-align: center;
+  transform-style: preserve-3d;
+  animation: pillarRise 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+  position: relative;
+}
+.pillar::after {
+  content: '';
+  position: absolute; bottom: 0; left: 10%; right: 10%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+}
+.pillar:nth-child(1) { animation-delay: 0.1s; }
+.pillar:nth-child(2) { animation-delay: 0.25s; }
+.pillar:nth-child(3) { animation-delay: 0.4s; }
+.pillar:nth-child(4) { animation-delay: 0.55s; }
+.pillar:nth-child(5) { animation-delay: 0.7s; }
+.pillar:nth-child(6) { animation-delay: 0.85s; }
+@keyframes pillarRise {
+  0% { opacity: 0; transform: translateY(100px) rotateX(30deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+.pillar-emoji { font-size: 2rem; margin-bottom: 10px; }
+.pillar-name {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== SLIDE 6: BD SPECIFIC ===== */
+.bd-features {
+  display: flex;
+  gap: 30px;
+  padding: 40px;
+  align-items: center;
+}
+.bd-flag {
+  font-size: 8rem;
+  animation: flagWave 2s ease-in-out infinite;
+}
+@keyframes flagWave {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.bd-list {
+  list-style: none;
+}
+.bd-list li {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; gap: 14px;
+  animation: bdListIn 0.5s ease forwards;
+  opacity: 0;
+}
+.bd-list li:nth-child(1) { animation-delay: 0.3s; }
+.bd-list li:nth-child(2) { animation-delay: 0.5s; }
+.bd-list li:nth-child(3) { animation-delay: 0.7s; }
+.bd-list li:nth-child(4) { animation-delay: 0.9s; }
+.bd-list li:nth-child(5) { animation-delay: 1.1s; }
+@keyframes bdListIn {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.bd-list .bd-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+
+/* ===== SLIDE 7: PARTNERS ===== */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 40px;
+}
+.partner-card {
+  background: rgba(13,17,23,0.9);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  animation: partnerIn 0.6s ease forwards;
+  opacity: 0;
+}
+.partner-card:nth-child(1) { animation-delay: 0.1s; }
+.partner-card:nth-child(2) { animation-delay: 0.2s; }
+.partner-card:nth-child(3) { animation-delay: 0.3s; }
+.partner-card:nth-child(4) { animation-delay: 0.4s; }
+.partner-card:nth-child(5) { animation-delay: 0.5s; }
+.partner-card:nth-child(6) { animation-delay: 0.6s; }
+.partner-card:nth-child(7) { animation-delay: 0.7s; }
+.partner-card:nth-child(8) { animation-delay: 0.8s; }
+@keyframes partnerIn {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.partner-card img {
+  max-width: 100%; max-height: 50px;
+  filter: brightness(0) invert(0.7);
+  transition: filter 0.3s;
+}
+.partner-card:hover img { filter: brightness(1); }
+
+/* ===== SLIDE 8: CTA / FINALE ===== */
+.finale-container {
+  text-align: center;
+  transform-style: preserve-3d;
+}
+.finale-logo {
+  width: 150px; height: 150px;
+  margin: 0 auto 30px;
+  animation: finaleLogoPulse 2s ease-in-out infinite;
+}
+@keyframes finaleLogoPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(16,185,129,0.3)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 60px rgba(56,189,248,0.5)); }
+}
+.finale-logo img { width: 100%; height: 100%; object-fit: contain; }
+.finale-headline {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  animation: finaleText 1.2s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+@keyframes finaleText {
+  0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.finale-headline .gradient-text {
+  background: linear-gradient(135deg, #ef4444, #f59e0b, #10b981, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% 300%;
+  animation: gradientShift 4s ease infinite;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.finale-url {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--neon-blue);
+  letter-spacing: 3px;
+  margin-top: 20px;
+  animation: urlPulse 2s ease-in-out infinite;
+}
+@keyframes urlPulse {
+  0%, 100% { text-shadow: 0 0 10px rgba(56,189,248,0.3); }
+  50% { text-shadow: 0 0 30px rgba(56,189,248,0.6), 0 0 60px rgba(16,185,129,0.3); }
+}
+.finale-badge {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 36px;
+  border: 2px solid var(--neon-green);
+  border-radius: 50px;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--neon-green);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  animation: badgeBreathe 3s ease-in-out infinite;
+}
+@keyframes badgeBreathe {
+  0%, 100% { box-shadow: 0 0 10px rgba(16,185,129,0.2); }
+  50% { box-shadow: 0 0 30px rgba(16,185,129,0.4), inset 0 0 20px rgba(16,185,129,0.1); }
+}
+
+/* ===== SECTION LABEL ===== */
+.section-label {
+  position: absolute;
+  top: 40px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Oxanium', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.section-heading {
+  font-family: 'Oxanium', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.section-sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 30px;
+  max-width: 500px;
+}
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed;
+  bottom: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-red), var(--accent-amber), var(--neon-green), var(--neon-blue), var(--accent-violet));
+  background-size: 200% 100%;
+  animation: progressGradient 3s linear infinite;
+  z-index: 100;
+  transition: width 0.5s ease;
+}
+@keyframes progressGradient {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* ===== SLIDE COUNTER ===== */
+#slide-counter {
+  position: fixed;
+  bottom: 18px; right: 24px;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  z-index: 100;
+  letter-spacing: 2px;
+}
+
+/* ===== PLAY/PAUSE ===== */
+#play-pause-btn {
+  position: fixed;
+  bottom: 16px; left: 24px;
+  background: rgba(13,17,23,0.8);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-primary);
+  font-size: 1rem;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+}
+#play-pause-btn:hover {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 15px rgba(16,185,129,0.3);
+}
+
+/* ===== WATERMARK ===== */
+.watermark {
+  position: fixed;
+  top: 18px; right: 24px;
+  font-family: 'Oxanium', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  z-index: 100;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .stat-number { font-size: 2rem; }
+  .feature-showcase { flex-direction: column; align-items: center; }
+  .pillars-row { flex-wrap: wrap; justify-content: center; }
+  .brand-title { font-size: 2rem; letter-spacing: 3px; }
+  .partners-grid { grid-template-columns: repeat(2, 1fr); }
+  .finale-headline { font-size: 2rem; }
+  .bd-features { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+<div class="grid-overlay"></div>
+<div class="scan-line"></div>
+
+<div class="watermark">ESBD CONFIDENTIAL PREVIEW • NOT FOR PUBLIC DISTRIBUTION</div>
+
+<div id="promo-scene">
+
+  <!-- SLIDE 0: BOOT SEQUENCE -->
+  <div class="promo-slide active" id="slide-0">
+    <div class="boot-text" id="boot-text"></div>
+  </div>
+
+  <!-- SLIDE 1: LOGO REVEAL -->
+  <div class="promo-slide" id="slide-1">
+    <div class="logo-container">
+      <div class="logo-3d">
+        <div class="logo-glow-ring"></div>
+        <img src="public/img/esbd-logo-512.png" alt="ESBD Logo">
+      </div>
+    </div>
+    <div class="brand-title">E-SPORTS BANGLADESH</div>
+    <div class="brand-subtitle">🇧🇩 Premier Gaming Tournament Platform</div>
+  </div>
+
+  <!-- SLIDE 2: STATS -->
+  <div class="promo-slide" id="slide-2">
+    <div class="section-label">PLATFORM METRICS</div>
+    <div class="section-heading">Built for Scale</div>
+    <div class="section-sub">Bangladesh's largest competitive gaming infrastructure</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" data-count="7">0</div>
+        <div class="stat-label">Game Titles</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="12">0</div>
+        <div class="stat-label">Active Tournaments</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="85000" data-suffix="+">0</div>
+        <div class="stat-label">Verified Athletes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="16">0</div>
+        <div class="stat-label">Team Members</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: CORE FEATURES -->
+  <div class="promo-slide" id="slide-3">
+    <div class="section-label">CORE CAPABILITIES</div>
+    <div class="section-heading">Full-Stack Esports Platform</div>
+    <div class="section-sub">Every tool a tournament organizer and player needs</div>
+    <div class="feature-showcase">
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-title">Live Tournaments</div>
+        <div class="feature-desc">Bracket management, room dispatch & real-time scoring</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📡</div>
+        <div class="feature-title">Live Streaming</div>
+        <div class="feature-desc">Embedded broadcast, VOD highlights & data-saver mode</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Anti-Cheat Shield</div>
+        <div class="feature-desc">Fair-Play engine with screenshot proof & dispute system</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">Wallet System</div>
+        <div class="feature-desc">bKash, Nagad & Rocket (DBBL) deposits & payouts</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <div class="feature-title">LFG Board</div>
+        <div class="feature-desc">Find teammates across all titles — role, rank & platform</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: SUPPORTED GAMES -->
+  <div class="promo-slide" id="slide-4">
+    <div class="section-label">TITLE ECOSYSTEM</div>
+    <div class="games-orbit" id="games-orbit"></div>
+    <div class="games-center-text">
+      <h2>7 Competitive Titles</h2>
+      <p>Bangladesh's Most Popular Games</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: PLATFORM PILLARS -->
+  <div class="promo-slide" id="slide-5">
+    <div class="section-label">PLATFORM MODULES</div>
+    <div class="section-heading">Integrated Experience</div>
+    <div class="section-sub">11 sections — one unified gaming ecosystem</div>
+    <div class="pillars-row">
+      <div class="pillar"><div class="pillar-emoji">🏠</div><div class="pillar-name">Home</div></div>
+      <div class="pillar"><div class="pillar-emoji">🏆</div><div class="pillar-name">Tournaments</div></div>
+      <div class="pillar"><div class="pillar-emoji">📰</div><div class="pillar-name">Newsroom</div></div>
+      <div class="pillar"><div class="pillar-emoji">🌐</div><div class="pillar-name">Community</div></div>
+      <div class="pillar"><div class="pillar-emoji">🎬</div><div class="pillar-name">Creator Hub</div></div>
+      <div class="pillar"><div class="pillar-emoji">📺</div><div class="pillar-name">Live</div></div>
+    </div>
+    <div class="pillars-row" style="margin-top:-10px;">
+      <div class="pillar"><div class="pillar-emoji">📊</div><div class="pillar-name">Results</div></div>
+      <div class="pillar"><div class="pillar-emoji">💼</div><div class="pillar-name">Our Work</div></div>
+      <div class="pillar"><div class="pillar-emoji">🛒</div><div class="pillar-name">Shop</div></div>
+      <div class="pillar"><div class="pillar-emoji">ℹ️</div><div class="pillar-name">About ESBD</div></div>
+      <div class="pillar"><div class="pillar-emoji">📞</div><div class="pillar-name">Contact</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: BANGLADESH-SPECIFIC -->
+  <div class="promo-slide" id="slide-6">
+    <div class="section-label">LOCALIZED FOR BANGLADESH</div>
+    <div class="section-heading">🇧🇩 Built by Gamers, for Bangladesh</div>
+    <div class="section-sub">Features tailored for the Bangladeshi esports community</div>
+    <div class="bd-features">
+      <div class="bd-flag">🇧🇩</div>
+      <ul class="bd-list">
+        <li><span class="bd-icon" style="background:rgba(233,30,99,0.15); color:#e91e63;">💸</span> bKash, Nagad & Rocket — Entry fees & prize payouts</li>
+        <li><span class="bd-icon" style="background:rgba(56,189,248,0.15); color:#38bdf8;">📱</span> Mobile-first design — optimized for Android & low data</li>
+        <li><span class="bd-icon" style="background:rgba(245,158,11,0.15); color:#f59e0b;">⏰</span> BST (UTC+6) timezone — schedules & countdowns</li>
+        <li><span class="bd-icon" style="background:rgba(16,185,129,0.15); color:#10b981;">🎯</span> Local teams, influencers & gaming communities</li>
+        <li><span class="bd-icon" style="background:rgba(167,139,250,0.15); color:#a78bfa;">🗣️</span> Bengali gaming culture — #scrims, LFG & Discord integration</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: PARTNERS & SPONSORS -->
+  <div class="promo-slide" id="slide-7">
+    <div class="section-label">PARTNERS & SPONSORS</div>
+    <div class="section-heading">Trusted by Industry Leaders</div>
+    <div class="section-sub">Working with global gaming & tech brands</div>
+    <div class="partners-grid">
+      <div class="partner-card"><img src="public/img/clients/asus.png" alt="ASUS ROG"></div>
+      <div class="partner-card"><img src="public/img/clients/gigabyte.png" alt="Gigabyte"></div>
+      <div class="partner-card"><img src="public/img/clients/msi.png" alt="MSI"></div>
+      <div class="partner-card"><img src="public/img/clients/viewsonic.png" alt="ViewSonic"></div>
+      <div class="partner-card"><img src="public/img/clients/thermaltake.png" alt="Thermaltake"></div>
+      <div class="partner-card"><img src="public/img/clients/zotac.png" alt="Zotac"></div>
+      <div class="partner-card"><img src="public/img/clients/ucc.png" alt="UCC"></div>
+      <div class="partner-card" style="border-color: rgba(245,158,11,0.3);">
+        <div style="font-family:'Oxanium',sans-serif; font-size:0.8rem; font-weight:700; color:var(--accent-amber); text-transform:uppercase; letter-spacing:2px;">Your Brand Here</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: FINALE CTA -->
+  <div class="promo-slide" id="slide-8">
+    <div class="finale-container">
+      <div class="finale-logo">
+        <img src="public/img/esbd-logo-512.png" alt="ESBD">
+      </div>
+      <div class="finale-headline">
+        <span class="gradient-text">The Future of Esports</span><br>
+        in Bangladesh
+      </div>
+      <div class="finale-url">esports-bd-website.vercel.app</div>
+      <div class="finale-badge">🚀 Launching Soon</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="progress-bar" style="width: 0%"></div>
+<div id="slide-counter">01 / 09</div>
+<button id="play-pause-btn" title="Play / Pause">⏸</button>
+
+<script>
+// ============================================================
+// PARTICLE SYSTEM
+// ============================================================
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const PARTICLE_COUNT = 80;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 2 + 0.5;
+      this.color = ['#10b981', '#38bdf8', '#a78bfa', '#ef4444', '#f59e0b'][Math.floor(Math.random() * 5)];
+      this.alpha = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.alpha;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = particles[i].color;
+          ctx.globalAlpha = (1 - dist / 150) * 0.1;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawConnections();
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ============================================================
+// GAMES ORBIT SETUP
+// ============================================================
+(function() {
+  const orbit = document.getElementById('games-orbit');
+  const games = [
+    { name: 'Free Fire', img: 'public/img/games/free-fire.png' },
+    { name: 'PUBG Mobile', img: 'public/img/games/pubg-mobile.png' },
+    { name: 'Valorant', img: 'public/img/games/valorant.png' },
+    { name: 'CS2', img: 'public/img/games/cs2.png' },
+    { name: 'Mobile Legends', img: 'public/img/games/mobile-legends.png' },
+    { name: 'COD Mobile', img: 'public/img/games/cod-mobile.png' },
+    { name: 'EA FC 26', img: 'public/img/games/ea-fc26.png' },
+  ];
+  games.forEach((g, i) => {
+    const angle = (i / games.length) * Math.PI * 2;
+    const radius = 190;
+    const x = Math.cos(angle) * radius;
+    const z = Math.sin(angle) * radius;
+    const el = document.createElement('div');
+    el.className = 'game-planet';
+    el.style.transform = `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px)`;
+    el.style.animationDelay = `${i * 0.4}s`;
+    el.innerHTML = `<img src="${g.img}" alt="${g.name}" title="${g.name}">`;
+    orbit.appendChild(el);
+  });
+})();
+
+// ============================================================
+// BOOT SEQUENCE
+// ============================================================
+(function() {
+  const bootLines = [
+    '> ESBD Platform v4.0 — Initializing...',
+    '> Loading tournament engine.............. ✅',
+    '> Anti-cheat shield activated............ ✅',
+    '> Payment gateways (bKash/Nagad/Rocket).. ✅',
+    '> Live streaming module.................. ✅',
+    '> Player authentication layer............ ✅',
+    '> Community & LFG board.................. ✅',
+    '> BST (UTC+6) timezone sync.............. ✅',
+    '> 7 game titles registered............... ✅',
+    '> Mobile-first responsive engine......... ✅',
+    '',
+    '> SYSTEM READY — PLATFORM ONLINE 🟢',
+  ];
+  const bootEl = document.getElementById('boot-text');
+  bootLines.forEach((line, i) => {
+    const div = document.createElement('div');
+    div.className = 'line';
+    div.textContent = line;
+    div.style.animationDelay = `${i * 0.35}s`;
+    bootEl.appendChild(div);
+  });
+})();
+
+// ============================================================
+// SLIDE MANAGEMENT
+// ============================================================
+const slides = document.querySelectorAll('.promo-slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+let isPlaying = true;
+let autoplayTimer = null;
+
+const slideDurations = [5000, 5500, 5500, 5000, 5500, 5500, 5000, 5500, 7000];
+const exitStyles = ['exit-left', 'exit-zoom', 'exit-right', 'exit-up', 'exit-left', 'exit-zoom', 'exit-right', 'exit-up', 'exit-zoom'];
+
+function goToSlide(index) {
+  if (index === currentSlide) return;
+  const oldSlide = slides[currentSlide];
+  const exitClass = exitStyles[currentSlide % exitStyles.length];
+  oldSlide.classList.remove('active');
+  oldSlide.classList.add(exitClass);
+  setTimeout(() => {
+    oldSlide.classList.remove(exitClass);
+  }, 1500);
+
+  currentSlide = index;
+  const newSlide = slides[currentSlide];
+  newSlide.classList.add('active');
+
+  // Update progress & counter
+  const progress = ((currentSlide + 1) / totalSlides) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+  document.getElementById('slide-counter').textContent =
+    String(currentSlide + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+
+  // Animate counters on stats slide
+  if (currentSlide === 2) animateCounters();
+}
+
+function nextSlide() {
+  const next = (currentSlide + 1) % totalSlides;
+  goToSlide(next);
+}
+
+function startAutoplay() {
+  stopAutoplay();
+  autoplayTimer = setTimeout(() => {
+    if (isPlaying) {
+      nextSlide();
+      startAutoplay();
+    }
+  }, slideDurations[currentSlide] || 5000);
+}
+
+function stopAutoplay() {
+  if (autoplayTimer) clearTimeout(autoplayTimer);
+}
+
+// Play/Pause
+const ppBtn = document.getElementById('play-pause-btn');
+ppBtn.addEventListener('click', () => {
+  isPlaying = !isPlaying;
+  ppBtn.textContent = isPlaying ? '⏸' : '▶';
+  if (isPlaying) startAutoplay();
+  else stopAutoplay();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    nextSlide();
+    if (isPlaying) startAutoplay();
+  }
+  if (e.key === 'ArrowLeft') {
+    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+    goToSlide(prev);
+    if (isPlaying) startAutoplay();
+  }
+});
+
+// ============================================================
+// COUNTER ANIMATION
+// ============================================================
+function animateCounters() {
+  document.querySelectorAll('.stat-number[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 60));
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(interval);
+      }
+      if (target >= 1000) {
+        el.textContent = current.toLocaleString() + suffix;
+      } else {
+        el.textContent = current + suffix;
+      }
+    }, 30);
+  });
+}
+
+// ============================================================
+// START
+// ============================================================
+startAutoplay();
+</script>
+
+</body>
+</html>
