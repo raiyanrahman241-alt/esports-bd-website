@@ -46,6 +46,18 @@
       "destination": "/preview.html"
     },
     {
+      "source": "/promo",
+      "destination": "/promo-preview.html"
+    },
+    {
+      "source": "/promo-preview",
+      "destination": "/promo-preview.html"
+    },
+    {
+      "source": "/promo-preview.html",
+      "destination": "/promo-preview.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
